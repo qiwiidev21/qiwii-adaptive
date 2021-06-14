@@ -1,0 +1,4 @@
+// Override default variables before the import
+$body-bg: #ffff;
+// Import Bootstrap and its default variables
+@import "../../../node_modules/bootstrap/scss/bootstrap";

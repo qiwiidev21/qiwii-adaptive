@@ -1,0 +1,44 @@
+.btn-custom {
+  background-color: transparent;
+  border: 1px solid transparent;
+  flex-wrap: wrap;
+}
+
+.content-bg {
+  flex: 1;
+  align-items: center;
+  align-content: center;
+  background-color: #dc3232;
+  justify-content: center;
+}
+
+.card-info {
+  max-width: 85%;
+}
+
+.icon-merchant {
+  min-height: 50%;
+  min-width: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-color: #ffff;
+}
+
+.unit-name {
+  font-family: "Rubik Normal";
+  color: #33333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+}
+
+.unit-address {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}

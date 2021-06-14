@@ -1,0 +1,7 @@
+.content-bg {
+  flex: 1;
+  align-items: center;
+  align-content: center;
+  background-color: #dc3232;
+  justify-content: center;
+}
