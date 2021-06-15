@@ -23,120 +23,120 @@ import TempatWisata from "../screens/TempatWisata";
 import Movies from "../screens/Movies";
 
 function BaseService() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Service} />
-        <Route path={`${url}/:id/schedule`} component={Schedule} />
+        <Route path={`${path}`} component={Service} />
+        <Route path={`${path}/:id/schedule`} component={Schedule} />
       </Switch>
     </Router>
   );
 }
 
 function RoutePemerintah() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Government} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={Government} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteFinance() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Finance} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={Finance} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteSalon() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Salon} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={Salon} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteBengkel() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Services} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={Services} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteMovies() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Movies} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={Movies} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteTempatWisata() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={TempatWisata} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={TempatWisata} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RoutePhotoStudio() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={PhotoStudio} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={PhotoStudio} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteEvents() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={Events} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={Events} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
 }
 
 function RouteKesehatan() {
-  let { url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
-        <Route path={`${url}`} component={HealthCare} />
-        <Route path={`${url}/:id`} component={BaseService} />
+        <Route path={`${path}`} component={HealthCare} />
+        <Route path={`${path}/:id`} component={BaseService} />
       </Switch>
     </Router>
   );
@@ -144,7 +144,7 @@ function RouteKesehatan() {
 
 function Routes() {
   return (
-    <Router>
+    <Router basename={"/adaptive"}>
       <Switch>
         <Route exact path={"/"} component={Home} />
         <Route path={"/adaptive"} component={Home} />

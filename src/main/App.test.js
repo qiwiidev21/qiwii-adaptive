@@ -4,3 +4,7 @@ import App from "./App";
 test("renders App", () => {
   render(<App />);
 });
+
+describe("renders App describe", () => {
+  jest.spyOn(console, "warn").mockImplementation(() => {});
+});

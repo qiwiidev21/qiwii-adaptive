@@ -26,7 +26,6 @@ function render(
 test("renders App", () => {
   render();
 });
-
 // re-export everything
 export * from "@testing-library/react";
 // override render method

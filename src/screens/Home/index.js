@@ -9,7 +9,7 @@ import "./styles.css";
 import PropTypes from "prop-types";
 
 const Home = (props) => {
-  const url = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const image = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchMenuCategory();
@@ -22,12 +22,12 @@ const Home = (props) => {
   return (
     <div>
       <Header />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={image} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="d-flex container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 flex-wrap justify-content-center py-5">
         {props.dataMenu.data &&
           props.dataMenu.data.map((item, index) => (
-            <Link key={index} to={item.navigate.toLowerCase()}>
+            <Link key={index} to={`/${item.navigate.toLowerCase()}`}>
               <div className="card-menu p-3 p-md-4 m-2 align-self-center shadow-sm">
                 <div className="justify-content-center align-items-center">
                   <img
