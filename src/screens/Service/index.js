@@ -11,27 +11,26 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./styles.css";
 
 const Service = (props) => {
-  const { path } = useRouteMatch();
-  const serviceId =
-    typeof path == "string" ? path.substr(path.length - 3) : null;
-  const url = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const { url } = useRouteMatch();
+  const serviceId = typeof url == "string" ? url.substr(url.length - 3) : null;
+  const imah = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchServiceMerchant(serviceId);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function fetchServiceMerchant(serviceId) {
+  function fetchServiceMerchant(id) {
     let params = {
       show_in_mobile: 1,
       organization_show_on_mobile: 1,
     };
-    props.fetchMerchantServices(serviceId, params);
+    props.fetchMerchantServices(id, params);
   }
 
   return (
     <div>
       <Header back title="Layanan" />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={imah} alt="Qiwii" />
       <div className="container">
         <InfiniteScroll
           dataLength={

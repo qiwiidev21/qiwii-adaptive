@@ -5,12 +5,12 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 
 function ItemMerchant({ data, index, category }) {
   const [icon, setIcon] = useState();
-
+  const { url } = useRouteMatch();
   useEffect(() => {
     if (data) {
       if (
@@ -39,13 +39,13 @@ function ItemMerchant({ data, index, category }) {
       <div className="btn-group-vertical p-2 card-info">
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() => history.push(`${category}/${data.id}`)}
+          onClick={() => history.push(`${url}/${data.id}`)}
         >
           <h6 className="unit-name">{data.unit_name}</h6>
         </button>
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() => history.push(`${category}/${data.id}`)}
+          onClick={() => history.push(`${url}/${data.id}`)}
         >
           <h6 className="unit-address">{data.unit_address}</h6>
         </button>

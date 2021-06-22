@@ -43,14 +43,15 @@ function ItemService({ data, index, category }) {
           onClick={() =>
             history.push(`${location.pathname}/${data.id}/schedule`)
           }
-        ></button>
+        >
+          <h6>{data.company_name}</h6>
+        </button>
         <button
           className="btn-custom btn-primary-outline"
           onClick={() =>
             history.push(`${location.pathname}/${data.id}/schedule`)
           }
         >
-          <h6>{data.company_name}</h6>
           <h6 className="unit-name">{data.name}</h6>
         </button>
         <button
