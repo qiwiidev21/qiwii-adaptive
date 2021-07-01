@@ -19,12 +19,6 @@ const responseMenus = {
     },
     {
       id: 3,
-      title: "TempatWisata",
-      navigate: "tempatWisata",
-      icon: TempatWisata,
-    },
-    {
-      id: 4,
       title: "Bioskop",
       navigate: "bioskop",
       icon: Bioskop,
