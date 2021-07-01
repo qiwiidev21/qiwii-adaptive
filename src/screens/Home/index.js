@@ -9,7 +9,7 @@ import "./styles.css";
 import PropTypes from "prop-types";
 
 const Home = (props) => {
-  const image = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const image = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchMenuCategory();

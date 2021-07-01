@@ -9,7 +9,7 @@ import "./styles.css";
 import PropTypes from "prop-types";
 
 const Entertainment = (props) => {
-  const url = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchEntertainmentCategory();

@@ -13,7 +13,7 @@ import "./styles.css";
 const Service = (props) => {
   const { url } = useRouteMatch();
   const serviceId = typeof url == "string" ? url.substr(url.length - 3) : null;
-  const imah = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const imah = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchServiceMerchant(serviceId);

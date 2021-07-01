@@ -33,3 +33,14 @@ export const dataMenus = createReducer(
     },
   }
 );
+
+export const dataCustomField = createReducer(
+  {},
+  {
+    [types.SET_DATA_CUSTOM_FIELD](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);

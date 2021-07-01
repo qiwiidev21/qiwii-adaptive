@@ -11,11 +11,12 @@ import Logo from "../../assets/images/logo.png";
 function ItemMerchant({ data, index, category }) {
   const [icon, setIcon] = useState();
   const { url } = useRouteMatch();
+
   useEffect(() => {
     if (data) {
       if (
         data.id_icon ===
-        "https://app.qiwii.id/system/cms/themes/ace/img/logo_alt.png"
+        "https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png"
       ) {
         setIcon(Logo);
       } else {

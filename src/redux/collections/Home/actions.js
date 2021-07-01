@@ -1,5 +1,5 @@
 import * as types from "../types";
-import { LOGIN, MENU, MENUS } from "../../../constants";
+import { LOGIN, MENU, MENUS, CUSTOM_FIELD } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 import { isMockAllowed } from "../../../mocks/Config";
@@ -76,6 +76,23 @@ export function fetchEntertainmentCategory() {
           if (data.status === "Success") {
             dispatch(setDataEntertainment(data.data));
           }
+        })
+        .catch((error) => console.log(error));
+    });
+  };
+}
+
+const setDataCustomField = (data) => ({
+  type: types.SET_DATA_CUSTOM_FIELD,
+  payload: data,
+});
+
+export function fetchDataCustomField(params) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.post(CUSTOM_FIELD, qs.stringify(params))
+        .then(({ data }) => {
+          dispatch(setDataCustomField(data.custom_field));
         })
         .catch((error) => console.log(error));
     });

@@ -21,6 +21,7 @@ const createAPI = (baseURL) => {
   api.interceptors.request.use(
     function (config) {
       // Do something before request is sent
+      console.log(config);
       return config;
     },
     function (error) {
@@ -41,5 +42,5 @@ const createAPI = (baseURL) => {
   return api;
 };
 
-export const Qiwii = createAPI("https://app.qiwii.id");
+export const Qiwii = createAPI("https://dev.qiwii.id");
 if (MOCK_NETWORK) mockQiwii(new MockAdapter(Qiwii));

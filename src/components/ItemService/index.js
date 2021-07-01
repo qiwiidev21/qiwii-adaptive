@@ -11,7 +11,7 @@ import Logo from "../../assets/images/logo.png";
 function ItemService({ data, index, category }) {
   const [icon, setIcon] = useState(
     data.id_icon !==
-      ("https://app.qiwii.id/system/cms/themes/ace/img/logo_alt.png" || null)
+      ("https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png" || null)
       ? Logo
       : data.id_icon
   );
@@ -40,9 +40,7 @@ function ItemService({ data, index, category }) {
       <div className="btn-group-vertical p-2 card-info">
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() =>
-            history.push(`${location.pathname}/${data.id}/schedule`)
-          }
+          onClick={() => history.push(`${location.pathname}/${data.id}`)}
         >
           <h6>{data.company_name}</h6>
         </button>

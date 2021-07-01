@@ -11,7 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const Event = (props) => {
   const [keyword, setKeyword] = useState("");
-  const url = "https://app.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchEvent();

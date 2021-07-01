@@ -47,12 +47,22 @@ function Routes() {
   );
 }
 
+function RouteScedule() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Service} />
+      <Route path={`${path}/:routeID`} component={Schedule} />
+    </Switch>
+  );
+}
+
 function RouteGovernment() {
   const { path } = useRouteMatch();
   return (
     <Switch>
       <Route exact path={path} component={Government} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -62,7 +72,7 @@ function RouteFinance() {
   return (
     <Switch>
       <Route exact path={path} component={Finance} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -72,7 +82,7 @@ function RouteServices() {
   return (
     <Switch>
       <Route exact path={path} component={Services} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -82,7 +92,7 @@ function RouteSalon() {
   return (
     <Switch>
       <Route exact path={path} component={Salon} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -92,7 +102,7 @@ function RouterHealth() {
   return (
     <Switch>
       <Route exact path={path} component={HealthCare} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -102,7 +112,7 @@ function RouteMovies() {
   return (
     <Switch>
       <Route exact path={path} component={Movies} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -112,7 +122,7 @@ function RouteTempatWisata() {
   return (
     <Switch>
       <Route exact path={path} component={TempatWisata} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -122,7 +132,7 @@ function RouterEntertainment() {
   return (
     <Switch>
       <Route exact path={path} component={Entertainment} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -132,7 +142,7 @@ function RoutePhotoStudio() {
   return (
     <Switch>
       <Route exact path={path} component={PhotoStudio} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }
@@ -142,7 +152,7 @@ function RouteEvents() {
   return (
     <Switch>
       <Route exact path={path} component={Events} />
-      <Route path={`${path}/:routeID`} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );
 }

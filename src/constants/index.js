@@ -10,3 +10,4 @@ export const MERCHANT_PROFILE = "/api/v2/organization/get_by_id/";
 export const SERVICE = "/api/v2/service/get_by_id/";
 export const SLOT_TIME = "/api/v2/slot/time/";
 export const BOOKING = "/api/v2/ticket/register/";
+export const CUSTOM_FIELD = "/api/v2/service/get_custom_field";
