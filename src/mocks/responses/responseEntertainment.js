@@ -1,7 +1,6 @@
 import Bioskop from "../../assets/images/cinema.png";
 import Event from "../../assets/images/icon-event.png";
 import PhotoStudio from "../../assets/images/foto-studio.png";
-import TempatWisata from "../../assets/images/tempat-wisata.png";
 
 const responseMenus = {
   data: [

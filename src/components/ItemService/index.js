@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 
-function ItemService({ data, index, category }) {
+function ItemService({ data, index, category, onPress }) {
   const [icon, setIcon] = useState(
     data.id_icon !==
       ("https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png" || null)
@@ -40,23 +40,28 @@ function ItemService({ data, index, category }) {
       <div className="btn-group-vertical p-2 card-info">
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() => history.push(`${location.pathname}/${data.id}`)}
+          onClick={() => {
+            onPress(data);
+            history.push(`${location.pathname}/${data.id}`);
+          }}
         >
           <h6>{data.company_name}</h6>
         </button>
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() =>
-            history.push(`${location.pathname}/${data.id}/schedule`)
-          }
+          onClick={() => {
+            history.push(`${location.pathname}/${data.id}/schedule`);
+            onPress(data);
+          }}
         >
           <h6 className="unit-name">{data.name}</h6>
         </button>
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() =>
-            history.push(`${location.pathname}/${data.id}/schedule`)
-          }
+          onClick={() => {
+            history.push(`${location.pathname}/${data.id}/schedule`);
+            onPress(data);
+          }}
         >
           <p className="unit-address">
             Saat ini ada{" "}
@@ -75,6 +80,7 @@ ItemService.propTypes = {
   data: PropTypes.object.isRequired,
   category: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  onPress: PropTypes.func,
 };
 
 ItemService.defaultProps = {

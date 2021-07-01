@@ -23,3 +23,14 @@ export const dataService = createReducer(initialState, {
     };
   },
 });
+
+export const dataServiceSelected = createReducer(
+  {},
+  {
+    [types.SET_DATA_SELECTED_SERVICE](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);

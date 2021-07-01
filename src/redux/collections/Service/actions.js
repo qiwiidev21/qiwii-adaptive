@@ -31,3 +31,14 @@ export function fetchMerchantServices(id, payload) {
     });
   };
 }
+
+const setSelectedService = (data) => ({
+  type: types.SET_DATA_SELECTED_SERVICE,
+  payload: data,
+});
+
+export function selectedService(data) {
+  return (dispatch) => {
+    dispatch(setSelectedService(data));
+  };
+}

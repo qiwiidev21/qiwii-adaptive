@@ -40,7 +40,12 @@ const Service = (props) => {
         >
           {props.dataService.data &&
             props.dataService.data.map((item, index) => (
-              <ItemService key={index} data={item} index={index} />
+              <ItemService
+                key={index}
+                data={item}
+                index={index}
+                onPress={(item) => props.selectedService(item)}
+              />
             ))}
         </InfiniteScroll>
         {props.dataService.data?.length < 1 && (
@@ -55,10 +60,12 @@ const Service = (props) => {
 
 Service.defaultProps = {
   fetchMerchantServices: () => {},
+  selectedService: () => {},
 };
 
 Service.propTypes = {
   fetchMerchantServices: PropTypes.func,
+  selectedService: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
