@@ -1,9 +1,8 @@
-.content-bg-hero {
+.content-bg-second {
   flex: 1;
   align-items: center;
   align-content: center;
   background-color: #ffffff;
   justify-content: center;
-  max-width: 25%;
-  max-height: 25%;
+  background-repeat: repeat;
 }

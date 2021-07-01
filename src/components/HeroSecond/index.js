@@ -8,8 +8,14 @@ import PropTypes from "prop-types";
 
 function Hero({ url, alt, customStyle }) {
   return (
-    <div className="content-bg d-flex justify-content-center align-content-center">
-      <img src={url} alt={alt} className="img-fluid" />
+    <div className="content-bg-second d-flex justify-content-center align-content-center">
+      <img
+        src={url}
+        alt={alt}
+        className="img-fluid"
+        height="100px"
+        width="60%"
+      />
     </div>
   );
 }

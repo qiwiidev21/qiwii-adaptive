@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./styles.css";
 import Header from "../../components/Header";
-import Hero from "../../components/Hero";
+import HeroSecond from "../../components/HeroSecond";
 import PropTypes from "prop-types";
 import { useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
@@ -29,7 +29,7 @@ const Schedule = (props) => {
   return (
     <div>
       <Header back title="Pilih Jadwal" />
-      <Hero url={launchImage} alt="Qiwii" customStyle="content-bg-hero" />
+      <HeroSecond url={launchImage} alt="Qiwii" />
       <div className="container my-5">
         <Form>
           <Button variant="primary" type="submit">
