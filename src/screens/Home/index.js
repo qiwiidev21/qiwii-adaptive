@@ -30,13 +30,26 @@ const Home = (props) => {
             <Link key={index} to={`/${item.navigate.toLowerCase()}`}>
               <div className="card-menu p-3 p-md-4 m-2 align-self-center shadow-sm">
                 <div className="justify-content-center align-items-center">
-                  <img
-                    src={item.icon}
-                    className="img-fluid"
-                    width="90"
-                    height="45"
-                    alt={item.title}
-                  />
+                  {item.title === "Expedition" || item.title === "Retail" ? (
+                    <div className="d-flex background">
+                      <img
+                        src={item.icon}
+                        className="img-fluid"
+                        width="90"
+                        height="45"
+                        alt={item.title}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={item.icon}
+                      className="img-fluid"
+                      width="90"
+                      height="45"
+                      alt={item.title}
+                    />
+                  )}
+
                   <h6 className="pt-3 card-title">{item.title}</h6>
                 </div>
               </div>

@@ -12,3 +12,12 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.background {
+  background-color: #ebebeb;
+  border-radius: 45px;
+  height: 90px;
+  width: 90px;
+  justify-content: center;
+  align-items: center;
+}

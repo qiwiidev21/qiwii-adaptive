@@ -21,6 +21,8 @@ import Service from "../screens/Service";
 import Services from "../screens/Services";
 import TempatWisata from "../screens/TempatWisata";
 import Movies from "../screens/Movies";
+import Retail from "../screens/Retail";
+import Expedition from "../screens/Expedition";
 
 function Routes() {
   return (
@@ -42,6 +44,8 @@ function Routes() {
         <Route path={"/register"} component={Register} />
         <Route path={"/schedule"} component={Schedule} />
         <Route path={"/service"} component={Service} />
+        <Route path={"/retail"} component={Retail} />
+        <Route path={"/expedition"} component={Expedition} />
       </Switch>
     </Router>
   );
