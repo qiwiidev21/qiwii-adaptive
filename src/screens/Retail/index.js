@@ -57,7 +57,7 @@ const Salon = (props) => {
 
   return (
     <div>
-      <Header title="Kecantikan" back />
+      <Header title="Retail" back />
       <Hero url={url} alt="Qiwii" />
       <div className="container">
         <div className="my-3 card-item shadow-sm p-2">

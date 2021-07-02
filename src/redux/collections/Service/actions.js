@@ -117,6 +117,17 @@ export function setCustomField(customField) {
   };
 }
 
+const setSlotTimeData = (data) => ({
+  type: types.SET_DATA_SLOT_TIME_DATA,
+  payload: data,
+});
+
+export function setSlotTime(timeData) {
+  return (dispatch) => {
+    dispatch(setSlotTimeData(timeData));
+  };
+}
+
 export function getTicket(id, data, customField) {
   let formBody = [];
   for (let property in data) {

@@ -12,7 +12,10 @@ import { useCookies } from "react-cookie";
 
 const ReviewQueue = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalReport, setShowModalReport] = useState(false);
   const [username, setUsername] = useState("");
+  const [titleReport, setTitleReport] = useState("");
+  const [messageReport, setMessageReport] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showModalLogin, setShowModalLogin] = useState(false);
@@ -98,6 +101,29 @@ const ReviewQueue = (props) => {
       </Modal>
     );
   }
+  function renderModalReport() {
+    return (
+      <Modal
+        show={showModalReport}
+        onHide={() => setShowModalReport(!showModalReport)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{titleReport}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{messageReport}</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={async () => {
+              await setShowModalReport(!showModalReport);
+            }}
+          >
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
   function validateEmail(email) {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
@@ -158,13 +184,22 @@ const ReviewQueue = (props) => {
       .then((user) => {
         if (user.status === "Success") {
           setShowModalLogin(!showModalLogin);
+          setShowModalReport(true);
+          setTitleReport(user.status);
+          setMessageReport(user.message);
           setUserSession("user", user, { path: "/adaptive" });
         } else {
+          setShowModalReport(true);
+          setTitleReport(user.status);
+          setMessageReport(user.message);
           setShowModalLogin(!showModalLogin);
         }
       })
       .catch((error) => {
         if (error.status === 400) {
+          setShowModalReport(true);
+          setTitleReport("Error");
+          setMessageReport(error.message);
         }
       });
   }
@@ -183,6 +218,7 @@ const ReviewQueue = (props) => {
         </Button>
       </div>
       {renderModal()}
+      {renderModalReport()}
       {renderModalLogin()}
     </div>
   );

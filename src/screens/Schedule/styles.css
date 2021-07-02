@@ -65,3 +65,9 @@
   margin-top: 5px;
   margin-left: 5px;
 }
+.btn-custom-slot {
+  background-color: transparent;
+  border: 1px solid transparent;
+  flex: auto;
+  width: 100%;
+}

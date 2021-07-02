@@ -57,6 +57,16 @@ const Schedule = (props) => {
     format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
   });
 
+  const [selectTime, setSelectTime] = useState({
+    disabled: "true",
+    estimated_next_called_time: "05:00:00",
+    label: "05:00 - 06:00",
+    order: 0,
+    queues: 0,
+    quota: "25",
+    time: "05",
+  });
+
   const parseUrl = typeof url == "string" ? url.substr(url.length - 7) : null;
   const organizationID = parseUrl.substring(0, 3);
 
@@ -215,10 +225,41 @@ const Schedule = (props) => {
         <div className="container my-2">
           {props.dataSlotTime.data.map((item, index) => (
             <div key={index}>
-              <div className="justify-content-between row mx-2">
-                <p>{item.label}</p>
-                <p>Tersisa {item.quota} kuota</p>
-              </div>
+              <button
+                className="btn-custom-slot btn-primary-outline"
+                onClick={async () => {
+                  await setSelectTime(item);
+                  await props.setSlotTime(item);
+                }}
+              >
+                <div
+                  className="justify-content-between row mx-2"
+                  style={
+                    item.label === selectTime?.label
+                      ? { backgroundColor: "#8f1619" }
+                      : { backgroundColor: "#ffffff" }
+                  }
+                >
+                  <p
+                    style={
+                      item.label === selectTime?.label
+                        ? { color: "#ffffff" }
+                        : { color: "#333333" }
+                    }
+                  >
+                    {item.label}
+                  </p>
+                  <p
+                    style={
+                      item.label === selectTime?.label
+                        ? { color: "#ffffff" }
+                        : { color: "#333333" }
+                    }
+                  >
+                    Tersisa {item.quota} kuota
+                  </p>
+                </div>
+              </button>
               <div className="dropdown-divider"></div>
             </div>
           ))}
@@ -316,6 +357,7 @@ Schedule.defaultProps = {
   fetchServiceDetail: () => {},
   fetchDataCustomField: () => {},
   setCustomField: () => {},
+  setSlotTime: () => {},
 };
 
 Schedule.propTypes = {
@@ -324,6 +366,7 @@ Schedule.propTypes = {
   dataServiceDetail: PropTypes.object,
   dataService: PropTypes.object,
   fetchServiceDetail: PropTypes.func,
+  setSlotTime: PropTypes.func,
   fetchDataCustomField: PropTypes.func,
   setCustomField: PropTypes.func,
 };
