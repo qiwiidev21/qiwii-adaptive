@@ -14,18 +14,18 @@ const Salon = (props) => {
   const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
-    fetchSalon();
+    fetchRetail();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (keyword.length >= 3) {
-      fetchSalon(keyword);
+      fetchRetail(keyword);
     } else {
-      fetchSalon("");
+      fetchRetail("");
     }
   }, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function fetchSalon(name) {
+  function fetchRetail(name) {
     const payload = {
       "f-id_organization_type": 18,
       "f-show_on_web": 1,
@@ -35,20 +35,20 @@ const Salon = (props) => {
     if (keyword !== "") {
       payload["f-name"] = name;
     }
-    props.fetchOrganizations(payload, "salon");
+    props.fetchOrganizations(payload, "retail");
   }
 
-  function fetchMoreSalon(name) {
+  function fetchMoreRetail(name) {
     const payload = {
-      "f-id_organization_type": 6,
+      "f-id_organization_type": 18,
       "f-show_on_web": 1,
       pagging: 1,
-      page: Number(props.dataSalon.page) + 1,
+      page: Number(props.dataRetail.page) + 1,
     };
     if (keyword !== "") {
       payload["f-name"] = name;
     }
-    props.fetchOrganizations(payload, "salon");
+    props.fetchOrganizations(payload, "retail");
   }
 
   function handleChange(event) {
@@ -76,20 +76,22 @@ const Salon = (props) => {
           </div>
         </div>
         <InfiniteScroll
-          dataLength={props.dataSalon.data.length ?? []}
-          next={fetchMoreSalon}
+          dataLength={props.dataRetail.data.length ?? []}
+          next={fetchMoreRetail}
           hasMore={
-            Number(props.dataSalon.page) < props.dataSalon.total ? true : false
+            Number(props.dataRetail.page) < props.dataRetail.total
+              ? true
+              : false
           }
           loader={<h4>Loading...</h4>}
         >
-          {props.dataSalon.data &&
-            props.dataSalon.data.map((item, index) => (
+          {props.dataRetail.data &&
+            props.dataRetail.data.map((item, index) => (
               <ItemMerchant
                 key={index}
                 data={item}
                 index={index}
-                category="kecantikan"
+                category="retail"
               />
             ))}
         </InfiniteScroll>
@@ -107,7 +109,7 @@ Salon.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  dataSalon: state.dataSalon,
+  dataRetail: state.dataRetail,
 });
 
 const mapDispatchToProps = (dispatch) => {

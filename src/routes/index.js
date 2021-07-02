@@ -23,6 +23,7 @@ import TempatWisata from "../screens/TempatWisata";
 import Movies from "../screens/Movies";
 import Retail from "../screens/Retail";
 import Expedition from "../screens/Expedition";
+import ReviewQueue from "../screens/ReviewQueue";
 
 function Routes() {
   return (
@@ -44,8 +45,8 @@ function Routes() {
         <Route path={"/register"} component={Register} />
         <Route path={"/schedule"} component={Schedule} />
         <Route path={"/service"} component={Service} />
-        <Route path={"/retail"} component={Retail} />
-        <Route path={"/expedition"} component={Expedition} />
+        <Route path={"/retail"} component={RouteRetail} />
+        <Route path={"/expedition"} component={RouteExpedition} />
       </Switch>
     </Router>
   );
@@ -56,7 +57,17 @@ function RouteScedule() {
   return (
     <Switch>
       <Route exact path={path} component={Service} />
-      <Route path={`${path}/:routeID`} component={Schedule} />
+      <Route path={`${path}/:routeID`} component={RouteReview} />
+    </Switch>
+  );
+}
+
+function RouteReview() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Schedule} />
+      <Route path={`${path}/review`} component={ReviewQueue} />
     </Switch>
   );
 }
@@ -161,4 +172,22 @@ function RouteEvents() {
   );
 }
 
+function RouteRetail() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Retail} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+function RouteExpedition() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Expedition} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
 export default Routes;

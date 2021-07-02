@@ -70,9 +70,12 @@ const HealthCare = (props) => {
             />
           </div>
           <div className="form-group m-2">
-            <select className="form-control">
-              <option>Cari Lokasi</option>
-            </select>
+            <input
+              value={keyword}
+              placeholder="Cari Lokasi"
+              className="form-control"
+              onChange={handleChange}
+            />
           </div>
         </div>
         <InfiniteScroll

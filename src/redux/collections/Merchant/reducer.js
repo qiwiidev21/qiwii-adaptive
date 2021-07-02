@@ -31,6 +31,54 @@ export const dataHealthCare = createReducer(initialState, {
   },
 });
 
+export const dataExpedition = createReducer(initialState, {
+  [types.SET_DATA_EXPEDITION](state, action) {
+    return {
+      data: action.payload.data,
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_MORE_EXPEDITION](state, action) {
+    return {
+      data: state.data.concat(action.payload.data),
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_IS_NULL](state, action) {
+    return {
+      data: [],
+      page: 0,
+      total: 0,
+    };
+  },
+});
+
+export const dataRetail = createReducer(initialState, {
+  [types.SET_DATA_RETAIL](state, action) {
+    return {
+      data: action.payload.data,
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_MORE_RETAIL](state, action) {
+    return {
+      data: state.data.concat(action.payload.data),
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_IS_NULL](state, action) {
+    return {
+      data: [],
+      page: 0,
+      total: 0,
+    };
+  },
+});
+
 export const dataOrganization = createReducer(initialState, {
   [types.SET_DATA_ORGANIZATION](state, action) {
     return {

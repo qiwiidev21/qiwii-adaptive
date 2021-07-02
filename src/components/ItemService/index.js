@@ -50,7 +50,7 @@ function ItemService({ data, index, category, onPress }) {
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
-            history.push(`${location.pathname}/${data.id}/schedule`);
+            history.push(`${location.pathname}/${data.id}`);
             onPress(data);
           }}
         >
@@ -59,7 +59,7 @@ function ItemService({ data, index, category, onPress }) {
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
-            history.push(`${location.pathname}/${data.id}/schedule`);
+            history.push(`${location.pathname}/${data.id}`);
             onPress(data);
           }}
         >

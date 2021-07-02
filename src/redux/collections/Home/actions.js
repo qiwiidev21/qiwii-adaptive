@@ -9,13 +9,22 @@ const setDataSession = (data) => ({
   payload: data,
 });
 
-export function loginQiwii(email, password) {
+export function loginQiwii(email, phone, password) {
   return (dispatch) => {
-    const payload = {
-      email: email ? email.toLowerCase() : "",
-      password,
-      uuid: "ABCD1234",
-    };
+    let payload;
+    if (email !== "") {
+      payload = {
+        email: email ? email.toLowerCase() : "",
+        password,
+        uuid: "ABCD1234",
+      };
+    } else {
+      payload = {
+        phone,
+        password,
+        uuid: "ABCD1234",
+      };
+    }
     return new Promise((resolve, reject) => {
       Qiwii.post(
         LOGIN,
@@ -31,6 +40,7 @@ export function loginQiwii(email, password) {
           }
         })
         .catch((error) => {
+          console.log(error);
           if (error.response) {
             reject(error.response);
           } else if (error.request) {

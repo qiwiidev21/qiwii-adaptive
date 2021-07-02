@@ -93,6 +93,26 @@ const setDataMoreMovies = (data) => ({
   payload: data,
 });
 
+const setDataRetail = (data) => ({
+  type: types.SET_DATA_RETAIL,
+  payload: data,
+});
+
+const setDataMoreRetail = (data) => ({
+  type: types.SET_DATA_MORE_RETAIL,
+  payload: data,
+});
+
+const setDataExpedition = (data) => ({
+  type: types.SET_DATA_EXPEDITION,
+  payload: data,
+});
+
+const setDataMoreExpedition = (data) => ({
+  type: types.SET_DATA_MORE_EXPEDITION,
+  payload: data,
+});
+
 const setDataIsNull = () => ({
   type: types.SET_DATA_IS_NULL,
 });
@@ -132,6 +152,12 @@ export function fetchOrganizations(payload, organization) {
                 case "bioskop":
                   dispatch(setDataMovies(response.data));
                   break;
+                case "retail":
+                  dispatch(setDataRetail(response.data));
+                  break;
+                case "expedition":
+                  dispatch(setDataExpedition(response.data));
+                  break;
                 default:
                   dispatch(setDataHealthCare(response.data));
               }
@@ -164,6 +190,12 @@ export function fetchOrganizations(payload, organization) {
                   break;
                 case "bioskop":
                   dispatch(setDataMoreMovies(response.data));
+                  break;
+                case "retail":
+                  dispatch(setDataMoreRetail(response.data));
+                  break;
+                case "expedition":
+                  dispatch(setDataMoreExpedition(response.data));
                   break;
                 default:
                   dispatch(setDataMoreHealthCare(response.data));

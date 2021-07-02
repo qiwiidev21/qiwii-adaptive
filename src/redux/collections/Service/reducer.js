@@ -34,3 +34,44 @@ export const dataServiceSelected = createReducer(
     },
   }
 );
+
+export const dataServiceDetail = createReducer(
+  {},
+  {
+    [types.SET_DETAIL_SERVICE](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+export const dataSlotTime = createReducer(
+  {},
+  {
+    [types.SET_DATA_SLOT_TIME](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+export const dataSelectedDate = createReducer(
+  {},
+  {
+    [types.SET_DATA_SELECTED_DATE](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+export const dataCustomFieldData = createReducer(
+  {},
+  {
+    [types.SET_DATA_CUSTOM_FIELD_DATA](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);

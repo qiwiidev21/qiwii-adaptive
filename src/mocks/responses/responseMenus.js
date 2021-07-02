@@ -43,13 +43,13 @@ const responseMenus = {
     {
       id: 6,
       title: "Retail",
-      navigate: "services",
+      navigate: "retail",
       icon: Retail,
     },
     {
       id: 7,
       title: "Expedition",
-      navigate: "services",
+      navigate: "expedition",
       icon: Expedition,
     },
     {

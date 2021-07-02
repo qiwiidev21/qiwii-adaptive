@@ -1,8 +1,8 @@
 .card-item {
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
-  height: 100px;
-  max-height: 110px;
+  height: 40px;
+  max-height: 70px;
 }
 
 .card-icon {
