@@ -179,6 +179,8 @@ const ReviewQueue = (props) => {
   }
 
   function handleLogin() {
+    const date = new Date();
+    const tomorrow = new Date(date.setDate(date.getDate() + 1));
     props
       .loginQiwii(username, phone, password)
       .then((user) => {
@@ -187,7 +189,7 @@ const ReviewQueue = (props) => {
           setShowModalReport(true);
           setTitleReport(user.status);
           setMessageReport(user.message);
-          setUserSession("user", user, { path: "/adaptive" });
+          setUserSession("user", user, { expires: tomorrow });
         } else {
           setShowModalReport(true);
           setTitleReport(user.status);
