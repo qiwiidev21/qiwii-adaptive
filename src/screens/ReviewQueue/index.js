@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 import Header from "../../components/Header";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
-import PropTypes from "prop-types";
+import PropTypes, { instanceOf } from "prop-types";
 import moment from "moment";
 import { Button, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
-import { useCookies } from "react-cookie";
+import { useCookies, Cookies } from "react-cookie";
 
 const ReviewQueue = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [registerForm, setRegisterForm] = useState(false);
   const [showModalReport, setShowModalReport] = useState(false);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [titleReport, setTitleReport] = useState("");
   const [messageReport, setMessageReport] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [setUserSession] = useCookies(["user"]);
+
+  useEffect(() => {
+    getCookies();
+  }, []);
+
+  const getCookies = async () => {
+    // const dataUser = await props.cookies.get("user")
+    // console.log(dataUser);
+  };
 
   function renderDetailAntrian() {
     if (props.dataServiceDetail) {
@@ -101,6 +113,7 @@ const ReviewQueue = (props) => {
       </Modal>
     );
   }
+
   function renderModalReport() {
     return (
       <Modal
@@ -144,31 +157,81 @@ const ReviewQueue = (props) => {
         onHide={() => setShowModalLogin(!showModalLogin)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">Login</Modal.Title>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            {registerForm ? "Register" : "Login"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Username"
-                onChange={(event) => setPhoneOrMail(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </Form.Group>
-          </Form>
+          {registerForm ? (
+            <Form>
+              <Form.Group controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={(event) => setUsername(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Email"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="phone">
+                <Form.Label>Nomor Telepone</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Nomor Telepone"
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="rePassword">
+                <Form.Label>Ulangi Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Ulangi Password"
+                  onChange={(event) => setRePassword(event.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          ) : (
+            <Form>
+              <Form.Group controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={(event) => setPhoneOrMail(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={() => {}}>
-            Register
+          <Button
+            variant="light"
+            onClick={() => setRegisterForm(registerForm ? false : true)}
+          >
+            {registerForm ? "Login" : "Register"}
           </Button>
           <Button variant="primary" onClick={() => handleLogin()}>
             Submit
@@ -233,6 +296,7 @@ ReviewQueue.defaultProps = {
 };
 
 ReviewQueue.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
   dataServiceDetail: PropTypes.object,
   dataSelectedDate: PropTypes.object,
   dataSession: PropTypes.object,

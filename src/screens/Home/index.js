@@ -7,6 +7,7 @@ import { ActionCreators } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import "./styles.css";
 import PropTypes from "prop-types";
+import { useCookies } from "react-cookie";
 
 const Home = (props) => {
   const image = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";

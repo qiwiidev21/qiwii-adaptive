@@ -150,7 +150,7 @@ export function getTicket(id, data, customField) {
           console.log(response);
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log(error.bodyString);
         });
     });
   };
