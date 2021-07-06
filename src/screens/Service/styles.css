@@ -1,5 +1,15 @@
+.address-text {
+  color: #333333;
+  text-align: left;
+  font-family: "Rubik";
+}
 .self-center {
   align-items: center;
   justify-content: center;
   padding-top: 100px;
+}
+.merchant-item {
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.8rem;
+  max-height: 200px;
 }

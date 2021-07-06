@@ -280,3 +280,14 @@ export const dataEvents = createReducer(initialState, {
     };
   },
 });
+
+export const dataMerchantProfile = createReducer(
+  {},
+  {
+    [types.SET_DATA_MERCHANT_PROFILE](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);

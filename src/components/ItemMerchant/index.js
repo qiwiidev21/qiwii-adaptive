@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 
-function ItemMerchant({ data, index, category }) {
+function ItemMerchant({ data, index, category, onPress }) {
   const [icon, setIcon] = useState();
   const { url } = useRouteMatch();
 
@@ -40,13 +40,19 @@ function ItemMerchant({ data, index, category }) {
       <div className="btn-group-vertical p-2 card-info">
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() => history.push(`${url}/${data.id}`)}
+          onClick={() => {
+            onPress(data.id);
+            history.push(`${url}/${data.id}`);
+          }}
         >
           <h6 className="unit-name">{data.unit_name}</h6>
         </button>
         <button
           className="btn-custom btn-primary-outline"
-          onClick={() => history.push(`${url}/${data.id}`)}
+          onClick={() => {
+            onPress(data.id);
+            history.push(`${url}/${data.id}`);
+          }}
         >
           <h6 className="unit-address">{data.unit_address}</h6>
         </button>
@@ -59,6 +65,7 @@ ItemMerchant.propTypes = {
   data: PropTypes.object.isRequired,
   category: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  onPress: PropTypes.func,
 };
 
 ItemMerchant.defaultProps = {

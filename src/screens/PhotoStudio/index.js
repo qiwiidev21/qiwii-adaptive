@@ -95,6 +95,7 @@ const PhotoStudio = (props) => {
                 data={item}
                 index={index}
                 category="photoStudio"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

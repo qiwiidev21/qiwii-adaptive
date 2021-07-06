@@ -1,5 +1,5 @@
 import * as types from "../types";
-import { ORGANIZATION } from "../../../constants";
+import { ORGANIZATION, MERCHANT_PROFILE } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 
@@ -205,6 +205,29 @@ export function fetchOrganizations(payload, organization) {
           } else {
             dispatch(setDataIsNull());
             resolve([]);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+}
+
+const setDataMerchantProfile = (data) => ({
+  type: types.SET_DATA_MERCHANT_PROFILE,
+  payload: data,
+});
+
+export function fetchMerchantProfile(id) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.get(MERCHANT_PROFILE + `${id}`)
+        .then((response) => {
+          //+ qs.stringify(payload)
+          if (response.status === 200) {
+            dispatch(setDataMerchantProfile(response.data));
+            resolve(response.data);
           }
         })
         .catch((error) => {

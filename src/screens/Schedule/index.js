@@ -14,6 +14,7 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import launchImage from "../../assets/images/header-qiwii-launch.png";
 import { Form, Button } from "react-bootstrap";
+import _ from "lodash";
 
 const Schedule = (props) => {
   const { url } = useRouteMatch();
@@ -22,6 +23,9 @@ const Schedule = (props) => {
   let location = useLocation();
   const date = new Date();
   const currentDate = date.getDate();
+
+  // const [banner, setBanner] = useState("https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit");
+
   const lastDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
@@ -87,6 +91,19 @@ const Schedule = (props) => {
       props.fetchSlotTime(routeID, selectedDate.format);
     }
   }, [selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    if (props.dataMerchantProfile) {
+      if (!_.isEmpty(props.dataMerchantProfile)) {
+        setProfile(props.dataMerchantProfile.data[0]);
+        // if (props.dataMerchantProfile.data[0]?.banner) {
+        //   setBanner(props.dataMerchantProfile.data[0].banner);
+        // }
+      }
+    }
+  }, [props.dataMerchantProfile]);
 
   async function fetchServiceDetail() {
     await props.fetchServiceDetail(routeID);
@@ -332,7 +349,7 @@ const Schedule = (props) => {
 
   return (
     <div>
-      <Header back title="Pilih Jadwal" />
+      <Header back title="Pilih Jadwal" profile={profile} />
       <HeroSecond url={launchImage} alt="Qiwii" />
       <section>{renderMerchant()}</section>
       <section>{renderCalendar()}</section>
@@ -372,6 +389,7 @@ Schedule.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  dataMerchantProfile: state.dataMerchantProfile,
   dataCustomField: state.dataCustomField,
   dataServiceDetail: state.dataServiceDetail,
   dataSlotTime: state.dataSlotTime,

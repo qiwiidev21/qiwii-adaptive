@@ -24,6 +24,19 @@ const ReviewQueue = (props) => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [setUserSession] = useCookies(["user"]);
 
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    if (props.dataMerchantProfile) {
+      if (!_.isEmpty(props.dataMerchantProfile)) {
+        setProfile(props.dataMerchantProfile.data[0]);
+        // if (props.dataMerchantProfile.data[0]?.banner) {
+        //   setBanner(props.dataMerchantProfile.data[0].banner);
+        // }
+      }
+    }
+  }, [props.dataMerchantProfile]);
+
   useEffect(() => {
     getCookies();
   }, []);
@@ -73,12 +86,16 @@ const ReviewQueue = (props) => {
     } else {
       const params = {
         api_user: "root",
-        api_key: "1494ba401c74a879a386b5057d2e9a4f",
+        // api_key: "1494ba401c74a879a386b5057d2e9a4f",
         channel: "mobile",
         id_organization: props.dataServiceDetail.data.id_organization,
         id_service: props.dataServiceDetail.data.id,
         layanan: props.dataServiceDetail.data.id,
         kode: props.dataServiceDetail.data.code,
+        token: props.dataSession.data.token,
+        uuid: props.dataSession.data.uuid,
+        slot_date: props.dataSelectedDate.data,
+        slot_time: props.dataSelectedDate,
         unique_identifier: props.dataSession.data.unique_identifier,
       };
       props.getTicket(
@@ -151,7 +168,7 @@ const ReviewQueue = (props) => {
   function renderModalLogin() {
     return (
       <Modal
-        size="lg"
+        size="md"
         aria-labelledby="example-modal-sizes-title-lg"
         show={showModalLogin}
         onHide={() => setShowModalLogin(!showModalLogin)}
@@ -227,15 +244,17 @@ const ReviewQueue = (props) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="light"
-            onClick={() => setRegisterForm(registerForm ? false : true)}
-          >
-            {registerForm ? "Login" : "Register"}
-          </Button>
-          <Button variant="primary" onClick={() => handleLogin()}>
-            Submit
-          </Button>
+          <div className="container my-5">
+            <Button
+              variant="primary"
+              type="submit"
+              className="next-button"
+              onClick={() => handleLogin()}
+            >
+              Submit
+            </Button>
+            <h6 className="register-text">Belum punya akun? Daftar</h6>
+          </div>
         </Modal.Footer>
       </Modal>
     );
@@ -270,7 +289,7 @@ const ReviewQueue = (props) => {
   }
   return (
     <div>
-      <Header back title="Review Antrian" />
+      <Header back title="Review Antrian" profile={profile} />
       <section>{renderDetailAntrian()}</section>
       <div className="container my-5 fixed-bottom">
         <Button
@@ -305,6 +324,7 @@ ReviewQueue.propTypes = {
 
 const mapStateToProps = (state) => ({
   dataServiceDetail: state.dataServiceDetail,
+  dataMerchantProfile: state.dataMerchantProfile,
   dataSelectedDate: state.dataSelectedDate,
   dataCustomFieldData: state.dataCustomFieldData,
   dataSession: state.dataSession,

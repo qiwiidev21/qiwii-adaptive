@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import ItemService from "../../components/ItemService";
@@ -9,11 +9,14 @@ import { ActionCreators } from "../../redux/actions";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./styles.css";
+import _ from "lodash";
 
 const Service = (props) => {
   const { url } = useRouteMatch();
   const serviceId = typeof url == "string" ? url.substr(url.length - 3) : null;
-  const imah = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const [banner, setBanner] = useState(
+    "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit"
+  );
 
   useEffect(() => {
     fetchServiceMerchant(serviceId);
@@ -27,11 +30,38 @@ const Service = (props) => {
     props.fetchMerchantServices(id, params);
   }
 
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    if (props.dataMerchantProfile) {
+      if (!_.isEmpty(props.dataMerchantProfile)) {
+        setProfile(props.dataMerchantProfile.data[0]);
+        if (props.dataMerchantProfile.data[0]?.banner) {
+          setBanner(props.dataMerchantProfile.data[0].banner);
+        }
+      }
+    }
+  }, [props.dataMerchantProfile]);
+
+  function renderMerchant() {
+    if (props.dataMerchantProfile.data) {
+      const data = props.dataMerchantProfile.data[0];
+      return (
+        <div className="container my-5 merchant-item p-3 shadow-sm">
+          <h6 className="m-1">{data.category_name}</h6>
+          <h5 className="unit-name m-1">{data.unit_name}</h5>
+          <p className="address-text">{data.unit_address}</p>
+        </div>
+      );
+    }
+  }
+
   return (
     <div>
-      <Header back title="Layanan" />
-      <Hero url={imah} alt="Qiwii" />
+      <Header back title="Layanan" profile={profile} />
+      <Hero url={banner} alt="Qiwii" />
       <div className="container">
+        <section>{renderMerchant()}</section>
         <InfiniteScroll
           dataLength={
             props.dataService.data?.length ? props.dataService.data.length : []
@@ -61,15 +91,18 @@ const Service = (props) => {
 Service.defaultProps = {
   fetchMerchantServices: () => {},
   selectedService: () => {},
+  dataMerchantProfile: {},
 };
 
 Service.propTypes = {
   fetchMerchantServices: PropTypes.func,
+  dataMerchantProfile: PropTypes.object,
   selectedService: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   dataService: state.dataService,
+  dataMerchantProfile: state.dataMerchantProfile,
 });
 
 const mapDispatchToProps = (dispatch) => {

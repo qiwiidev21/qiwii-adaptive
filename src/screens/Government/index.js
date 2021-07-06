@@ -95,6 +95,7 @@ const Government = (props) => {
                 data={item}
                 index={index}
                 category="pemerintahan"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

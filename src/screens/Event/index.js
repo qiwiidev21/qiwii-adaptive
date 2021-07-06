@@ -95,6 +95,7 @@ const Event = (props) => {
                 data={item}
                 index={index}
                 category="events"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

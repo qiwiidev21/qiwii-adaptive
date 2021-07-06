@@ -95,6 +95,7 @@ const Services = (props) => {
                 data={item}
                 index={index}
                 category="services"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

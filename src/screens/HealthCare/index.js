@@ -95,6 +95,7 @@ const HealthCare = (props) => {
                 data={item}
                 index={index}
                 category="kesehatan"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

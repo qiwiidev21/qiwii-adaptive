@@ -95,6 +95,7 @@ const Movies = (props) => {
                 data={item}
                 index={index}
                 category="bioskop"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

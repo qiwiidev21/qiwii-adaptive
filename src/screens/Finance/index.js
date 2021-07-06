@@ -95,6 +95,7 @@ const Finance = (props) => {
                 data={item}
                 index={index}
                 category="keuangan"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>

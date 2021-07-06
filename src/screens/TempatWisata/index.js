@@ -92,6 +92,7 @@ const TempatWisata = (props) => {
                 data={item}
                 index={index}
                 category="tempatwisata"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>
@@ -106,10 +107,12 @@ TempatWisata.defaultProps = {
 
 TempatWisata.propTypes = {
   fetchOrganizations: PropTypes.func,
+  dataMerchantProfile: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   dataTempatWisata: state.dataTempatWisata,
+  dataMerchantProfile: state.dataMerchantProfile,
 });
 
 const mapDispatchToProps = (dispatch) => {

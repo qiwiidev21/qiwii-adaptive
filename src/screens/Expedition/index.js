@@ -91,7 +91,8 @@ const Salon = (props) => {
                 key={index}
                 data={item}
                 index={index}
-                category="kecantikan"
+                category="expedition"
+                onPress={(id) => props.fetchMerchantProfile(id)}
               />
             ))}
         </InfiniteScroll>
