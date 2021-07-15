@@ -24,8 +24,17 @@ const Home = (props) => {
     <div>
       <Header />
       <Hero url={image} alt="Qiwii" />
+      {/*  <div className="container">
+          <div className="input-form form-group m-2 justify-content-center align-self-center">
+            <input
+              placeholder="Cari Merchant"
+              className="form-control"
+              onChange={() => {}}
+            />
+          </div>
+        </div>*/}
       {/* Start Of Menu */}
-      <div className="d-flex container col-12 col-sm-5 col-md-9 col-lg-7 col-xl-5 flex-wrap justify-content-center py-5">
+      <div className="d-flex container col-sm-8 col-md-6 col-lg-5 col-xl-3 col-xs-10 flex-wrap justify-content-center my-5">
         {props.dataMenu.data &&
           props.dataMenu.data.map((item, index) => (
             <Link key={index} to={`/${item.navigate.toLowerCase()}`}>
@@ -35,7 +44,7 @@ const Home = (props) => {
                     <div className="d-flex background">
                       <img
                         src={item.icon}
-                        className="img-fluid"
+                        className="img-fluid round"
                         width="90"
                         height="45"
                         alt={item.title}
@@ -44,7 +53,7 @@ const Home = (props) => {
                   ) : (
                     <img
                       src={item.icon}
-                      className="img-fluid"
+                      className="img-fluid round"
                       width="90"
                       height="45"
                       alt={item.title}

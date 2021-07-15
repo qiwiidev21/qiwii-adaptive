@@ -75,3 +75,23 @@ export const dataCustomFieldData = createReducer(
     },
   }
 );
+export const dataSlotTimes = createReducer(
+  {},
+  {
+    [types.SET_DATA_SLOT_TIME_DATA](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+export const dataTicket = createReducer(
+  {},
+  {
+    [types.SET_DATA_TICKET](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);

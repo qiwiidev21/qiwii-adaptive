@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const HealthCare = (props) => {
   const [keyword, setKeyword] = useState("");
+  const [city, setCity] = useState("");
   const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
@@ -55,6 +56,10 @@ const HealthCare = (props) => {
     setKeyword(event.target.value);
   }
 
+  function handleChanges(event) {
+    setCity(event.target.value);
+  }
+
   return (
     <div>
       <Header title="Kesehatan" back />
@@ -71,10 +76,10 @@ const HealthCare = (props) => {
           </div>
           <div className="form-group m-2">
             <input
-              value={keyword}
+              value={city}
               placeholder="Cari Lokasi"
               className="form-control"
-              onChange={handleChange}
+              onChange={handleChanges}
             />
           </div>
         </div>

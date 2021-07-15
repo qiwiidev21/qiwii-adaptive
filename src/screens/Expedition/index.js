@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
+  const [city, setCity] = useState("");
   const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
@@ -54,6 +55,9 @@ const Salon = (props) => {
   function handleChange(event) {
     setKeyword(event.target.value);
   }
+  function handleChanges(event) {
+    setCity(event.target.value);
+  }
 
   return (
     <div>
@@ -70,9 +74,12 @@ const Salon = (props) => {
             />
           </div>
           <div className="form-group m-2">
-            <select className="form-control">
-              <option>Cari Lokasi</option>
-            </select>
+            <input
+              value={city}
+              placeholder="Cari Lokasi"
+              className="form-control"
+              onChange={handleChanges}
+            />
           </div>
         </div>
         <InfiniteScroll

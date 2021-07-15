@@ -211,10 +211,10 @@ const ReviewQueue = (props) => {
                 />
               </Form.Group>
               <Form.Group controlId="phone">
-                <Form.Label>Nomor Telepon</Form.Label>
+                <Form.Label>Nomor Telepone</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Nomor Telepon"
+                  placeholder="Nomor Telepone"
                   onChange={(event) => setPhone(event.target.value)}
                 />
               </Form.Group>
@@ -266,17 +266,7 @@ const ReviewQueue = (props) => {
             >
               Submit
             </Button>
-            <div>
-              <h6 className="register-text">
-                Belum punya akun?
-                <button
-                  className="btn-custom btn-primary-outline"
-                  onClick={() => setRegisterForm(!registerForm)}
-                >
-                  <h6 className="register-text-button">Daftar</h6>
-                </button>
-              </h6>
-            </div>
+            <h6 className="register-text">Belum punya akun? Daftar</h6>
           </div>
         </Modal.Footer>
       </Modal>

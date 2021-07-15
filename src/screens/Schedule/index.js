@@ -14,6 +14,10 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import launchImage from "../../assets/images/header-qiwii-launch.png";
 import { Form, Button } from "react-bootstrap";
+import Dropdown from "react-dropdown";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-dropdown/style.css";
 import _ from "lodash";
 
 const Schedule = (props) => {
@@ -107,8 +111,8 @@ const Schedule = (props) => {
 
   async function fetchServiceDetail() {
     await props.fetchServiceDetail(routeID);
-    await props.fetchSlotTime(routeID, selectedDate.format);
     await fetchDataCustomField();
+    await props.fetchSlotTime(routeID, selectedDate.format);
   }
 
   function fetchDataCustomField() {
@@ -235,6 +239,30 @@ const Schedule = (props) => {
       );
     }
   }
+  const [code, setCode] = useState("");
+  async function _timePressed(item, index) {
+    let itemTime = item.time;
+    // await this._getSlotTime()
+    await setSelectTime(item);
+    // await this.setState({ selectedTime: item.time, selectedTimeIndex: index })
+    let status = await props.dataSlotTime.data.filter(
+      (x) => x.time == itemTime
+    );
+    await props.setSlotTime(item);
+
+    let number = (await parseInt(props.dataSlotTime.data[index].order)) + 1;
+    let queNum = await _pad(number);
+    let code = await `${props.dataServiceDetail.data.code}-${queNum}`;
+    // this.setState({ code: code })
+    await setCode(code);
+    // this.menit = (60 / parseInt(props.dataSlotTime.data[index].quota) ) * (parseInt(props.dataSlotTime.data[index].order) + 1)
+  }
+
+  function _pad(number) {
+    let z = "0";
+    number = number + "";
+    return new Array(3 - number.length + 1).join(z) + number;
+  }
 
   function renderSlotTime() {
     if (props.dataSlotTime.data?.length) {
@@ -245,8 +273,9 @@ const Schedule = (props) => {
               <button
                 className="btn-custom-slot btn-primary-outline"
                 onClick={async () => {
-                  await setSelectTime(item);
-                  await props.setSlotTime(item);
+                  await _timePressed(item, index);
+                  // await setSelectTime(item);
+                  // await props.setSlotTime(item);
                 }}
               >
                 <div
@@ -311,9 +340,9 @@ const Schedule = (props) => {
     }
   }
 
-  function handleSubmit() {
-    history.push(`${location.pathname}/review`);
-    props.setCustomField(customField);
+  async function handleSubmit() {
+    await props.setCustomField(customField);
+    await history.push(`${location.pathname}/review`);
   }
 
   function setCustomField(value, index) {
@@ -335,16 +364,66 @@ const Schedule = (props) => {
     );
   }
   function renderRadio(data) {
-    return <div></div>;
+    return (
+      <Form.Group controlId={data.field_name}>
+        <Form.Label>{data.field_name}</Form.Label>
+        {data.configuration?.text_options.length &&
+          data.configuration?.text_options.map((val, index) => (
+            <div key={index} className="mb-3">
+              <Form.Check
+                inline
+                name={`group-${index}`}
+                type={"radio"}
+                id={index}
+                label={val}
+              ></Form.Check>
+            </div>
+          ))}
+      </Form.Group>
+    );
   }
   function renderCheckBox(data) {
-    return <div></div>;
+    return (
+      <Form.Group controlId={data.field_name}>
+        <Form.Label>{data.field_name}</Form.Label>
+        {data.configuration?.text_options.length &&
+          data.configuration?.text_options.map((val, index) => (
+            <div key={index} className="mb-3">
+              <Form.Check
+                inline
+                name={`group-${index}`}
+                type={"checkbox"}
+                id={index}
+                label={val}
+              ></Form.Check>
+            </div>
+          ))}
+      </Form.Group>
+    );
   }
   function renderDropDown(data) {
-    return <div></div>;
+    return (
+      <div className="mb-3">
+        <Dropdown
+          options={data.configuration.text_options}
+          onChange={() => {}}
+          placeholder={data.field_name}
+        />
+      </div>
+    );
   }
+  const [startDate, setStartDate] = useState(new Date());
+
   function renderDatePicker(data) {
-    return <div></div>;
+    return (
+      <div className="mb-3">
+        <DatePicker
+          className="date-picker"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+        />
+      </div>
+    );
   }
 
   return (
@@ -394,6 +473,7 @@ const mapStateToProps = (state) => ({
   dataServiceDetail: state.dataServiceDetail,
   dataSlotTime: state.dataSlotTime,
   dataService: state.dataService,
+  dataSlotTimes: state.dataSlotTimes,
   dataServiceSelected: state.dataServiceSelected,
 });
 

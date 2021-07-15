@@ -3,6 +3,13 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+.date-picker {
+  width: 100%;
+  border: 1px solid #ced4da;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+}
 .calendar {
   overflow-y: scroll;
   height: 90px;

@@ -6,22 +6,25 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
-import { ArrowLeft, Bell } from "react-bootstrap-icons";
+import { ArrowLeft, Bell, PersonCircle } from "react-bootstrap-icons";
 import { useHistory } from "react-router-dom";
 import _ from "lodash";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { ActionCreators } from "../../redux/actions";
 
-function Header({ back, title, profile }) {
+function Header(props) {
   let history = useHistory();
 
   const [bgColor, setBGColor] = useState();
 
   useEffect(() => {
-    if (profile) {
-      if (!_.isEmpty(profile)) {
-        setBGColor(profile.display.config.main_color);
+    if (props.profile) {
+      if (!_.isEmpty(props.profile)) {
+        setBGColor(props.profile.display.config.main_color);
       }
     }
-  }, [profile]);
+  }, [props.profile]);
 
   const renderBack = () => {
     return (
@@ -40,10 +43,10 @@ function Header({ back, title, profile }) {
       style={{ backgroundColor: bgColor ? `${bgColor}` : "#8F1619" }}
     >
       <nav className="container">
-        {back ? renderBack() : <div className="px-2" />}
+        {props.back ? renderBack() : <div className="px-2" />}
         <div className="navbar-brand">
-          {title ? (
-            <h4 className="title">{title}</h4>
+          {props.title ? (
+            <h4 className="title">{props.title}</h4>
           ) : (
             <img
               src={Logo}
@@ -55,7 +58,11 @@ function Header({ back, title, profile }) {
           )}
         </div>
         <div>
-          <Bell color="white" size={20} />
+          {_.isEmpty(props.dataSession) ? (
+            <Bell color="white" size={20} />
+          ) : (
+            <PersonCircle color="white" size={20} />
+          )}
         </div>
       </nav>
     </header>
@@ -72,4 +79,11 @@ Header.defaultProps = {
   title: "",
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  dataSession: state.dataSession,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(ActionCreators, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

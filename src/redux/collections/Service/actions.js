@@ -128,6 +128,17 @@ export function setSlotTime(timeData) {
   };
 }
 
+const setDataTickets = (data) => ({
+  type: types.SET_DATA_TICKET,
+  payload: data,
+});
+
+export function setDataTicket(timeData) {
+  return (dispatch) => {
+    dispatch(setDataTickets(timeData));
+  };
+}
+
 export function getTicket(id, data, customField) {
   let formBody = [];
   for (let property in data) {
@@ -147,10 +158,10 @@ export function getTicket(id, data, customField) {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${GET_TICKET}/${id}`, formBody)
         .then((response) => {
-          console.log(response);
+          resolve(response);
         })
         .catch((error) => {
-          console.log(error.bodyString);
+          reject(error.bodyString);
         });
     });
   };

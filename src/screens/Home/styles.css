@@ -3,6 +3,12 @@
   justify-content: center;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
+  min-width: 110px;
+  min-height: 150px;
+}
+
+.input-form {
+  max-width: 100vw;
 }
 
 .card-title {

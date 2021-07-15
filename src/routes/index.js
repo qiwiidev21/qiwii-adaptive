@@ -24,6 +24,7 @@ import Movies from "../screens/Movies";
 import Retail from "../screens/Retail";
 import Expedition from "../screens/Expedition";
 import ReviewQueue from "../screens/ReviewQueue";
+import ReviewTicket from "../screens/ReviewTicket";
 
 function Routes() {
   return (
@@ -67,7 +68,17 @@ function RouteReview() {
   return (
     <Switch>
       <Route exact path={path} component={Schedule} />
-      <Route path={`${path}/review`} component={ReviewQueue} />
+      <Route path={`${path}/review`} component={RouteReviewTicket} />
+    </Switch>
+  );
+}
+
+function RouteReviewTicket() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={ReviewQueue} />
+      <Route path={`${path}/ticket`} component={ReviewTicket} />
     </Switch>
   );
 }
