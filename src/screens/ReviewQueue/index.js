@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import PropTypes, { instanceOf } from "prop-types";
 import moment from "moment";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Container, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
 import { useCookies, Cookies } from "react-cookie";
 import { useHistory, useLocation } from "react-router-dom";
@@ -15,6 +15,8 @@ const ReviewQueue = (props) => {
   let history = useHistory();
   let location = useLocation();
 
+  const [dataTicket, setDataTicket] = useState(false);
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [registerForm, setRegisterForm] = useState(false);
   const [showModalReport, setShowModalReport] = useState(false);
@@ -24,7 +26,6 @@ const ReviewQueue = (props) => {
   const [messageReport, setMessageReport] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [setUserSession] = useCookies(["user"]);
 
@@ -110,13 +111,67 @@ const ReviewQueue = (props) => {
           params,
           props.dataCustomFieldData.data
         )
-        .then((response) => {
+        .then(async (response) => {
           if (response.status === 200) {
-            props.setDataTicket(response.data);
-            history.push(`${location.pathname}/ticket`);
+            await setShowModalSuccess(true);
+            await setDataTicket(response.data);
+            await props.setDataTicket(response.data);
           }
         });
     }
+  }
+
+  function renderModalSuccess() {
+    return (
+      <Modal
+        show={showModalSuccess}
+        onHide={() => setShowModalSuccess(!showModalSuccess)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Terima kasih telah menggunakan Qiwii</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <div className="m-2">
+              <p className="title-review">Kamu telah mengantri di</p>
+              <p>
+                {dataTicket?.layanan} - {dataTicket?.organization_name}
+              </p>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div className="mx-2">
+              <p className="title-review">Informasi antrian telah dikirim ke</p>
+              <p>{dataTicket?.phone}</p>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div className="justify-content-between row mx-1">
+              <div className="mx-2">
+                <p className="title-review">Tanggal</p>
+                <p>
+                  {moment(dataTicket?.estimasi_tangal).format("DD MMM YYYY")}
+                </p>
+              </div>
+              <div className="mx-2">
+                <p className="title-review">Estimasi Nomor Antrian</p>
+                <p>{dataTicket?.antrian}</p>
+              </div>
+            </div>
+            <div className="dropdown-divider"></div>
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={async () => {
+              await setShowModalSuccess(!showModalSuccess);
+              await history.push(`${location.pathname}/ticket`);
+            }}
+          >
+            Detail
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
   }
 
   function renderModal() {
@@ -226,14 +281,6 @@ const ReviewQueue = (props) => {
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </Form.Group>
-              <Form.Group controlId="rePassword">
-                <Form.Label>Ulangi Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Ulangi Password"
-                  onChange={(event) => setRePassword(event.target.value)}
-                />
-              </Form.Group>
             </Form>
           ) : (
             <Form>
@@ -262,18 +309,26 @@ const ReviewQueue = (props) => {
               variant="primary"
               type="submit"
               className="next-button"
-              onClick={() => handleLogin()}
+              onClick={() => {
+                if (registerForm) {
+                  handleRegister();
+                } else {
+                  handleLogin();
+                }
+              }}
             >
               Submit
             </Button>
             <div>
               <h6 className="register-text">
-                Belum punya akun?
+                {registerForm ? "Sudah" : "Belum"} punya akun?
                 <button
                   className="btn-custom btn-primary-outline"
                   onClick={() => setRegisterForm(!registerForm)}
                 >
-                  <h6 className="register-text-button">Daftar</h6>
+                  <h6 className="register-text-button">
+                    {registerForm ? "Masuk" : "Daftar"}
+                  </h6>
                 </button>
               </h6>
             </div>
@@ -310,6 +365,35 @@ const ReviewQueue = (props) => {
         }
       });
   }
+
+  function handleRegister() {
+    const date = new Date();
+    const tomorrow = new Date(date.setDate(date.getDate() + 1));
+    props
+      .registerQiwii(username, email, phone, password)
+      .then((user) => {
+        if (user.status === "Success") {
+          // setShowModalLogin(!showModalLogin);
+          setRegisterForm(!registerForm);
+          setShowModalReport(true);
+          setTitleReport(user.status);
+          setMessageReport(user.message);
+          setUserSession("user", user, { expires: tomorrow });
+        } else {
+          setShowModalReport(true);
+          setTitleReport(user.status);
+          setMessageReport(user.message);
+          setShowModalLogin(!showModalLogin);
+        }
+      })
+      .catch((error) => {
+        if (error.status === 400) {
+          setShowModalReport(true);
+          setTitleReport("Error");
+          setMessageReport(error.message);
+        }
+      });
+  }
   return (
     <div>
       <Header back title="Review Antrian" profile={profile} />
@@ -327,6 +411,7 @@ const ReviewQueue = (props) => {
       {renderModal()}
       {renderModalReport()}
       {renderModalLogin()}
+      {renderModalSuccess()}
     </div>
   );
 };

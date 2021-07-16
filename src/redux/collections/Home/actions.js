@@ -1,5 +1,5 @@
 import * as types from "../types";
-import { LOGIN, MENU, MENUS, CUSTOM_FIELD } from "../../../constants";
+import { LOGIN, REGISTER, MENU, MENUS, CUSTOM_FIELD } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 import { isMockAllowed } from "../../../mocks/Config";
@@ -41,6 +41,38 @@ export function loginQiwii(email, phone, password) {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response) {
+            reject(error.response);
+          } else if (error.request) {
+            reject(error.request);
+          } else if (error.message) {
+            reject(error.message);
+          }
+        });
+    });
+  };
+}
+
+export function registerQiwii(name, email, phone, password) {
+  let payload = {
+    name,
+    email,
+    phone,
+    password,
+    uuid: "ABCD1234",
+  };
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.post(REGISTER, qs.stringify(payload))
+        .then(({ data }) => {
+          if (data.status === "Success") {
+            // dispatch(setDataSession(data));
+            resolve(data);
+          } else {
+            reject(data.message);
+          }
+        })
+        .catch((error) => {
           if (error.response) {
             reject(error.response);
           } else if (error.request) {

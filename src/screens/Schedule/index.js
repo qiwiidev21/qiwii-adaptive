@@ -75,7 +75,7 @@ const Schedule = (props) => {
     time: "05",
   });
 
-  const parseUrl = typeof url == "string" ? url.substr(url.length - 7) : null;
+  const parseUrl = typeof url === "string" ? url.substr(url.length - 7) : null;
   const organizationID = parseUrl.substring(0, 3);
 
   const [customField, setValCustomField] = useState([]);
@@ -239,14 +239,15 @@ const Schedule = (props) => {
       );
     }
   }
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(""); // eslint-disable-line no-unused-vars
   async function _timePressed(item, index) {
     let itemTime = item.time;
     // await this._getSlotTime()
     await setSelectTime(item);
     // await this.setState({ selectedTime: item.time, selectedTimeIndex: index })
     let status = await props.dataSlotTime.data.filter(
-      (x) => x.time == itemTime
+      // eslint-disable-line no-unused-vars
+      (x) => x.time === itemTime
     );
     await props.setSlotTime(item);
 

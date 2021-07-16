@@ -4,6 +4,7 @@ export const ENVIRONMENT = "development";
 export const MENU = "/api/v2/menu";
 export const MENUS = "/api/v2/menus";
 export const LOGIN = "/api/v2/users/login";
+export const REGISTER = "/api/v2/users/";
 export const ORGANIZATION = "/api/v3/organization/units/?";
 export const MERCHANT = "/api/v2/service/get_by_organization";
 export const MERCHANT_PROFILE = "/api/v2/organization/get_by_id/";
