@@ -2,21 +2,66 @@
  * Header Component
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
-import { ArrowLeft, Bell, PersonCircle } from "react-bootstrap-icons";
-import { useHistory } from "react-router-dom";
+import {
+  ArrowLeft,
+  Bell,
+  PersonCircle,
+  BoxArrowInRight,
+  ThreeDotsVertical,
+} from "react-bootstrap-icons";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
+import Dropdown from "react-bootstrap/Dropdown";
+
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
+  <button
+    ref={ref}
+    className="btn btn-primary-outline"
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </button>
+));
+
+const CustomMenu = forwardRef(
+  ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
+    const [value, setValue] = useState("");
+
+    return (
+      <div
+        ref={ref}
+        style={style}
+        className={className}
+        aria-labelledby={labeledBy}
+      >
+        <ul className="list-unstyled">
+          {React.Children.toArray(children).filter(
+            (child) =>
+              !value || child.props.children.toLowerCase().startsWith(value)
+          )}
+        </ul>
+      </div>
+    );
+  }
+);
 
 function Header(props) {
   let history = useHistory();
 
+  const { url } = useRouteMatch();
+
   const [bgColor, setBGColor] = useState();
+  const [sessionStored, setSessionStored] = useState({});
 
   useEffect(() => {
     if (props.profile) {
@@ -25,6 +70,15 @@ function Header(props) {
       }
     }
   }, [props.profile]);
+
+  useEffect(() => {
+    getSession();
+  }, []);
+
+  function getSession() {
+    const user = sessionStorage.getItem("user");
+    setSessionStored(JSON.parse(user));
+  }
 
   const renderBack = () => {
     return (
@@ -58,10 +112,45 @@ function Header(props) {
           )}
         </div>
         <div>
-          {_.isEmpty(props.dataSession) ? (
-            <Bell color="white" size={20} />
+          {_.isEmpty(sessionStored) ? (
+            <div className="row">
+              <button
+                className="btn btn-primary-outline"
+                onClick={() => history.push(`${url}login`)}
+              >
+                <BoxArrowInRight color="white" size={20} />
+              </button>
+            </div>
           ) : (
-            <PersonCircle color="white" size={20} />
+            <div className="row">
+              <div className="row">
+                <button
+                  className="btn btn-primary-outline"
+                  onClick={() => history.push(`${url}profile`)}
+                >
+                  <PersonCircle color="white" size={20} />
+                </button>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    as={CustomToggle}
+                    id="dropdown-custom-components"
+                  >
+                    <ThreeDotsVertical color="white" size={20} />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu as={CustomMenu}>
+                    <Dropdown.Item eventKey="1">
+                      <Link to={"/profile"}>Profil</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="2">
+                      <Link to={"/antrian"}>Antrian Saya</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="3" active>
+                      Keluar
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            </div>
           )}
         </div>
       </nav>
@@ -72,11 +161,13 @@ function Header(props) {
 Header.propTypes = {
   back: PropTypes.bool,
   title: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 Header.defaultProps = {
   back: false,
   title: "",
+  onClick: () => {},
 };
 
 const mapStateToProps = (state) => ({

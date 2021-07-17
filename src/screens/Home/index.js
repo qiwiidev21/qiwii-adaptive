@@ -22,7 +22,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header onClick={() => {}} />
       <Hero url={image} alt="Qiwii" />
       {/*  <div className="container">
           <div className="input-form form-group m-2 justify-content-center align-self-center">
@@ -81,6 +81,7 @@ Home.propTypes = {
 
 const mapStateToProps = (state) => ({
   dataMenu: state.dataMenu,
+  dataSession: state.dataSession,
 });
 
 const mapDispatchToProps = (dispatch) => {

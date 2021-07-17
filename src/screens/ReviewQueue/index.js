@@ -349,6 +349,9 @@ const ReviewQueue = (props) => {
           setShowModalReport(true);
           setTitleReport(user.status);
           setMessageReport(user.message);
+          sessionStorage.setItem("token", user.token);
+          sessionStorage.setItem("unique_identifier", user.unique_identifier);
+          sessionStorage.setItem("user", JSON.stringify(user));
           setUserSession("user", user, { expires: tomorrow });
         } else {
           setShowModalReport(true);

@@ -6,10 +6,14 @@ import { ActionCreators } from "../../redux/actions";
 import { useCookies } from "react-cookie";
 import { Button, Form } from "react-bootstrap";
 // import { Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 function Login(props) {
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
+  let history = useHistory();
+  let location = useLocation();
+  const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
+  const [emailError, setUsernameError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [setUserSession] = useCookies(["user"]);
@@ -17,15 +21,18 @@ function Login(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     props
-      .loginQiwii(email, password)
+      .loginQiwii(username, phone, password)
       .then((user) => {
-        props.history.push("/adaptive");
-        setUserSession("user", user, { path: "/adaptive" });
+        history.goBack();
+        sessionStorage.setItem("token", user.token);
+        sessionStorage.setItem("unique_identifier", user.unique_identifier);
+        sessionStorage.setItem("user", JSON.stringify(user));
+        // setUserSession("user", user, { path: "/adaptive" });
       })
       .catch((error) => {
         if (error.status === 400) {
           if (error.data.message === "User belum terdaftar.") {
-            setEmailError(error.data.message);
+            setUsernameError(error.data.message);
           } else {
             setPasswordError(error.data.message);
           }
@@ -33,14 +40,21 @@ function Login(props) {
           if (error === "Maaf password yang anda berikan salah.") {
             setPasswordError(error);
           } else {
-            setEmailError(error);
+            setUsernameError(error);
           }
-        } else {
-          alert("Internal server error");
         }
       });
   };
-
+  function validateEmail(email) {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    return re.test(email);
+  }
+  function setPhoneOrMail(value) {
+    let email = validateEmail(value) ? value : "";
+    let phone = !validateEmail(value) ? value : "";
+    setUsername(email);
+    setPhone(phone);
+  }
   return (
     <div className="container">
       <section className="bg-home d-flex bg-light align-items-center">
@@ -55,11 +69,11 @@ function Login(props) {
                     <Form.Group controlId="formBasicEmail">
                       <Form.Label>Email</Form.Label>
                       <Form.Control
-                        type="email"
+                        type="text"
                         placeholder="Masukkan email"
                         onChange={(event) => {
-                          setEmail(event.target.value);
-                          setEmailError("");
+                          setPhoneOrMail(event.target.value);
+                          setUsernameError("");
                         }}
                         isInvalid={emailError}
                       />

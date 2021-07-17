@@ -25,6 +25,8 @@ import Retail from "../screens/Retail";
 import Expedition from "../screens/Expedition";
 import ReviewQueue from "../screens/ReviewQueue";
 import ReviewTicket from "../screens/ReviewTicket";
+import Profile from "../screens/Profile";
+import Antrian from "../screens/Antrian";
 
 function Routes() {
   return (
@@ -32,6 +34,8 @@ function Routes() {
       <Switch>
         <Route exact path={"/"} component={Home} />
         <Route path={"/adaptive"} component={Home} />
+        <Route path={"/profile"} component={Profile} />
+        <Route path={"/antrian"} component={Antrian} />
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
         <Route path={"/tempatwisata"} component={RouteTempatWisata} />
