@@ -12,6 +12,17 @@ export const dataSession = createReducer(
   }
 );
 
+export const dataUserProfile = createReducer(
+  {},
+  {
+    [types.SET_DATA_USER_PROFILE](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+
 export const dataMenu = createReducer(
   {},
   {

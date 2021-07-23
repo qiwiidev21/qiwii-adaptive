@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
 import {
   ArrowLeft,
-  Bell,
   PersonCircle,
   BoxArrowInRight,
   ThreeDotsVertical,
@@ -35,7 +34,7 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
 
 const CustomMenu = forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(""); // eslint-disable-line no-unused-vars
 
     return (
       <div
@@ -144,8 +143,19 @@ function Header(props) {
                     <Dropdown.Item eventKey="2">
                       <Link to={"/antrian"}>Antrian Saya</Link>
                     </Dropdown.Item>
-                    <Dropdown.Item eventKey="3" active>
-                      Keluar
+                    <div className="dropdown-divider"></div>
+                    <Dropdown.Item eventKey="3">
+                      <button
+                        className="btn-custom btn-primary-outline"
+                        onClick={async () => {
+                          await sessionStorage.removeItem("user");
+                          await sessionStorage.removeItem("token");
+                          await sessionStorage.removeItem("unique_identifier");
+                          await window.location.reload(false);
+                        }}
+                      >
+                        Keluar
+                      </button>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

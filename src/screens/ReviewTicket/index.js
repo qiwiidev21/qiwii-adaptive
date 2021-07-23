@@ -41,7 +41,7 @@ const ReviewTicket = (props) => {
           <div className="dropdown-divider"></div>
           <div className="mx-2">
             <p className="title-review">Informasi antrian telah dikirim ke</p>
-            <p>{data?.phone}</p>
+            <p>{props.dataUserProfile.data?.email}</p>
           </div>
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-1">
@@ -61,7 +61,7 @@ const ReviewTicket = (props) => {
   }
 
   function handleSubmit() {
-    history.push(`/adaptive`);
+    history.push(`/`);
   }
 
   return (
@@ -103,6 +103,7 @@ const mapStateToProps = (state) => ({
   dataCustomFieldData: state.dataCustomFieldData,
   dataSlotTimes: state.dataSlotTimes,
   dataSession: state.dataSession,
+  dataUserProfile: state.dataUserProfile,
 });
 
 const mapDispatchToProps = (dispatch) => {

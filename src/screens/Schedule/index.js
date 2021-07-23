@@ -249,7 +249,8 @@ const Schedule = (props) => {
       // eslint-disable-line no-unused-vars
       (x) => x.time === itemTime
     );
-    await props.setSlotTime(item);
+    const timeSelect = `${status[0].time}-00`;
+    await props.setSlotTime(timeSelect);
 
     let number = (await parseInt(props.dataSlotTime.data[index].order)) + 1;
     let queNum = await _pad(number);

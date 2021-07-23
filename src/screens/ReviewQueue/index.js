@@ -15,6 +15,7 @@ const ReviewQueue = (props) => {
   let history = useHistory();
   let location = useLocation();
 
+  const [user, setUser] = useState({});
   const [dataTicket, setDataTicket] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -47,8 +48,13 @@ const ReviewQueue = (props) => {
   }, []);
 
   const getCookies = async () => {
-    // const dataUser = await props.cookies.get("user")
-    // console.log(dataUser);
+    const userSession = await sessionStorage.getItem("user");
+    const user = await JSON.parse(userSession);
+    if (user) {
+      return props.getDataUser(user.unique_identifier, user.uuid, user.token);
+    } else {
+      return null;
+    }
   };
 
   function renderDetailAntrian() {
@@ -86,24 +92,32 @@ const ReviewQueue = (props) => {
   }
 
   async function handleSubmit() {
-    if (_.isEmpty(props.dataSession)) {
+    const userSession = sessionStorage.getItem("user");
+    const user = JSON.parse(userSession);
+    if (_.isEmpty(user)) {
       setShowModal(true);
     } else {
       const params = {
         api_user: "root",
-        // api_key: "1494ba401c74a879a386b5057d2e9a4f",
+        api_key: "1494ba401c74a879a386b5057d2e9a4f",
         channel: "mobile",
         id_organization: props.dataServiceDetail.data.id_organization,
         id_service: props.dataServiceDetail.data.id,
         layanan: props.dataServiceDetail.data.id,
         kode: props.dataServiceDetail.data.code,
-        token: props.dataSession.data.token,
-        uuid: props.dataSession.data.uuid,
+        token: _.isEmpty(props.dataSession)
+          ? user.token
+          : props.dataSession.data.token,
+        uuid: _.isEmpty(props.dataSession)
+          ? user.uuid
+          : props.dataSession.data.uuid,
         slot_date: props.dataSelectedDate.data,
-        unique_identifier: props.dataSession.data.unique_identifier,
+        unique_identifier: _.isEmpty(props.dataSession)
+          ? user.unique_identifier
+          : props.dataSession.data.unique_identifier,
       };
       if (!_.isEmpty(props.dataSlotTimes)) {
-        params.slot_time = props.dataSlotTimes?.data.label.substr(0, 5);
+        params.slot_time = props.dataSlotTimes?.data;
       }
       await props
         .getTicket(
@@ -141,7 +155,7 @@ const ReviewQueue = (props) => {
             <div className="dropdown-divider"></div>
             <div className="mx-2">
               <p className="title-review">Informasi antrian telah dikirim ke</p>
-              <p>{dataTicket?.phone}</p>
+              <p>{props.dataUserProfile.data?.email}</p>
             </div>
             <div className="dropdown-divider"></div>
             <div className="justify-content-between row mx-1">
@@ -213,7 +227,22 @@ const ReviewQueue = (props) => {
           <Button
             variant="primary"
             onClick={async () => {
-              await setShowModalReport(!showModalReport);
+              if (!_.isEmpty(user)) {
+                await setShowModalReport(false);
+                await sessionStorage.setItem("token", user.token);
+                await sessionStorage.setItem(
+                  "unique_identifier",
+                  user.unique_identifier
+                );
+                await sessionStorage.setItem("user", JSON.stringify(user));
+                await props.getDataUser(
+                  user.unique_identifier,
+                  user.uuid,
+                  user.token
+                );
+              } else {
+                await setShowModalReport(!showModalReport);
+              }
             }}
           >
             OK
@@ -343,21 +372,19 @@ const ReviewQueue = (props) => {
     const tomorrow = new Date(date.setDate(date.getDate() + 1));
     props
       .loginQiwii(username, phone, password)
-      .then((user) => {
+      .then(async (user) => {
         if (user.status === "Success") {
-          setShowModalLogin(!showModalLogin);
-          setShowModalReport(true);
-          setTitleReport(user.status);
-          setMessageReport(user.message);
-          sessionStorage.setItem("token", user.token);
-          sessionStorage.setItem("unique_identifier", user.unique_identifier);
-          sessionStorage.setItem("user", JSON.stringify(user));
-          setUserSession("user", user, { expires: tomorrow });
+          await setShowModalLogin(!showModalLogin);
+          await setShowModalReport(true);
+          await setTitleReport(user.status);
+          await setMessageReport(user.message);
+          await setUser(user);
         } else {
-          setShowModalReport(true);
-          setTitleReport(user.status);
-          setMessageReport(user.message);
-          setShowModalLogin(!showModalLogin);
+          await setShowModalReport(true);
+          await setTitleReport(user.status);
+          await setMessageReport(user.message);
+          await setShowModalLogin(!showModalLogin);
+          await setUser({});
         }
       })
       .catch((error) => {
@@ -440,6 +467,7 @@ const mapStateToProps = (state) => ({
   dataCustomFieldData: state.dataCustomFieldData,
   dataSlotTimes: state.dataSlotTimes,
   dataSession: state.dataSession,
+  dataUserProfile: state.dataUserProfile,
 });
 
 const mapDispatchToProps = (dispatch) => {

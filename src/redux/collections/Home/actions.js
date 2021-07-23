@@ -1,5 +1,12 @@
 import * as types from "../types";
-import { LOGIN, REGISTER, MENU, MENUS, CUSTOM_FIELD } from "../../../constants";
+import {
+  LOGIN,
+  REGISTER,
+  MENU,
+  MENUS,
+  CUSTOM_FIELD,
+  GET_USER,
+} from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 import { isMockAllowed } from "../../../mocks/Config";
@@ -137,6 +144,28 @@ export function fetchDataCustomField(params) {
           dispatch(setDataCustomField(data.custom_field));
         })
         .catch((error) => console.log(error));
+    });
+  };
+}
+
+const setDataUserProfile = (data) => ({
+  type: types.SET_DATA_USER_PROFILE,
+  payload: data,
+});
+
+export function getDataUser(unique_identifier, uuid, token) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      const params = {
+        unique_identifier: unique_identifier,
+        uuid: uuid,
+        token: token,
+      };
+      Qiwii.get(`${GET_USER}?` + qs.stringify(params))
+        .then((response) => {
+          dispatch(setDataUserProfile(response.data));
+        })
+        .catch((error) => reject(error?.message));
     });
   };
 }

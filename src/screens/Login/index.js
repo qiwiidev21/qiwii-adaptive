@@ -27,6 +27,7 @@ function Login(props) {
         sessionStorage.setItem("token", user.token);
         sessionStorage.setItem("unique_identifier", user.unique_identifier);
         sessionStorage.setItem("user", JSON.stringify(user));
+        props.getDataUser(user.unique_identifier, user.uuid, user.token);
         // setUserSession("user", user, { path: "/adaptive" });
       })
       .catch((error) => {
