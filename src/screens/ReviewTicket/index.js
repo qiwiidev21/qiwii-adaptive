@@ -4,10 +4,9 @@ import Header from "../../components/Header";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
-import PropTypes, { instanceOf } from "prop-types";
+import PropTypes from "prop-types";
 import moment from "moment";
 import _ from "lodash";
-import { Cookies } from "react-cookie";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
@@ -51,7 +50,7 @@ const ReviewTicket = (props) => {
             </div>
             <div className="mx-2">
               <p className="title-review">Estimasi Nomor Antrian</p>
-              <p>{data?.antrian}</p>
+              <p>{data?.antrian || data?.ticket}</p>
             </div>
           </div>
           <div className="dropdown-divider"></div>
@@ -89,7 +88,6 @@ ReviewTicket.defaultProps = {
 };
 
 ReviewTicket.propTypes = {
-  cookies: instanceOf(Cookies).isRequired,
   dataTicket: PropTypes.object,
   dataSelectedDate: PropTypes.object,
   dataSession: PropTypes.object,

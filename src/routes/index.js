@@ -35,7 +35,7 @@ function Routes() {
         <Route exact path={"/"} component={Home} />
         <Route path={"/adaptive"} component={Home} />
         <Route path={"/profile"} component={Profile} />
-        <Route path={"/antrian"} component={Antrian} />
+        <Route path={"/antrian"} component={RouteQueue} />
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
         <Route path={"/tempatwisata"} component={RouteTempatWisata} />
@@ -133,6 +133,16 @@ function RouterHealth() {
     <Switch>
       <Route exact path={path} component={HealthCare} />
       <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+
+function RouteQueue() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Antrian} />
+      <Route path={`${path}/ticket`} component={ReviewTicket} />
     </Switch>
   );
 }

@@ -6,6 +6,7 @@ import {
   MENUS,
   CUSTOM_FIELD,
   GET_USER,
+  GET_QUEUE,
 } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
@@ -164,6 +165,49 @@ export function getDataUser(unique_identifier, uuid, token) {
       Qiwii.get(`${GET_USER}?` + qs.stringify(params))
         .then((response) => {
           dispatch(setDataUserProfile(response.data));
+        })
+        .catch((error) => reject(error?.message));
+    });
+  };
+}
+
+const setDataQueue = (data) => ({
+  type: types.SET_DATA_USER_QUEUE,
+  payload: data,
+});
+
+const setDataQueueFinish = (data) => ({
+  type: types.SET_DATA_USER_QUEUE_FINISH,
+  payload: data,
+});
+
+const setDataQueueReservasi = (data) => ({
+  type: types.SET_DATA_USER_QUEUE_RESERVASI,
+  payload: data,
+});
+
+export function getDataQueue(unique_identifier, uuid, token) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      const params = {
+        unique_identifier: unique_identifier,
+        uuid: uuid,
+        token: token,
+      };
+      Qiwii.post(`${GET_QUEUE}`, qs.stringify(params))
+        .then((response) => {
+          if (response.data.status === "Success") {
+            if (response.data.data.berlangsung) {
+              dispatch(setDataQueue(response.data.data.berlangsung));
+              resolve(response.data.data.berlangsung);
+            } else if (response.data.data.selesai) {
+              dispatch(setDataQueueFinish(response.data.data.selesai));
+              resolve(response.data.data.selesai);
+            } else {
+              dispatch(setDataQueueReservasi(response.data.data.reservasi));
+              resolve(response.data.data.reservasi);
+            }
+          }
         })
         .catch((error) => reject(error?.message));
     });

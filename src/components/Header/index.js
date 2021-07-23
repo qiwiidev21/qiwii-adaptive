@@ -151,7 +151,7 @@ function Header(props) {
                           await sessionStorage.removeItem("user");
                           await sessionStorage.removeItem("token");
                           await sessionStorage.removeItem("unique_identifier");
-                          await window.location.reload(false);
+                          await history.push("/");
                         }}
                       >
                         Keluar
