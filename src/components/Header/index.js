@@ -93,7 +93,7 @@ function Header(props) {
   return (
     <header
       className="navbar navbar-expand-md navbar-dark"
-      style={{ backgroundColor: bgColor ? `${bgColor}` : "#8F1619" }}
+      style={{ backgroundColor: "#8F1619" }}
     >
       <nav className="container">
         {props.back ? renderBack() : <div className="px-2" />}

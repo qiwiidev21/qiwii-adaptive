@@ -34,7 +34,7 @@ const Home = (props) => {
           </div>
         </div>*/}
       {/* Start Of Menu */}
-      <div className="d-flex container col-sm-8 col-md-6 col-lg-5 col-xl-3 col-xs-10 flex-wrap justify-content-center my-5">
+      <div className="d-flex container col-sm-8 col-md-6 col-lg-5 col-xl-5 col-xs-10 flex-wrap justify-content-center my-5">
         {props.dataMenu.data &&
           props.dataMenu.data.map((item, index) => (
             <Link key={index} to={`/${item.navigate.toLowerCase()}`}>

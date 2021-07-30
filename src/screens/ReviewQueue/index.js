@@ -4,11 +4,11 @@ import Header from "../../components/Header";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
-import PropTypes, { instanceOf } from "prop-types";
+import PropTypes from "prop-types";
 import moment from "moment";
 import { Button, Container, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
-import { useCookies, Cookies } from "react-cookie";
+import { Cookies } from "react-cookie";
 import { useHistory, useLocation } from "react-router-dom";
 
 const ReviewQueue = (props) => {
@@ -28,7 +28,6 @@ const ReviewQueue = (props) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showModalLogin, setShowModalLogin] = useState(false);
-  const [setUserSession] = useCookies(["user"]);
 
   const [profile, setProfile] = useState({});
 
@@ -408,7 +407,6 @@ const ReviewQueue = (props) => {
           setShowModalReport(true);
           setTitleReport(user.status);
           setMessageReport(user.message);
-          setUserSession("user", user, { expires: tomorrow });
         } else {
           setShowModalReport(true);
           setTitleReport(user.status);
@@ -453,7 +451,6 @@ ReviewQueue.defaultProps = {
 };
 
 ReviewQueue.propTypes = {
-  cookies: instanceOf(Cookies).isRequired,
   dataServiceDetail: PropTypes.object,
   dataSelectedDate: PropTypes.object,
   dataSession: PropTypes.object,

@@ -7,12 +7,14 @@ import { ActionCreators } from "../../redux/actions";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { ChevronRight } from "react-bootstrap-icons";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
   const [data, setDataUser] = useState({});
   let history = useHistory();
+  let { url } = useRouteMatch();
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
@@ -66,6 +68,50 @@ const Profile = (props) => {
           <p className="title-review">Phone</p>
           <p>{data?.phone}</p>
         </div>
+        <div className="dropdown-divider"></div>
+      </div>
+      <div className="container my-2">
+        <button
+          className="btn-custom-slot btn-primary-outline"
+          onClick={() => history.push(`${url}/edit`)}
+        >
+          <div className="justify-content-between row mx-2">
+            <p className="title-review">Pengaturan Profil</p>
+            <ChevronRight />
+          </div>
+        </button>
+        <div className="dropdown-divider"></div>
+        <button
+          className="btn-custom-slot btn-primary-outline"
+          onClick={() => history.push(`${url}/password`)}
+        >
+          <div className="justify-content-between row mx-2">
+            <p className="title-review">Kata Sandi</p>
+            <ChevronRight />
+          </div>
+        </button>
+        <div className="dropdown-divider"></div>
+        <button
+          className="btn-custom-slot btn-primary-outline"
+          onClick={() => window.open("http://qiwii.id/faq/", "_blank")}
+        >
+          <div className="justify-content-between row mx-2">
+            <p className="title-review">FAQ</p>
+            <ChevronRight />
+          </div>
+        </button>
+        <div className="dropdown-divider"></div>
+        <button
+          className="btn-custom-slot btn-primary-outline"
+          onClick={() => window.open("http://bit.ly/daftarqiwii", "_blank")}
+        >
+          <div className="justify-content-between row mx-2">
+            <p className="title-review">
+              Saya punya bisnis dan ingin bekerja sama dengan QIWII
+            </p>
+            <ChevronRight />
+          </div>
+        </button>
         <div className="dropdown-divider"></div>
       </div>
       <div className="container my-5 fixed-bottom">

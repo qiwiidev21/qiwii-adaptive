@@ -93,6 +93,58 @@ export function registerQiwii(name, email, phone, password) {
   };
 }
 
+export function updateUser(
+  name,
+  email,
+  phone,
+  unique_identifier,
+  password,
+  oldPassword,
+  token,
+  uuid
+) {
+  let params;
+
+  if (oldPassword) {
+    params.old_password = oldPassword;
+  }
+  if (password) {
+    params.password = password;
+  }
+
+  params = {
+    unique_identifier: unique_identifier,
+    uuid: uuid,
+    token: token,
+    name: name,
+    email: email,
+    phone: phone,
+  };
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.put(REGISTER, qs.stringify(params))
+        .then((response) => {
+          console.log(response);
+          // if (data.status === "Success") {
+          //   // dispatch(setDataSession(data));
+          //   resolve(data);
+          // } else {
+          //   reject(data.message);
+          // }
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response);
+          } else if (error.request) {
+            reject(error.request);
+          } else if (error.message) {
+            reject(error.message);
+          }
+        });
+    });
+  };
+}
+
 const setDataMenu = (data) => ({
   type: types.SET_DATA_MENU,
   payload: data,

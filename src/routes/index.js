@@ -26,6 +26,8 @@ import Expedition from "../screens/Expedition";
 import ReviewQueue from "../screens/ReviewQueue";
 import ReviewTicket from "../screens/ReviewTicket";
 import Profile from "../screens/Profile";
+import ProfileEdit from "../screens/ProfileEdit";
+import PasswordEdit from "../screens/PasswordEdit";
 import Antrian from "../screens/Antrian";
 
 function Routes() {
@@ -34,7 +36,7 @@ function Routes() {
       <Switch>
         <Route exact path={"/"} component={Home} />
         <Route path={"/adaptive"} component={Home} />
-        <Route path={"/profile"} component={Profile} />
+        <Route path={"/profile"} component={RouteProfile} />
         <Route path={"/antrian"} component={RouteQueue} />
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
@@ -143,6 +145,17 @@ function RouteQueue() {
     <Switch>
       <Route exact path={path} component={Antrian} />
       <Route path={`${path}/ticket`} component={ReviewTicket} />
+    </Switch>
+  );
+}
+
+function RouteProfile() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Profile} />
+      <Route path={`${path}/edit`} component={ProfileEdit} />
+      <Route path={`${path}/password`} component={PasswordEdit} />
     </Switch>
   );
 }

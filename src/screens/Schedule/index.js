@@ -249,7 +249,7 @@ const Schedule = (props) => {
       // eslint-disable-line no-unused-vars
       (x) => x.time === itemTime
     );
-    const timeSelect = `${status[0].time}-00`;
+    const timeSelect = `${status[0].time}:00`;
     await props.setSlotTime(timeSelect);
 
     let number = (await parseInt(props.dataSlotTime.data[index].order)) + 1;
@@ -343,6 +343,7 @@ const Schedule = (props) => {
   }
 
   async function handleSubmit() {
+    await props.setSelectedDate(selectedDate.format);
     await props.setCustomField(customField);
     await history.push(`${location.pathname}/review`);
   }
