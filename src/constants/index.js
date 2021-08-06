@@ -15,3 +15,6 @@ export const CUSTOM_FIELD = "/api/v2/service/get_custom_field";
 export const GET_TICKET = "/api/v2/ticket/register";
 export const GET_USER = "/api/v2/users/";
 export const GET_QUEUE = "/api/v2/ticket/";
+export const GET_PROMO = "/api/v2/promo/";
+export const GET_CATEGORIES = "/api/v3/organization/categories/";
+export const GET_TYPES = "/api/v3/organization/types/";

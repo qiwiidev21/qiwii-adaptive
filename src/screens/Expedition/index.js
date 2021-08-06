@@ -28,7 +28,7 @@ const Salon = (props) => {
 
   function fetchExpedition(name) {
     const payload = {
-      "f-id_organization_type": 15,
+      "f-id_organization_category": 14,
       "f-show_on_web": 1,
       pagging: 1,
       page: 1,
@@ -41,7 +41,7 @@ const Salon = (props) => {
 
   function fetchMoreSalon(name) {
     const payload = {
-      "f-id_organization_type": 15,
+      "f-id_organization_category": 14,
       "f-show_on_web": 1,
       pagging: 1,
       page: Number(props.dataExpedition.page) + 1,
@@ -59,10 +59,21 @@ const Salon = (props) => {
     setCity(event.target.value);
   }
 
+  const [promo, setPromo] = useState([]);
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(14).then((data) => {
+      setPromo(data);
+    });
+  }
   return (
     <div>
       <Header title="Expedition" back />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">

@@ -28,7 +28,7 @@ const Services = (props) => {
 
   function fetchServices(name) {
     const payload = {
-      "f-id_organization_type": 14,
+      "f-id_organization_category": 8,
       "f-show_on_web": 1,
       pagging: 1,
       page: 1,
@@ -41,7 +41,7 @@ const Services = (props) => {
 
   function fetchMoreServices(name) {
     const payload = {
-      "f-id_organization_type": 14,
+      "f-id_organization_category": 8,
       "f-show_on_web": 1,
       pagging: 1,
       page: Number(props.dataServices.page) + 1,
@@ -58,11 +58,21 @@ const Services = (props) => {
   function handleChanges(event) {
     setCity(event.target.value);
   }
+  const [promo, setPromo] = useState([]);
 
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(8).then((data) => {
+      setPromo(data);
+    });
+  }
   return (
     <div>
       <Header title="Service" back />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">

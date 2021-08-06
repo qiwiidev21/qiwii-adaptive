@@ -12,7 +12,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const Government = (props) => {
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchOrganization();
@@ -28,7 +27,7 @@ const Government = (props) => {
 
   function fetchOrganization(name) {
     const payload = {
-      "f-id_organization_type": 4,
+      "f-id_organization_category": 5,
       "f-show_on_web": 1,
       pagging: 1,
       page: 1,
@@ -41,7 +40,7 @@ const Government = (props) => {
 
   function fetchMoreOrganization(name) {
     const payload = {
-      "f-id_organization_type": 4,
+      "f-id_organization_category": 5,
       "f-show_on_web": 1,
       pagging: 1,
       page: Number(props.dataOrganization.page) + 1,
@@ -58,11 +57,22 @@ const Government = (props) => {
   function handleChanges(event) {
     setCity(event.target.value);
   }
+  const [promo, setPromo] = useState([]);
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(5).then((data) => {
+      setPromo(data);
+    });
+  }
 
   return (
     <div>
       <Header title="Pemerintahan" back />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">

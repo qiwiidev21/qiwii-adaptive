@@ -27,7 +27,7 @@ const TempatWisata = (props) => {
 
   function fetchTempatWisata(name) {
     const payload = {
-      "f-id_organization_type": 9,
+      "f-id_organization_category": 15,
       "f-show_on_web": 1,
       pagging: 1,
       page: 1,
@@ -40,7 +40,7 @@ const TempatWisata = (props) => {
 
   function fetchMoreTempatWisata(name) {
     const payload = {
-      "f-id_organization_type": 9,
+      "f-id_organization_category": 15,
       "f-show_on_web": 1,
       pagging: 1,
       page: Number(props.dataTempatWisata.page) + 1,
@@ -55,10 +55,22 @@ const TempatWisata = (props) => {
     setKeyword(event.target.value);
   }
 
+  const [promo, setPromo] = useState([]);
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(15).then((data) => {
+      setPromo(data);
+    });
+  }
+
   return (
     <div>
       <Header title="Tempat Wisata" back />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">

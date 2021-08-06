@@ -5,3 +5,8 @@
   background-color: #dc3232;
   justify-content: center;
 }
+
+.img-custom {
+  max-width: 100%;
+  height: auto;
+}

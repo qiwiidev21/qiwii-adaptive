@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import { connect } from "react-redux";
@@ -18,11 +18,22 @@ const Entertainment = (props) => {
   function fetchEntertainmentCategory() {
     props.fetchEntertainmentCategory();
   }
+  const [promo, setPromo] = useState([]);
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(12).then((data) => {
+      setPromo(data);
+    });
+  }
 
   return (
     <div>
       <Header back title="Hiburan" />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="d-flex container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 flex-wrap justify-content-center py-5">
         {props.dataMenus.data &&

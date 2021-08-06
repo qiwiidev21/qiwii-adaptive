@@ -12,7 +12,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const PhotoStudio = (props) => {
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchPhotoStudio();
@@ -59,10 +58,22 @@ const PhotoStudio = (props) => {
     setCity(event.target.value);
   }
 
+  const [promo, setPromo] = useState([]);
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(12).then((data) => {
+      setPromo(data);
+    });
+  }
+
   return (
     <div>
-      <Header title="Keuangan" back />
-      <Hero url={url} alt="Qiwii" />
+      <Header title="Photostudio" back />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">

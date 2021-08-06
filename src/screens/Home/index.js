@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import { connect } from "react-redux";
@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 // import { useCookies } from "react-cookie";
 
 const Home = (props) => {
-  const image = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const [promo, setPromo] = useState([]);
 
   useEffect(() => {
     fetchMenuCategory();
@@ -19,11 +19,36 @@ const Home = (props) => {
   function fetchMenuCategory() {
     props.fetchMenuCategory();
   }
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(10).then((data) => {
+      setPromo(data);
+    });
+  }
+
+  useEffect(() => {
+    fetchDataCategories();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataCategories() {
+    props.getCategories();
+  }
+
+  useEffect(() => {
+    fetchDataTypes();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataTypes() {
+    props.getTypes();
+  }
 
   return (
     <div>
       <Header onClick={() => {}} />
-      <Hero url={image} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       {/*  <div className="container">
           <div className="input-form form-group m-2 justify-content-center align-self-center">
             <input
@@ -40,7 +65,7 @@ const Home = (props) => {
             <Link key={index} to={`/${item.navigate.toLowerCase()}`}>
               <div className="card-menu p-3 p-md-4 m-2 align-self-center shadow-sm">
                 <div className="justify-content-center align-items-center">
-                  {item.title === "Expedition" || item.title === "Retail" ? (
+                  {item.title === "Shipping" || item.title === "Retail" ? (
                     <div className="d-flex background">
                       <img
                         src={item.icon}

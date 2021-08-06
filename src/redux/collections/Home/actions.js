@@ -7,10 +7,87 @@ import {
   CUSTOM_FIELD,
   GET_USER,
   GET_QUEUE,
+  GET_PROMO,
+  GET_CATEGORIES,
+  GET_TYPES,
 } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 import { isMockAllowed } from "../../../mocks/Config";
+
+export function getPromo(categoryId) {
+  return () => {
+    return new Promise((resolve, reject) => {
+      const params = {
+        device: "mobile",
+        category: categoryId,
+      };
+      Qiwii.get(`${GET_PROMO}?` + qs.stringify(params))
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data?.data);
+          } else {
+            resolve([]);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+}
+
+const setDataCategories = (data) => ({
+  type: types.SET_DATA_CATEGORIES,
+  payload: data,
+});
+
+export function getCategories(name) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      let params = {};
+      if (name) {
+        params["f-name"] = name;
+      }
+      Qiwii.get(`${GET_CATEGORIES}?` + qs.stringify(params))
+        .then((response) => {
+          if (response.status === 200) {
+            dispatch(setDataCategories(response.data?.data));
+            resolve(response.data?.data);
+          } else {
+            resolve([]);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+}
+
+const setDataTypes = (data) => ({
+  type: types.SET_DATA_TYPES,
+  payload: data,
+});
+
+export function getTypes() {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.get(`${GET_TYPES}`)
+        .then((response) => {
+          if (response.status === 200) {
+            dispatch(setDataTypes(response.data?.data));
+            resolve(response.data?.data);
+          } else {
+            resolve([]);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+}
 
 const setDataSession = (data) => ({
   type: types.SET_DATA_SESSION,

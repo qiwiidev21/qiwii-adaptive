@@ -12,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const Finance = (props) => {
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
+  const url = "https://dev.qiwii.id/files/thumb/49d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchFinance();
@@ -28,7 +28,7 @@ const Finance = (props) => {
 
   function fetchFinance(name) {
     const payload = {
-      "f-id_organization_type": 17,
+      "f-id_organization_category": 4,
       "f-show_on_web": 1,
       pagging: 1,
       page: 1,
@@ -41,7 +41,7 @@ const Finance = (props) => {
 
   function fetchMoreFinance(name) {
     const payload = {
-      "f-id_organization_type": 17,
+      "f-id_organization_category": 4,
       "f-show_on_web": 1,
       pagging: 1,
       page: Number(props.dataFinance.page) + 1,
@@ -59,10 +59,22 @@ const Finance = (props) => {
     setCity(event.target.value);
   }
 
+  const [promo, setPromo] = useState([]);
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(4).then((data) => {
+      setPromo(data);
+    });
+  }
+
   return (
     <div>
       <Header title="Keuangan" back />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">

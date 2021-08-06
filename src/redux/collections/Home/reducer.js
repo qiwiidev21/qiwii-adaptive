@@ -22,6 +22,27 @@ export const dataUserProfile = createReducer(
     },
   }
 );
+export const dataCategories = createReducer(
+  {},
+  {
+    [types.SET_DATA_CATEGORIES](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+
+export const dataTypes = createReducer(
+  {},
+  {
+    [types.SET_DATA_TYPES](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
 
 const initialState = {
   data: [],

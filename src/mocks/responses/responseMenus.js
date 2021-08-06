@@ -12,7 +12,7 @@ const responseMenus = {
   data: [
     {
       id: 1,
-      title: "HealthCare",
+      title: "Health Care",
       navigate: "kesehatan",
       icon: Kesehatan,
     },
@@ -48,7 +48,7 @@ const responseMenus = {
     },
     {
       id: 7,
-      title: "Expedition",
+      title: "Shipping",
       navigate: "expedition",
       icon: Expedition,
     },
@@ -60,7 +60,7 @@ const responseMenus = {
     },
     {
       id: 9,
-      title: "Entertainment",
+      title: "Leisure",
       navigate: "entertainment",
       icon: Bioskop,
     },

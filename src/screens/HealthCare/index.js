@@ -11,8 +11,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const HealthCare = (props) => {
   const [keyword, setKeyword] = useState("");
+  const [promo, setPromo] = useState([]);
   const [city, setCity] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchHealthCare();
@@ -25,6 +25,16 @@ const HealthCare = (props) => {
       fetchHealthCare("");
     }
   }, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    fetchDataPromo();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(1).then((data) => {
+      setPromo(data);
+    });
+  }
 
   function fetchHealthCare(name) {
     const payload = {
@@ -63,7 +73,7 @@ const HealthCare = (props) => {
   return (
     <div>
       <Header title="Kesehatan" back />
-      <Hero url={url} alt="Qiwii" />
+      <Hero url={promo} alt="Qiwii" />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
