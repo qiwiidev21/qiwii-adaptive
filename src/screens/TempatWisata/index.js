@@ -60,7 +60,7 @@ const TempatWisata = (props) => {
       <Header title="Tempat Wisata" back />
       <Hero url={url} alt="Qiwii" />
       <div className="container">
-        <div className="my-3 card-item shadow-sm p-2">
+        <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
             <input
               value={keyword}
@@ -68,11 +68,6 @@ const TempatWisata = (props) => {
               className="form-control"
               onChange={handleChange}
             />
-          </div>
-          <div className="form-group m-2">
-            <select className="form-control">
-              <option>Cari Lokasi</option>
-            </select>
           </div>
         </div>
         <InfiniteScroll
