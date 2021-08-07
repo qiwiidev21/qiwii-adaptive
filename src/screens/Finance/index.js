@@ -11,8 +11,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const Finance = (props) => {
   const [keyword, setKeyword] = useState("");
-  const [city, setCity] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/49d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchFinance();
@@ -54,9 +52,6 @@ const Finance = (props) => {
 
   function handleChange(event) {
     setKeyword(event.target.value);
-  }
-  function handleChanges(event) {
-    setCity(event.target.value);
   }
 
   const [promo, setPromo] = useState([]);

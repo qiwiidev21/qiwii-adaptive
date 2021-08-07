@@ -12,7 +12,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const HealthCare = (props) => {
   const [keyword, setKeyword] = useState("");
   const [promo, setPromo] = useState([]);
-  const [city, setCity] = useState("");
 
   useEffect(() => {
     fetchHealthCare();
@@ -64,10 +63,6 @@ const HealthCare = (props) => {
 
   function handleChange(event) {
     setKeyword(event.target.value);
-  }
-
-  function handleChanges(event) {
-    setCity(event.target.value);
   }
 
   return (

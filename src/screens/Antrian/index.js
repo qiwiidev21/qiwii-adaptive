@@ -5,16 +5,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import PropTypes from "prop-types";
-import moment from "moment";
 import _ from "lodash";
-import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
 import ItemQueue from "../../components/ItemQueue";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
-  let history = useHistory();
 
   useEffect(() => {
     if (props.dataMerchantProfile) {

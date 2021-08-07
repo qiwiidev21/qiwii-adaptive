@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { Button, Container, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
-import { Cookies } from "react-cookie";
 import { useHistory, useLocation } from "react-router-dom";
 
 const ReviewQueue = (props) => {
@@ -44,7 +43,7 @@ const ReviewQueue = (props) => {
 
   useEffect(() => {
     getCookies();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getCookies = async () => {
     const userSession = await sessionStorage.getItem("user");
@@ -367,8 +366,6 @@ const ReviewQueue = (props) => {
   }
 
   function handleLogin() {
-    const date = new Date();
-    const tomorrow = new Date(date.setDate(date.getDate() + 1));
     props
       .loginQiwii(username, phone, password)
       .then(async (user) => {
@@ -396,8 +393,6 @@ const ReviewQueue = (props) => {
   }
 
   function handleRegister() {
-    const date = new Date();
-    const tomorrow = new Date(date.setDate(date.getDate() + 1));
     props
       .registerQiwii(username, email, phone, password)
       .then((user) => {

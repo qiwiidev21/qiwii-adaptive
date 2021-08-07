@@ -3,20 +3,18 @@ import logo from "../../assets/images/logo.png";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
-import { useCookies } from "react-cookie";
 import { Button, Form } from "react-bootstrap";
 // import { Link } from "react-router-dom";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Login(props) {
   let history = useHistory();
-  let location = useLocation();
+  // let location = useLocation();
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [emailError, setUsernameError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [setUserSession] = useCookies(["user"]);
   // console.log(userSession);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,7 +26,6 @@ function Login(props) {
         sessionStorage.setItem("unique_identifier", user.unique_identifier);
         sessionStorage.setItem("user", JSON.stringify(user));
         props.getDataUser(user.unique_identifier, user.uuid, user.token);
-        // setUserSession("user", user, { path: "/adaptive" });
       })
       .catch((error) => {
         if (error.status === 400) {

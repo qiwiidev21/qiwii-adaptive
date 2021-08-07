@@ -2,7 +2,7 @@
  * ItemService Component
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
@@ -16,8 +16,6 @@ function ItemService({ data, index, category, onPress }) {
       ? Logo
       : data.id_icon
   );
-
-  const [setting, setSetting] = useState({});
 
   // useEffect(() => {
   //   if (data) {

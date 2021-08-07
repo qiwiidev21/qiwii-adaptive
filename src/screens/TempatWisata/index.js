@@ -11,7 +11,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const TempatWisata = (props) => {
   const [keyword, setKeyword] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
   useEffect(() => {
     fetchTempatWisata();

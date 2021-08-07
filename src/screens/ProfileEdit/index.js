@@ -7,14 +7,14 @@ import { ActionCreators } from "../../redux/actions";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { Button, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  let history = useHistory();
+  // let history = useHistory();
 
   useEffect(() => {
     if (props.dataMerchantProfile) {

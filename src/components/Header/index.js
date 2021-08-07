@@ -59,16 +59,16 @@ function Header(props) {
 
   const { url } = useRouteMatch();
 
-  const [bgColor, setBGColor] = useState();
+  // const [bgColor, setBGColor] = useState();
   const [sessionStored, setSessionStored] = useState({});
 
-  useEffect(() => {
-    if (props.profile) {
-      if (!_.isEmpty(props.profile)) {
-        setBGColor(props.profile.display.config.main_color);
-      }
-    }
-  }, [props.profile]);
+  // useEffect(() => {
+  //   if (props.profile) {
+  //     if (!_.isEmpty(props.profile)) {
+  //       setBGColor(props.profile.display.config.main_color);
+  //     }
+  //   }
+  // }, [props.profile]);
 
   useEffect(() => {
     getSession();

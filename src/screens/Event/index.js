@@ -11,7 +11,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const Event = (props) => {
   const [keyword, setKeyword] = useState("");
-  const [city, setCity] = useState("");
 
   useEffect(() => {
     fetchEvent();
@@ -54,9 +53,7 @@ const Event = (props) => {
   function handleChange(event) {
     setKeyword(event.target.value);
   }
-  function handleChanges(event) {
-    setCity(event.target.value);
-  }
+
   const [promo, setPromo] = useState([]);
 
   useEffect(() => {
