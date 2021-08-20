@@ -40,7 +40,7 @@ Hero.propTypes = {
 
 Hero.defaultProps = {
   alt: "",
-  url: "",
+  url: [],
 };
 
 export default Hero;
