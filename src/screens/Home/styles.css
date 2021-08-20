@@ -5,12 +5,23 @@
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
   min-width: 2vw;
+  max-width: 22vw;
   min-height: 1vh;
+  /* max-height: 25vh; */
 }
 
 .round {
   min-height: 0.2vh;
+  max-height: 10vh;
   min-width: 2.2vw;
+  max-width: 10vw;
+}
+
+.rounds {
+  min-height: 40%;
+  max-height: 41%;
+  min-width: 50%;
+  max-width: 51%;
 }
 
 .input-form {
@@ -32,6 +43,15 @@
 .background {
   background-color: #ebebeb;
   border-radius: 50%;
+  /* width: 100%; */
+  /* height: 100%; */
+  justify-content: center;
+  align-items: center;
+}
+.backgrounds {
+  background-color: #ebebeb;
+  border-radius: 50%;
+  padding: 18% 18%;
   /* width: 100%; */
   /* height: 100%; */
   justify-content: center;

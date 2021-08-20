@@ -46,7 +46,7 @@ const Entertainment = (props) => {
                   <div className="justify-content-center align-items-center">
                     {item.title.includes("Mall") ||
                     item.title.includes("Gym") ? (
-                      <div className="d-flex background">
+                      <div className="d-flex backgrounds">
                         <img
                           src={item.icon}
                           className="img-fluid round"
