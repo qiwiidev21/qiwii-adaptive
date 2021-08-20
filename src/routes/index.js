@@ -29,6 +29,10 @@ import Profile from "../screens/Profile";
 import ProfileEdit from "../screens/ProfileEdit";
 import PasswordEdit from "../screens/PasswordEdit";
 import Antrian from "../screens/Antrian";
+import Mall from "../screens/Mall";
+import Cafe from "../screens/Cafe";
+import Karaoke from "../screens/Karaoke";
+import Gym from "../screens/Gym";
 
 function Routes() {
   return (
@@ -40,6 +44,10 @@ function Routes() {
         <Route path={"/antrian"} component={RouteQueue} />
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
+        <Route path={"/cafe"} component={RouteCafe} />
+        <Route path={"/gym"} component={RouteGym} />
+        <Route path={"/karaoke"} component={RouteKaraoke} />
+        <Route path={"/mall"} component={RouteMall} />
         <Route path={"/tempatwisata"} component={RouteTempatWisata} />
         <Route path={"/leisure"} component={RouterEntertainment} />
         <Route path={"/photoStudio"} component={RoutePhotoStudio} />
@@ -165,6 +173,46 @@ function RouteMovies() {
   return (
     <Switch>
       <Route exact path={path} component={Movies} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+
+function RouteCafe() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Cafe} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+
+function RouteGym() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Gym} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+
+function RouteKaraoke() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Karaoke} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+
+function RouteMall() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Mall} />
       <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );

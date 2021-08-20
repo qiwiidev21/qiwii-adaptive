@@ -44,7 +44,8 @@ const Entertainment = (props) => {
               >
                 <Link to={`/${item.navigate.toLowerCase()}`}>
                   <div className="justify-content-center align-items-center">
-                    {item.title === "Shipping" || item.title === "Retail" ? (
+                    {item.title.includes("Mall") ||
+                    item.title.includes("Gym") ? (
                       <div className="d-flex background">
                         <img
                           src={item.icon}

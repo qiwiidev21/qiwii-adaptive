@@ -1,6 +1,10 @@
 import Bioskop from "../../assets/images/cinema.png";
 import Event from "../../assets/images/icon-event.png";
 import PhotoStudio from "../../assets/images/foto-studio.png";
+import Gym from "../../assets/images/icon-gym.png";
+import Karaoke from "../../assets/images/karaoke.png";
+import Mall from "../../assets/images/icon-mall.png";
+import Resto from "../../assets/images/tempat-makan.png";
 
 const responseMenus = {
   data: [
@@ -24,21 +28,27 @@ const responseMenus = {
     },
     {
       id: 4,
-      title: "Event",
-      navigate: "events",
-      icon: Event,
+      title: "Karaoke",
+      navigate: "karaoke",
+      icon: Karaoke,
     },
     {
       id: 5,
-      title: "PhotoStudio",
-      navigate: "photoStudio",
-      icon: PhotoStudio,
+      title: "Cafe",
+      navigate: "cafe",
+      icon: Resto,
     },
     {
       id: 6,
-      title: "Bioskop",
-      navigate: "bioskop",
-      icon: Bioskop,
+      title: "Mall",
+      navigate: "mall",
+      icon: Mall,
+    },
+    {
+      id: 7,
+      title: "Gym & Sport Center",
+      navigate: "gym",
+      icon: Gym,
     },
   ],
   message: "Selamat menu berhasil.",
