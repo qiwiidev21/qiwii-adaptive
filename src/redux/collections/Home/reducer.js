@@ -89,6 +89,17 @@ export const dataMenus = createReducer(
   }
 );
 
+export const dataPromo = createReducer(
+  {},
+  {
+    [types.SET_DATA_PROMO](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
+
 export const dataCustomField = createReducer(
   {},
   {

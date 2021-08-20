@@ -61,7 +61,7 @@ const responseMenus = {
     {
       id: 9,
       title: "Leisure",
-      navigate: "entertainment",
+      navigate: "leisure",
       icon: Bioskop,
     },
   ],

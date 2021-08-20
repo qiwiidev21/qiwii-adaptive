@@ -41,7 +41,7 @@ function Routes() {
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
         <Route path={"/tempatwisata"} component={RouteTempatWisata} />
-        <Route path={"/entertainment"} component={RouterEntertainment} />
+        <Route path={"/leisure"} component={RouterEntertainment} />
         <Route path={"/photoStudio"} component={RoutePhotoStudio} />
         <Route path={"/events"} component={RouteEvents} />
         <Route path={"/pemerintahan"} component={RouteGovernment} />

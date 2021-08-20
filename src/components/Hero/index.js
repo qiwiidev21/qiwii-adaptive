@@ -10,23 +10,26 @@ import { Carousel } from "react-responsive-carousel";
 
 function Hero({ url, alt, customStyle }) {
   return (
-    <Carousel
-      autoPlay
-      width={"100%"}
-      centerMode={false}
-      infiniteLoop
-      showThumbs={false}
-      showStatus={false}
-      dynamicHeight
-    >
-      {url.map((it) => (
-        <img
-          src={it.promo_large_link}
-          alt={it.promo_link}
-          className="img-fluid img-custom"
-        />
-      ))}
-    </Carousel>
+    <div className="hero">
+      <Carousel
+        autoPlay
+        width={"100%"}
+        verticalSwipe={"natural"}
+        centerMode
+        showThumbs={false}
+        showStatus={false}
+        centerSlidePercentage={100}
+      >
+        {url.map((it, index) => (
+          <img
+            key={index}
+            src={it.promo_large_link}
+            alt={it.promo_link}
+            className="img-fluid img-custom"
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 }
 

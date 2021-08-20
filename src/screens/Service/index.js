@@ -14,9 +14,9 @@ import _ from "lodash";
 const Service = (props) => {
   const { url } = useRouteMatch();
   const serviceId = typeof url == "string" ? url.substr(url.length - 3) : null;
-  const [banner, setBanner] = useState(
-    "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit"
-  );
+  // const [banner, setBanner] = useState(
+  //   "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit"
+  // );
 
   useEffect(() => {
     fetchServiceMerchant(serviceId);
@@ -36,9 +36,9 @@ const Service = (props) => {
     if (props.dataMerchantProfile) {
       if (!_.isEmpty(props.dataMerchantProfile)) {
         setProfile(props.dataMerchantProfile.data[0]);
-        if (props.dataMerchantProfile.data[0]?.banner) {
-          setBanner(props.dataMerchantProfile.data[0].banner);
-        }
+        // if (props.dataMerchantProfile.data[0]?.banner) {
+        //   setBanner(props.dataMerchantProfile.data[0].banner);
+        // }
       }
     }
   }, [props.dataMerchantProfile]);
@@ -59,8 +59,8 @@ const Service = (props) => {
   return (
     <div>
       <Header back title="Layanan" profile={profile} />
-      <Hero url={banner} alt="Qiwii" />
-      <div className="container">
+      <Hero url={props.dataPromo.data} alt="Qiwii" />
+      <div className="container-custom menu">
         <section>{renderMerchant()}</section>
         <InfiniteScroll
           dataLength={
@@ -102,6 +102,7 @@ Service.propTypes = {
 
 const mapStateToProps = (state) => ({
   dataService: state.dataService,
+  dataPromo: state.dataPromo,
   dataMerchantProfile: state.dataMerchantProfile,
 });
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Header from "../../components/Header";
-import HeroSecond from "../../components/HeroSecond";
+import Hero from "../../components/Hero";
 import PropTypes from "prop-types";
 import {
   useRouteMatch,
@@ -12,7 +12,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
-import launchImage from "../../assets/images/header-qiwii-launch.png";
+// import launchImage from "../../assets/images/header-qiwii-launch.png";
 import { Form, Button } from "react-bootstrap";
 import Dropdown from "react-dropdown";
 import DatePicker from "react-datepicker";
@@ -432,7 +432,8 @@ const Schedule = (props) => {
   return (
     <div>
       <Header back title="Pilih Jadwal" profile={profile} />
-      <HeroSecond url={launchImage} alt="Qiwii" />
+      <Hero url={props.dataPromo.data} alt="Qiwii" />
+      <div className="menu"></div>
       <section>{renderMerchant()}</section>
       <section>{renderCalendar()}</section>
       <section>{renderAntrian()}</section>
@@ -461,6 +462,7 @@ Schedule.defaultProps = {
 
 Schedule.propTypes = {
   dataSlotTime: PropTypes.object,
+  dataPromo: PropTypes.object,
   dataCustomField: PropTypes.object,
   dataServiceDetail: PropTypes.object,
   dataService: PropTypes.object,
@@ -472,6 +474,7 @@ Schedule.propTypes = {
 
 const mapStateToProps = (state) => ({
   dataMerchantProfile: state.dataMerchantProfile,
+  dataPromo: state.dataPromo,
   dataCustomField: state.dataCustomField,
   dataServiceDetail: state.dataServiceDetail,
   dataSlotTime: state.dataSlotTime,

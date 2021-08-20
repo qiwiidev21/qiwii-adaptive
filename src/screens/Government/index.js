@@ -61,8 +61,9 @@ const Government = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function fetchDataPromo() {
-    props.getPromo(5).then((data) => {
-      setPromo(data);
+    props.getPromo(5).then(async (data) => {
+      await setPromo(data);
+      await props.setDataPromo(data);
     });
   }
 
@@ -70,7 +71,7 @@ const Government = (props) => {
     <div>
       <Header title="Pemerintahan" back />
       <Hero url={promo} alt="Qiwii" />
-      <div className="container">
+      <div className="container menu">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
             <input

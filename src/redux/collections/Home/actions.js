@@ -37,6 +37,17 @@ export function getPromo(categoryId) {
   };
 }
 
+export function setDataPromo(data) {
+  return (dispatch) => {
+    dispatch(setPromo(data));
+  };
+}
+
+const setPromo = (data) => ({
+  type: types.SET_DATA_PROMO,
+  payload: data,
+});
+
 const setDataCategories = (data) => ({
   type: types.SET_DATA_CATEGORIES,
   payload: data,

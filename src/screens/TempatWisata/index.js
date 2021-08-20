@@ -61,8 +61,9 @@ const TempatWisata = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function fetchDataPromo() {
-    props.getPromo(15).then((data) => {
-      setPromo(data);
+    props.getPromo(15).then(async (data) => {
+      await setPromo(data);
+      await props.setDataPromo(data);
     });
   }
 
@@ -70,7 +71,7 @@ const TempatWisata = (props) => {
     <div>
       <Header title="Tempat Wisata" back />
       <Hero url={promo} alt="Qiwii" />
-      <div className="container">
+      <div className="container menu">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
             <input

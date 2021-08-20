@@ -30,8 +30,9 @@ const HealthCare = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function fetchDataPromo() {
-    props.getPromo(1).then((data) => {
-      setPromo(data);
+    props.getPromo(1).then(async (data) => {
+      await setPromo(data);
+      await props.setDataPromo(data);
     });
   }
 
@@ -69,7 +70,7 @@ const HealthCare = (props) => {
     <div>
       <Header title="Kesehatan" back />
       <Hero url={promo} alt="Qiwii" />
-      <div className="container">
+      <div className="container menu">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
             <input

@@ -421,7 +421,7 @@ const ReviewQueue = (props) => {
     <div>
       <Header back title="Review Antrian" profile={profile} />
       <section>{renderDetailAntrian()}</section>
-      <div className="container my-5 fixed-bottom">
+      <div className="container  my-5 fixed-bottom">
         <Button
           variant="primary"
           type="submit"

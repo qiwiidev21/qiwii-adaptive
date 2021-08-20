@@ -49,7 +49,8 @@ const Home = (props) => {
     <div>
       <Header onClick={() => {}} />
       <Hero url={promo} alt="Qiwii" />
-      {/*  <div className="container">
+      {/*
+        <div className="container">
           <div className="input-form form-group m-2 justify-content-center align-self-center">
             <input
               placeholder="Cari Merchant"
@@ -59,37 +60,38 @@ const Home = (props) => {
           </div>
         </div>*/}
       {/* Start Of Menu */}
-      <div className="d-flex container col-sm-8 col-md-6 col-lg-5 col-xl-5 col-xs-10 flex-wrap justify-content-center my-5">
-        {props.dataMenu.data &&
-          props.dataMenu.data.map((item, index) => (
-            <Link key={index} to={`/${item.navigate.toLowerCase()}`}>
-              <div className="card-menu p-3 p-md-4 m-2 align-self-center shadow-sm">
-                <div className="justify-content-center align-items-center">
-                  {item.title === "Shipping" || item.title === "Retail" ? (
-                    <div className="d-flex background">
+      <div className="menu">
+        <div className="d-flex container-custom justify-content-center flex-wrap flex-row py-5 row">
+          {props.dataMenu.data &&
+            props.dataMenu.data.map((item, index) => (
+              <div
+                key={index}
+                className="card-menu col-3 p-3 m-2 shadow-sm d-flex"
+              >
+                <Link to={`/${item.navigate.toLowerCase()}`}>
+                  <div className="justify-content-center align-items-center">
+                    {item.title === "Shipping" || item.title === "Retail" ? (
+                      <div className="d-flex background">
+                        <img
+                          src={item.icon}
+                          className="img-fluid round"
+                          alt={item.title}
+                        />
+                      </div>
+                    ) : (
                       <img
                         src={item.icon}
                         className="img-fluid round"
-                        width="90"
-                        height="45"
                         alt={item.title}
                       />
-                    </div>
-                  ) : (
-                    <img
-                      src={item.icon}
-                      className="img-fluid round"
-                      width="90"
-                      height="45"
-                      alt={item.title}
-                    />
-                  )}
+                    )}
 
-                  <h6 className="pt-3 card-title">{item.title}</h6>
-                </div>
+                    <h6 className="pt-3 card-title">{item.title}</h6>
+                  </div>
+                </Link>
               </div>
-            </Link>
-          ))}
+            ))}
+        </div>
       </div>
       {/* End Of Menu */}
     </div>
