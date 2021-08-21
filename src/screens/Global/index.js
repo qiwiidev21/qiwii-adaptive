@@ -61,10 +61,9 @@ const Salon = (props) => {
 
   return (
     <div>
-      <Header title="Retail" back />
-      <Hero url={url} alt="Qiwii" />
+      <Header title="Cari Merchant" back />
       <div className="container">
-        <div className="my-3 card-item shadow-sm p-2">
+        <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
             <input
               value={keyword}
@@ -73,36 +72,30 @@ const Salon = (props) => {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group m-2">
-            <input
-              value={city}
-              placeholder="Cari Lokasi"
-              className="form-control"
-              onChange={handleChanges}
-            />
-          </div>
         </div>
-        <InfiniteScroll
-          dataLength={props.dataRetail.data.length ?? []}
-          next={fetchMoreRetail}
-          hasMore={
-            Number(props.dataRetail.page) < props.dataRetail.total
-              ? true
-              : false
-          }
-          loader={<h4>Loading...</h4>}
-        >
-          {props.dataRetail.data &&
-            props.dataRetail.data.map((item, index) => (
-              <ItemMerchant
-                key={index}
-                data={item}
-                index={index}
-                category="retail"
-                onPress={(id) => props.fetchMerchantProfile(id)}
-              />
-            ))}
-        </InfiniteScroll>
+        {/*
+          <InfiniteScroll
+            dataLength={props.dataRetail.data.length ?? []}
+            next={fetchMoreRetail}
+            hasMore={
+              Number(props.dataRetail.page) < props.dataRetail.total
+                ? true
+                : false
+            }
+            loader={<h4>Loading...</h4>}
+          >
+            {props.dataRetail.data &&
+              props.dataRetail.data.map((item, index) => (
+                <ItemMerchant
+                  key={index}
+                  data={item}
+                  index={index}
+                  category="retail"
+                  onPress={(id) => props.fetchMerchantProfile(id)}
+                />
+              ))}
+          </InfiniteScroll>
+          */}
       </div>
     </div>
   );

@@ -54,9 +54,9 @@ const Home = (props) => {
     setKeyword(event.target.value);
     // if (textInput.current) {
     //   textInput.current?.focus();
-    setTimeout(() => {
-      history.push(`${location.pathname}global`);
-    }, 1000);
+    // setTimeout(() => {
+    //   history.push(`${location.pathname}global`);
+    // }, 1000);
     // }
   }
 
@@ -72,18 +72,20 @@ const Home = (props) => {
   return (
     <div>
       <Header onClick={() => {}} />
+      <div className="d-flex container-custom input-form form-group px-2 py-3 justify-content-center align-self-center">
+        <button className="btn-custom-slot btn-primary-outline" onClick={() => history.push(`${location.pathname}global`)}>
+            <input
+              ref={textInput}
+              value={keyword}
+              placeholder="Cari Merchant"
+              className="form-control"
+              onChange={handleChange}
+              />
+        </button>
+      </div>
       <Hero url={promo} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="menu">
-        <div className="d-flex container input-form form-group p-5 m-2 justify-content-center align-self-center">
-          <input
-            ref={textInput}
-            value={keyword}
-            placeholder="Cari Merchant"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </div>
         <div className="d-flex container-custom justify-content-center flex-wrap flex-row py-2 row">
           {props.dataMenu.data &&
             props.dataMenu.data.map((item, index) => (
