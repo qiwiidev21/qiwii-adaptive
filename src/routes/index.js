@@ -16,6 +16,7 @@ import Events from "../screens/Event";
 import Government from "../screens/Government";
 import Finance from "../screens/Finance";
 import Salon from "../screens/Salon";
+import Global from "../screens/Global";
 import Schedule from "../screens/Schedule";
 import Service from "../screens/Service";
 import Services from "../screens/Services";
@@ -62,6 +63,7 @@ function Routes() {
         <Route path={"/service"} component={Service} />
         <Route path={"/retail"} component={RouteRetail} />
         <Route path={"/expedition"} component={RouteExpedition} />
+        <Route path={"/global"} component={Global} />
       </Switch>
     </Router>
   );

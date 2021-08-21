@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import "./styles.css";
 import PropTypes from "prop-types";
 // import { useCookies } from "react-cookie";
 
 const Home = (props) => {
   const [promo, setPromo] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const textInput = useRef(null);
+
+  let history = useHistory();
+  let location = useLocation();
 
   useEffect(() => {
     fetchMenuCategory();
@@ -45,23 +50,41 @@ const Home = (props) => {
     props.getTypes();
   }
 
+  function handleChange(event) {
+    setKeyword(event.target.value);
+    // if (textInput.current) {
+    //   textInput.current?.focus();
+    setTimeout(() => {
+      history.push(`${location.pathname}global`);
+    }, 1000);
+    // }
+  }
+
+  // useEffect(() => {
+  //   if (textInput.current) {
+  //     textInput.current?.focus();
+  //     setTimeout(() => {
+  //       history.push(`${location.pathname}global`)
+  //     }, 1000);
+  //   }
+  // }, [textInput]);
+
   return (
     <div>
       <Header onClick={() => {}} />
       <Hero url={promo} alt="Qiwii" />
-      {/*
-        <div className="container">
-          <div className="input-form form-group m-2 justify-content-center align-self-center">
-            <input
-              placeholder="Cari Merchant"
-              className="form-control"
-              onChange={() => {}}
-            />
-          </div>
-        </div>*/}
       {/* Start Of Menu */}
       <div className="menu">
-        <div className="d-flex container-custom justify-content-center flex-wrap flex-row py-5 row">
+        <div className="d-flex container input-form form-group p-5 m-2 justify-content-center align-self-center">
+          <input
+            ref={textInput}
+            value={keyword}
+            placeholder="Cari Merchant"
+            className="form-control"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="d-flex container-custom justify-content-center flex-wrap flex-row py-2 row">
           {props.dataMenu.data &&
             props.dataMenu.data.map((item, index) => (
               <div

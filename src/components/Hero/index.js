@@ -14,8 +14,8 @@ function Hero({ url, alt, customStyle }) {
       <Carousel
         autoPlay
         width={"100%"}
-        verticalSwipe={"natural"}
         centerMode
+        infiniteLoop
         showThumbs={false}
         showStatus={false}
         centerSlidePercentage={100}
