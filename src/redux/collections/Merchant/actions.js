@@ -113,6 +113,16 @@ const setDataMoreExpedition = (data) => ({
   payload: data,
 });
 
+const setDataGlobal = (data) => ({
+  type: types.SET_DATA_GLOBAL,
+  payload: data,
+});
+
+const setDataMoreGlobal = (data) => ({
+  type: types.SET_DATA_MORE_GLOBAL,
+  payload: data,
+});
+
 const setDataIsNull = () => ({
   type: types.SET_DATA_IS_NULL,
 });
@@ -158,6 +168,9 @@ export function fetchOrganizations(payload, organization) {
                 case "expedition":
                   dispatch(setDataExpedition(response.data));
                   break;
+                case "global":
+                  dispatch(setDataGlobal(response.data));
+                  break;
                 default:
                   dispatch(setDataHealthCare(response.data));
               }
@@ -196,6 +209,9 @@ export function fetchOrganizations(payload, organization) {
                   break;
                 case "expedition":
                   dispatch(setDataMoreExpedition(response.data));
+                  break;
+                case "global":
+                  dispatch(setDataMoreGlobal(response.data));
                   break;
                 default:
                   dispatch(setDataMoreHealthCare(response.data));

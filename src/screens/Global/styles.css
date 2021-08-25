@@ -11,7 +11,23 @@
   width: 100px;
   height: 100px;
 }
-
+.tab-custom {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  width: 50%;
+  cursor: pointer;
+}
+.tab-custom-selected {
+  background: rgb(143 22 25);
+  border-color: rgb(143 22 25);
+  color: #f8f9fa;
+  border-radius: 5px 5px 0 0;
+}
 .card-info {
   max-width: 85%;
 }

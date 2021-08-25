@@ -175,6 +175,30 @@ export const dataTempatWisata = createReducer(initialState, {
   },
 });
 
+export const dataGlobal = createReducer(initialState, {
+  [types.SET_DATA_GLOBAL](state, action) {
+    return {
+      data: action.payload.data,
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_MORE_GLOBAL](state, action) {
+    return {
+      data: state.data.concat(action.payload.data),
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_IS_NULL](state, action) {
+    return {
+      data: [],
+      page: 0,
+      total: 0,
+    };
+  },
+});
+
 export const dataServices = createReducer(initialState, {
   [types.SET_DATA_SERVICES](state, action) {
     return {

@@ -73,14 +73,17 @@ const Home = (props) => {
     <div>
       <Header onClick={() => {}} />
       <div className="d-flex container-custom input-form form-group px-2 py-3 justify-content-center align-self-center">
-        <button className="btn-custom-slot btn-primary-outline" onClick={() => history.push(`${location.pathname}global`)}>
-            <input
-              ref={textInput}
-              value={keyword}
-              placeholder="Cari Merchant"
-              className="form-control"
-              onChange={handleChange}
-              />
+        <button
+          className="btn-custom-slot btn-primary-outline"
+          onClick={() => history.push(`${location.pathname}global`)}
+        >
+          <input
+            ref={textInput}
+            value={keyword}
+            placeholder="Search"
+            className="form-control"
+            onChange={handleChange}
+          />
         </button>
       </div>
       <Hero url={promo} alt="Qiwii" />

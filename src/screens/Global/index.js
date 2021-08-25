@@ -8,27 +8,26 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
   const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
 
-  useEffect(() => {
-    fetchRetail();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   fetchGlobalMerchant();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (keyword.length >= 3) {
-      fetchRetail(keyword);
-    } else {
-      fetchRetail("");
+      fetchGlobalMerchant(keyword);
     }
   }, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function fetchRetail(name) {
+  function fetchGlobalMerchant(name) {
     const payload = {
-      "f-id_organization_type": 18,
       "f-show_on_web": 1,
       pagging: 1,
       page: 1,
@@ -36,66 +35,78 @@ const Salon = (props) => {
     if (keyword !== "") {
       payload["f-name"] = name;
     }
-    props.fetchOrganizations(payload, "retail");
+    props.fetchOrganizations(payload, "global");
   }
 
   function fetchMoreRetail(name) {
     const payload = {
-      "f-id_organization_type": 18,
       "f-show_on_web": 1,
       pagging: 1,
-      page: Number(props.dataRetail.page) + 1,
+      page: Number(props.dataGlobal.page) + 1,
     };
     if (keyword !== "") {
       payload["f-name"] = name;
     }
-    props.fetchOrganizations(payload, "retail");
+    props.fetchOrganizations(payload, "global");
   }
 
   function handleChange(event) {
     setKeyword(event.target.value);
   }
-  function handleChanges(event) {
-    setCity(event.target.value);
-  }
 
   return (
     <div>
-      <Header title="Cari Merchant" back />
+      <Header title="" back />
       <div className="container">
         <div className="my-3 shadow-sm p-2">
           <div className="form-group m-2">
             <input
               value={keyword}
-              placeholder="Cari Nama Merchant"
+              placeholder="Search"
               className="form-control"
               onChange={handleChange}
             />
           </div>
         </div>
-        {/*
-          <InfiniteScroll
-            dataLength={props.dataRetail.data.length ?? []}
-            next={fetchMoreRetail}
-            hasMore={
-              Number(props.dataRetail.page) < props.dataRetail.total
-                ? true
-                : false
-            }
-            loader={<h4>Loading...</h4>}
-          >
-            {props.dataRetail.data &&
-              props.dataRetail.data.map((item, index) => (
-                <ItemMerchant
-                  key={index}
-                  data={item}
-                  index={index}
-                  category="retail"
-                  onPress={(id) => props.fetchMerchantProfile(id)}
-                />
-              ))}
-          </InfiniteScroll>
-          */}
+        <div>
+          <Tabs>
+            <TabList>
+              <Tab className="tab-custom">Merchant</Tab>
+              <Tab className="tab-custom">Layanan</Tab>
+            </TabList>
+
+            <TabPanel>
+              <div>
+                {props.dataGlobal?.data && (
+                  <InfiniteScroll
+                    dataLength={props.dataGlobal.data.length ?? []}
+                    next={fetchMoreRetail}
+                    hasMore={
+                      Number(props.dataGlobal.page) < props.dataGlobal.total
+                        ? true
+                        : false
+                    }
+                    loader={<h4>Loading...</h4>}
+                  >
+                    {props.dataGlobal.data &&
+                      props.dataGlobal.data.map((item, index) => (
+                        <ItemMerchant
+                          key={index}
+                          data={item}
+                          index={index}
+                          category="retail"
+                          onPress={(id) => props.fetchMerchantProfile(id)}
+                        />
+                      ))}
+                  </InfiniteScroll>
+                )}
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <h2>Any content 2</h2>
+            </TabPanel>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
@@ -110,7 +121,7 @@ Salon.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  dataRetail: state.dataRetail,
+  dataGlobal: state.dataGlobal,
 });
 
 const mapDispatchToProps = (dispatch) => {
