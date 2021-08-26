@@ -33,7 +33,7 @@ jest.mock("react-router-dom", () => ({
     id: 423,
   }),
   useRouteMatch: () => ({
-    pathname: "localhost:3000/adaptive/kesehatan",
+    pathname: "localhost:3000/kesehatan",
   }),
 }));
 

@@ -37,10 +37,9 @@ import Gym from "../screens/Gym";
 
 function Routes() {
   return (
-    <Router basename={"/adaptive"}>
+    <Router basename={"/"}>
       <Switch>
         <Route exact path={"/"} component={Home} />
-        <Route path={"/adaptive"} component={Home} />
         <Route path={"/profile"} component={RouteProfile} />
         <Route path={"/antrian"} component={RouteQueue} />
         <Route path={"/kesehatan"} component={RouterHealth} />

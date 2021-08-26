@@ -18,6 +18,7 @@ function Hero({ url, alt, customStyle }) {
         infiniteLoop
         showThumbs={false}
         showStatus={false}
+        showArrows={false}
         centerSlidePercentage={100}
       >
         {url.map((it, index) => (

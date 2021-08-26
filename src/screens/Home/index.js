@@ -96,7 +96,7 @@ const Home = (props) => {
                 key={index}
                 className="card-menu col-3 p-3 m-2 shadow-sm d-flex"
               >
-                <Link to={`/${item.navigate.toLowerCase()}`}>
+                <Link to={`${item.navigate.toLowerCase()}`}>
                   <div className="justify-content-center align-items-center">
                     {item.title === "Shipping" || item.title === "Retail" ? (
                       <div className="d-flex background">

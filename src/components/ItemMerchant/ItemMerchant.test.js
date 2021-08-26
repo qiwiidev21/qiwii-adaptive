@@ -8,6 +8,6 @@ test("renders ItemMerchant component", () => {
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useRouteMatch: () => ({
-    pathname: "localhost:3000/adaptive/kesehatan",
+    pathname: "localhost:3000/kesehatan",
   }),
 }));

@@ -1,2 +1,2 @@
 import { createBrowserHistory } from "history";
-export default createBrowserHistory({ basename: "/adaptive" });
+export default createBrowserHistory({ basename: "/" });
