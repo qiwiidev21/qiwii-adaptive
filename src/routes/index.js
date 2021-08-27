@@ -62,7 +62,7 @@ function Routes() {
         <Route path={"/service"} component={Service} />
         <Route path={"/retail"} component={RouteRetail} />
         <Route path={"/expedition"} component={RouteExpedition} />
-        <Route path={"/global"} component={Global} />
+        <Route path={"/global"} component={RouteGlobal} />
       </Switch>
     </Router>
   );
@@ -143,6 +143,15 @@ function RouterHealth() {
   return (
     <Switch>
       <Route exact path={path} component={HealthCare} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+function RouteGlobal() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Global} />
       <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );

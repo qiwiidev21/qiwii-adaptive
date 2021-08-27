@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import ItemMerchant from "../../components/ItemMerchant";
+import ItemService from "../../components/ItemService";
 import Hero from "../../components/Hero";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -14,15 +15,11 @@ import "react-tabs/style/react-tabs.css";
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
-  const url = "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit";
-
-  // useEffect(() => {
-  //   fetchGlobalMerchant();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (keyword.length >= 3) {
       fetchGlobalMerchant(keyword);
+      fetchGlobalServices(keyword);
     }
   }, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -32,10 +29,22 @@ const Salon = (props) => {
       pagging: 1,
       page: 1,
     };
-    if (keyword !== "") {
+    if (name !== "") {
       payload["f-name"] = name;
     }
     props.fetchOrganizations(payload, "global");
+  }
+  function fetchGlobalServices(name) {
+    const payload = {
+      pagging: 1,
+      show_in_web: 1,
+      organization_show_on_web: 1,
+      "f-show_on_web": 1,
+    };
+    if (name !== "") {
+      payload.name = name;
+    }
+    props.fetchServices(payload, "global");
   }
 
   function fetchMoreRetail(name) {
@@ -103,7 +112,32 @@ const Salon = (props) => {
               </div>
             </TabPanel>
             <TabPanel>
-              <h2>Any content 2</h2>
+              <div>
+                {props.dataGlobal?.data && (
+                  <InfiniteScroll
+                    dataLength={props.dataGlobalService.data.length ?? []}
+                    next={fetchMoreRetail}
+                    hasMore={
+                      Number(props.dataGlobalService.page) <
+                      props.dataGlobalService.total
+                        ? true
+                        : false
+                    }
+                    loader={<h4>Loading...</h4>}
+                  >
+                    {props.dataGlobalService.data &&
+                      props.dataGlobalService.data.map((item, index) => (
+                        <ItemService
+                          key={index}
+                          data={item}
+                          index={index}
+                          category="global"
+                          onPress={(item) => props.selectedService(item)}
+                        />
+                      ))}
+                  </InfiniteScroll>
+                )}
+              </div>
             </TabPanel>
           </Tabs>
         </div>
@@ -114,14 +148,23 @@ const Salon = (props) => {
 
 Salon.defaultProps = {
   fetchOrganizations: () => {},
+  fetchServices: () => {},
+  selectedService: () => {},
+  dataGlobal: {},
+  dataGlobalService: {},
 };
 
 Salon.propTypes = {
   fetchOrganizations: PropTypes.func,
+  fetchServices: PropTypes.func,
+  selectedService: PropTypes.func,
+  dataGlobal: PropTypes.object,
+  dataGlobalService: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   dataGlobal: state.dataGlobal,
+  dataGlobalService: state.dataGlobalService,
 });
 
 const mapDispatchToProps = (dispatch) => {

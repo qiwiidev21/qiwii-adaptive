@@ -1,5 +1,9 @@
 import * as types from "../types";
-import { ORGANIZATION, MERCHANT_PROFILE } from "../../../constants";
+import {
+  ORGANIZATION,
+  MERCHANT_PROFILE,
+  GET_LAYANAN,
+} from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 
@@ -226,6 +230,30 @@ export function fetchOrganizations(payload, organization) {
         .catch((error) => {
           reject(error);
         });
+    });
+  };
+}
+
+const setDataGlobalServices = (data) => ({
+  type: types.SET_DATA_GLOBAL_SERVICE,
+  payload: data,
+});
+
+export function fetchServices(payload, serviceName) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.get(GET_LAYANAN + qs.stringify(payload)).then((response) => {
+        if (response.status === 200) {
+          if (Number(response.data.current_page) <= 1) {
+            switch (serviceName) {
+              case "global":
+                dispatch(setDataGlobalServices(response.data));
+                break;
+              default:
+            }
+          }
+        }
+      });
     });
   };
 }

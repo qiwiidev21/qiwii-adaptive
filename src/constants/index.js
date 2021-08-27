@@ -18,3 +18,4 @@ export const GET_QUEUE = "/api/v2/ticket/";
 export const GET_PROMO = "/api/v2/promo/";
 export const GET_CATEGORIES = "/api/v3/organization/categories/";
 export const GET_TYPES = "/api/v3/organization/types/";
+export const GET_LAYANAN = "/api/v2/service/get_all?";

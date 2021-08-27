@@ -17,7 +17,6 @@ function ItemService({ data, index, category, onPress }) {
   );
 
   const [setting, setSetting] = useState({});
-
   useEffect(() => {
     if (data) {
       handleJson(data);
@@ -42,7 +41,13 @@ function ItemService({ data, index, category, onPress }) {
           className="btn-custom btn-primary-outline"
           onClick={() => {
             onPress(data);
-            history.push(`${location.pathname}/${data.id}`);
+            if (category === "global") {
+              history.push(
+                `${location.pathname}/${data.id_organization}/${data.id}`
+              );
+            } else {
+              history.push(`${location.pathname}/${data.id}`);
+            }
           }}
         >
           <h6>{data.company_name}</h6>
@@ -50,7 +55,13 @@ function ItemService({ data, index, category, onPress }) {
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
-            history.push(`${location.pathname}/${data.id}`);
+            if (category === "global") {
+              history.push(
+                `${location.pathname}/${data.id_organization}/${data.id}`
+              );
+            } else {
+              history.push(`${location.pathname}/${data.id}`);
+            }
             onPress(data);
           }}
         >
@@ -59,17 +70,21 @@ function ItemService({ data, index, category, onPress }) {
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
-            history.push(`${location.pathname}/${data.id}`);
+            if (category === "global") {
+              history.push(
+                `${location.pathname}/${data.id_organization}/${data.id}`
+              );
+            } else {
+              history.push(`${location.pathname}/${data.id}`);
+            }
             onPress(data);
           }}
         >
-          <p className="unit-address">
-            Saat ini ada{" "}
-            {setting.checkin === 1
-              ? data.front_queue_active.checkin
-              : data.front_queue_active.new}{" "}
-            orang yang mengantri
-          </p>
+          {
+            <p className="unit-address">
+              Saat ini ada {data.queue} orang yang mengantri
+            </p>
+          }
         </button>
       </div>
     </div>
