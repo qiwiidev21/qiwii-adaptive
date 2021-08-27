@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import merchantNull from "../../assets/images/merchant_null.png";
+import serviceNull from "../../assets/images/service_null.png";
 
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -20,6 +22,14 @@ const Salon = (props) => {
     if (keyword.length >= 3) {
       fetchGlobalMerchant(keyword);
       fetchGlobalServices(keyword);
+    } else {
+      const data = {
+        data: [],
+        page: 0,
+        total: 10,
+      };
+      props.setDataGlobalServices(data);
+      props.setDataGlobal(data);
     }
   }, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -86,7 +96,7 @@ const Salon = (props) => {
 
             <TabPanel>
               <div>
-                {props.dataGlobal?.data && (
+                {props.dataGlobal?.data.length && keyword.length > 1 ? (
                   <InfiniteScroll
                     dataLength={props.dataGlobal.data.length ?? []}
                     next={fetchMoreRetail}
@@ -108,12 +118,14 @@ const Salon = (props) => {
                         />
                       ))}
                   </InfiniteScroll>
+                ) : (
+                  <img src={merchantNull} className="img-fluid" />
                 )}
               </div>
             </TabPanel>
             <TabPanel>
               <div>
-                {props.dataGlobal?.data && (
+                {props.dataGlobal?.data.length && keyword.length > 1 ? (
                   <InfiniteScroll
                     dataLength={props.dataGlobalService.data.length ?? []}
                     next={fetchMoreRetail}
@@ -136,6 +148,8 @@ const Salon = (props) => {
                         />
                       ))}
                   </InfiniteScroll>
+                ) : (
+                  <img src={serviceNull} className="img-fluid" />
                 )}
               </div>
             </TabPanel>

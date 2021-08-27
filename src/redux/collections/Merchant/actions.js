@@ -117,7 +117,7 @@ const setDataMoreExpedition = (data) => ({
   payload: data,
 });
 
-const setDataGlobal = (data) => ({
+export const setDataGlobal = (data) => ({
   type: types.SET_DATA_GLOBAL,
   payload: data,
 });
@@ -228,13 +228,14 @@ export function fetchOrganizations(payload, organization) {
           }
         })
         .catch((error) => {
+          dispatch(setDataIsNull());
           reject(error);
         });
     });
   };
 }
 
-const setDataGlobalServices = (data) => ({
+export const setDataGlobalServices = (data) => ({
   type: types.SET_DATA_GLOBAL_SERVICE,
   payload: data,
 });
@@ -242,18 +243,23 @@ const setDataGlobalServices = (data) => ({
 export function fetchServices(payload, serviceName) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
-      Qiwii.get(GET_LAYANAN + qs.stringify(payload)).then((response) => {
-        if (response.status === 200) {
-          if (Number(response.data.current_page) <= 1) {
-            switch (serviceName) {
-              case "global":
-                dispatch(setDataGlobalServices(response.data));
-                break;
-              default:
+      Qiwii.get(GET_LAYANAN + qs.stringify(payload))
+        .then((response) => {
+          if (response.status === 200) {
+            if (Number(response.data.current_page) <= 1) {
+              switch (serviceName) {
+                case "global":
+                  dispatch(setDataGlobalServices(response.data));
+                  break;
+                default:
+              }
             }
           }
-        }
-      });
+        })
+        .catch((error) => {
+          dispatch(setDataIsNull());
+          reject(error);
+        });
     });
   };
 }
