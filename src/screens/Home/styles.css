@@ -7,6 +7,11 @@
   min-width: 2vw;
   max-width: 22vw;
   min-height: 1vh;
+  padding: 3rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  margin-left: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
   /* max-height: 25vh; */
 }
 
@@ -30,7 +35,6 @@
 
 .menu {
   position: relative;
-  padding-top: 35%;
 }
 .card-title {
   font-family: "Rubik Normal";

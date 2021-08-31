@@ -92,16 +92,18 @@ const TempatWisata = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          {props.dataTempatWisata.data &&
-            props.dataTempatWisata.data.map((item, index) => (
-              <ItemMerchant
-                key={index}
-                data={item}
-                index={index}
-                category="tempatwisata"
-                onPress={(id) => props.fetchMerchantProfile(id)}
-              />
-            ))}
+          <div className="flatlist" style={{flex: 1}}>
+            {props.dataTempatWisata.data &&
+              props.dataTempatWisata.data.map((item, index) => (
+                <ItemMerchant
+                  key={index}
+                  data={item}
+                  index={index}
+                  category="tempatwisata"
+                  onPress={(id) => props.fetchMerchantProfile(id)}
+                  />
+              ))}
+          </div>
         </InfiniteScroll>
       </div>
     </div>

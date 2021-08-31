@@ -1,7 +1,30 @@
 .bg-primary {
   background-color: #8f1619;
 }
+.nav-form {
+  min-width: 60vw;
+}
 
+@media (min-width: 260px) {
+  .nav-form {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .nav-form {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .nav-form {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .nav-form {
+    max-width: 1140px;
+  }
+}
 .title {
   margin-top: 2px;
   font-family: "Rubik";

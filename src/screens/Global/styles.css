@@ -4,7 +4,10 @@
   height: 100px;
   max-height: 110px;
 }
-
+.placeholder {
+  height: auto;
+  width: 100%;
+}
 .card-icon {
   border-top-left-radius: 0.8rem;
   border-bottom-left-radius: 0.8rem;

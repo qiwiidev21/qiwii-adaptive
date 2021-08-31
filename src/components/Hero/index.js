@@ -10,7 +10,7 @@ import { Carousel } from "react-responsive-carousel";
 
 function Hero({ url, alt, customStyle }) {
   return (
-    <div className="hero">
+    <div className="container" style={{paddingTop: 10}}>
       <Carousel
         autoPlay
         width={"100%"}

@@ -2,7 +2,7 @@
  * ItemService Component
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
@@ -16,14 +16,14 @@ function ItemService({ data, index, category, onPress }) {
       : data.id_icon
   );
 
-  const [setting, setSetting] = useState({});
-  useEffect(() => {
-    if (data) {
-      handleJson(data);
-    }
-  }, [data]);
+  // const [setting, setSetting] = useState({});
+  // useEffect(() => {
+  //   if (data) {
+  //     handleJson(data);
+  //   }
+  // }, [data]);
 
-  const handleJson = (data) => setSetting(JSON.parse(data.setting));
+  // const handleJson = (data) => setSetting(JSON.parse(data.setting));
   let history = useHistory();
   let location = useLocation();
   return (

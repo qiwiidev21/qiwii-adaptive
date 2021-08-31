@@ -90,16 +90,18 @@ const Services = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          {props.dataServices.data &&
-            props.dataServices.data.map((item, index) => (
-              <ItemMerchant
-                key={index}
-                data={item}
-                index={index}
-                category="services"
-                onPress={(id) => props.fetchMerchantProfile(id)}
-              />
-            ))}
+          <div className="flatlist" style={{flex: 1}}>
+            {props.dataServices.data &&
+              props.dataServices.data.map((item, index) => (
+                <ItemMerchant
+                  key={index}
+                  data={item}
+                  index={index}
+                  category="services"
+                  onPress={(id) => props.fetchMerchantProfile(id)}
+                  />
+              ))}
+          </div>
         </InfiniteScroll>
       </div>
     </div>

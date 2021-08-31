@@ -92,16 +92,18 @@ const Salon = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          {props.dataRetail.data &&
-            props.dataRetail.data.map((item, index) => (
-              <ItemMerchant
-                key={index}
-                data={item}
-                index={index}
-                category="retail"
-                onPress={(id) => props.fetchMerchantProfile(id)}
-              />
-            ))}
+          <div className="flatlist" style={{flex: 1}}>
+            {props.dataRetail.data &&
+              props.dataRetail.data.map((item, index) => (
+                <ItemMerchant
+                  key={index}
+                  data={item}
+                  index={index}
+                  category="retail"
+                  onPress={(id) => props.fetchMerchantProfile(id)}
+                  />
+              ))}
+          </div>
         </InfiniteScroll>
       </div>
     </div>

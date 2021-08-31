@@ -92,16 +92,18 @@ const PhotoStudio = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          {props.dataPhotos.data &&
-            props.dataPhotos.data.map((item, index) => (
-              <ItemMerchant
-                key={index}
-                data={item}
-                index={index}
-                category="photoStudio"
-                onPress={(id) => props.fetchMerchantProfile(id)}
-              />
-            ))}
+          <div className="flatlist" style={{flex: 1}}>
+            {props.dataPhotos.data &&
+              props.dataPhotos.data.map((item, index) => (
+                <ItemMerchant
+                  key={index}
+                  data={item}
+                  index={index}
+                  category="photoStudio"
+                  onPress={(id) => props.fetchMerchantProfile(id)}
+                  />
+              ))}
+          </div>
         </InfiniteScroll>
       </div>
     </div>

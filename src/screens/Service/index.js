@@ -60,7 +60,7 @@ const Service = (props) => {
     <div>
       <Header back title="Layanan" profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
-      <div className="container-custom menu">
+      <div className="container menu">
         <section>{renderMerchant()}</section>
         <InfiniteScroll
           dataLength={

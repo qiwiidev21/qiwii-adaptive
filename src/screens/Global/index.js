@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import ItemMerchant from "../../components/ItemMerchant";
 import ItemService from "../../components/ItemService";
-import Hero from "../../components/Hero";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
@@ -16,7 +15,6 @@ import serviceNull from "../../assets/images/service_null.png";
 
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
-  const [city, setCity] = useState("");
 
   useEffect(() => {
     if (keyword.length >= 3) {
@@ -75,18 +73,8 @@ const Salon = (props) => {
 
   return (
     <div>
-      <Header title="" back />
+      <Header title="" back search value={keyword} onChange={handleChange}/>
       <div className="container">
-        <div className="my-3 shadow-sm p-2">
-          <div className="form-group m-2">
-            <input
-              value={keyword}
-              placeholder="Search"
-              className="form-control"
-              onChange={handleChange}
-            />
-          </div>
-        </div>
         <div>
           <Tabs>
             <TabList>
@@ -119,7 +107,7 @@ const Salon = (props) => {
                       ))}
                   </InfiniteScroll>
                 ) : (
-                  <img src={merchantNull} className="img-fluid" />
+                  <img src={merchantNull} className="img-fluid placeholder" alt="Merchant not found"/>
                 )}
               </div>
             </TabPanel>
@@ -149,7 +137,7 @@ const Salon = (props) => {
                       ))}
                   </InfiniteScroll>
                 ) : (
-                  <img src={serviceNull} className="img-fluid" />
+                  <img src={serviceNull} className="img-fluid placeholder" alt="Service not found"/>
                 )}
               </div>
             </TabPanel>

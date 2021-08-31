@@ -72,7 +72,7 @@ const Home = (props) => {
   return (
     <div>
       <Header onClick={() => {}} />
-      <div className="d-flex container-custom input-form form-group px-2 py-3 justify-content-center align-self-center">
+      <div className="d-flex container justify-content-center py-3">
         <button
           className="btn-custom-slot btn-primary-outline"
           onClick={() => history.push(`${location.pathname}global`)}
@@ -89,12 +89,12 @@ const Home = (props) => {
       <Hero url={promo} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="menu">
-        <div className="d-flex container-custom justify-content-center flex-wrap flex-row py-2 row">
+        <div className="d-flex container-custom justify-content-center flex-wrap flex-row px-2 py-3 row">
           {props.dataMenu.data &&
             props.dataMenu.data.map((item, index) => (
               <div
                 key={index}
-                className="card-menu col-3 p-3 m-2 shadow-sm d-flex"
+                className="card-menu col-3 shadow-sm d-flex"
               >
                 <Link to={`${item.navigate.toLowerCase()}`}>
                   <div className="justify-content-center align-items-center">
