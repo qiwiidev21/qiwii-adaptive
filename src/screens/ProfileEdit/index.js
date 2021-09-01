@@ -67,7 +67,7 @@ const Profile = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header back title="Edit Profile" profile={profile} />
       <div className="container my-5">
         <Form>

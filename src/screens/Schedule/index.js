@@ -430,7 +430,7 @@ const Schedule = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header back title="Pilih Jadwal" profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
       <div className="menu"></div>

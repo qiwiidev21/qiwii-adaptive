@@ -72,9 +72,19 @@ const Salon = (props) => {
   }
 
   return (
-    <div>
-      <Header title="" back search value={keyword} onChange={handleChange}/>
-      <div className="container">
+    <div className="container">
+      <Header title="" back />
+      <div className="container-custom my-3 shadow-sm p-2">
+        <div className="form-group m-2">
+          <input
+            value={keyword}
+            placeholder="Cari Nama Merchant"
+            className="form-control"
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="container-custom">
         <div>
           <Tabs>
             <TabList>
@@ -107,7 +117,11 @@ const Salon = (props) => {
                       ))}
                   </InfiniteScroll>
                 ) : (
-                  <img src={merchantNull} className="img-fluid placeholder" alt="Merchant not found"/>
+                  <img
+                    src={merchantNull}
+                    className="img-fluid placeholder"
+                    alt="Merchant not found"
+                  />
                 )}
               </div>
             </TabPanel>
@@ -137,7 +151,11 @@ const Salon = (props) => {
                       ))}
                   </InfiniteScroll>
                 ) : (
-                  <img src={serviceNull} className="img-fluid placeholder" alt="Service not found"/>
+                  <img
+                    src={serviceNull}
+                    className="img-fluid placeholder"
+                    alt="Service not found"
+                  />
                 )}
               </div>
             </TabPanel>

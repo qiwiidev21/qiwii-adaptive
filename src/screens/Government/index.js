@@ -68,20 +68,20 @@ const Government = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header title="Pemerintahan" back />
-      <Hero url={promo} alt="Qiwii" />
-      <div className="container menu">
-        <div className="my-3 shadow-sm p-2">
-          <div className="form-group m-2">
-            <input
-              value={keyword}
-              placeholder="Cari Nama Instansi"
-              className="form-control"
-              onChange={handleChange}
-            />
-          </div>
+      <div className="container-custom my-3 shadow-sm p-2">
+        <div className="form-group m-2">
+          <input
+            value={keyword}
+            placeholder="Cari Nama Instansi"
+            className="form-control"
+            onChange={handleChange}
+          />
         </div>
+      </div>
+      <Hero url={promo} alt="Qiwii" />
+      <div className="container-custom menu">
         <InfiniteScroll
           dataLength={props.dataOrganization.data.length ?? []}
           next={fetchMoreOrganization}
@@ -92,7 +92,7 @@ const Government = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          <div className="flatlist" style={{flex: 1}}>
+          <div className="flatlist" style={{ flex: 1 }}>
             {props.dataOrganization.data &&
               props.dataOrganization.data.map((item, index) => (
                 <ItemMerchant
@@ -101,7 +101,7 @@ const Government = (props) => {
                   index={index}
                   category="pemerintahan"
                   onPress={(id) => props.fetchMerchantProfile(id)}
-                  />
+                />
               ))}
           </div>
         </InfiniteScroll>

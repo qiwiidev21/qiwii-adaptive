@@ -51,7 +51,7 @@ const Profile = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header back title="Profile" profile={profile} />
       <div className="container my-5">
         <div className="m-2">

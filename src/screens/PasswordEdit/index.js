@@ -53,7 +53,7 @@ const Profile = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header back title="Edit Password" profile={profile} />
       <div className="container my-5">
         <Form>

@@ -66,20 +66,20 @@ const Services = (props) => {
     });
   }
   return (
-    <div>
+    <div className="container">
       <Header title="Service" back />
-      <Hero url={promo} alt="Qiwii" />
-      <div className="container menu">
-        <div className="my-3 shadow-sm p-2">
-          <div className="form-group m-2">
-            <input
-              value={keyword}
-              placeholder="Cari Nama Merchant"
-              className="form-control"
-              onChange={handleChange}
-            />
-          </div>
+      <div className="container-custom my-3 shadow-sm p-2">
+        <div className="form-group m-2">
+          <input
+            value={keyword}
+            placeholder="Cari Nama Merchant"
+            className="form-control"
+            onChange={handleChange}
+          />
         </div>
+      </div>
+      <Hero url={promo} alt="Qiwii" />
+      <div className="container-custom menu">
         <InfiniteScroll
           dataLength={props.dataServices.data.length ?? []}
           next={fetchMoreServices}
@@ -90,7 +90,7 @@ const Services = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          <div className="flatlist" style={{flex: 1}}>
+          <div className="flatlist" style={{ flex: 1 }}>
             {props.dataServices.data &&
               props.dataServices.data.map((item, index) => (
                 <ItemMerchant
@@ -99,7 +99,7 @@ const Services = (props) => {
                   index={index}
                   category="services"
                   onPress={(id) => props.fetchMerchantProfile(id)}
-                  />
+                />
               ))}
           </div>
         </InfiniteScroll>

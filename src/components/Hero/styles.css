@@ -31,10 +31,10 @@
 }
 
 .img-custom {
-  height: 100%;
-  border-radius: 8px;
+  height: 70%;
+  /* border-radius: 8px; */
   border-style: none;
   width: 100%;
-  background-color: #dc3232;
+  background-color: transparent;
   object-fit: cover;
 }

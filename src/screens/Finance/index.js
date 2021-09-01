@@ -68,20 +68,20 @@ const Finance = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header title="Keuangan" back />
-      <Hero url={promo} alt="Qiwii" />
-      <div className="container menu">
-        <div className="my-3 shadow-sm p-2">
-          <div className="form-group m-2">
-            <input
-              value={keyword}
-              placeholder="Cari Nama Bank"
-              className="form-control"
-              onChange={handleChange}
-            />
-          </div>
+      <div className="container-custom my-3 shadow-sm p-2">
+        <div className="form-group m-2">
+          <input
+            value={keyword}
+            placeholder="Cari Nama Bank"
+            className="form-control"
+            onChange={handleChange}
+          />
         </div>
+      </div>
+      <Hero url={promo} alt="Qiwii" />
+      <div className="container-custom menu">
         <InfiniteScroll
           dataLength={props.dataFinance.data.length ?? []}
           next={fetchMoreFinance}
@@ -92,7 +92,7 @@ const Finance = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          <div className="flatlist" style={{flex: 1}}>
+          <div className="flatlist" style={{ flex: 1 }}>
             {props.dataFinance.data &&
               props.dataFinance.data.map((item, index) => (
                 <ItemMerchant
@@ -101,7 +101,7 @@ const Finance = (props) => {
                   index={index}
                   category="keuangan"
                   onPress={(id) => props.fetchMerchantProfile(id)}
-                  />
+                />
               ))}
           </div>
         </InfiniteScroll>

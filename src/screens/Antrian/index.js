@@ -34,7 +34,7 @@ const Profile = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header back title="Antrian" profile={profile} />
       <div className="container">
         {props.dataUserQueue.data &&

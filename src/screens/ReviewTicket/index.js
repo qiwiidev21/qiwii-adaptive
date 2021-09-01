@@ -64,7 +64,7 @@ const ReviewTicket = (props) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header back title="Detail Ticket" profile={profile} />
       <section>{renderDetailAntrian()}</section>
       <div className="container my-5 fixed-bottom">

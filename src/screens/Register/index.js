@@ -21,7 +21,7 @@ function Login(props) {
   };
 
   return (
-    <div>
+    <div className="container">
       <section className="bg-home d-flex bg-light align-items-center">
         <div className="container">
           <div className="row justify-content-center">
