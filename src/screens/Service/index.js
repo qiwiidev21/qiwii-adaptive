@@ -68,16 +68,19 @@ const Service = (props) => {
           }
           loader={<h4>Loading...</h4>}
         >
-          {props.dataService.data &&
-            props.dataService.data.map((item, index) => (
-              <ItemService
-                key={index}
-                data={item}
-                index={index}
-                onPress={(item) => props.selectedService(item)}
-              />
-            ))}
+          <div className="flatlist" style={{ flex: 1 }}>
+            {props.dataService.data &&
+              props.dataService.data.map((item, index) => (
+                <ItemService
+                  key={index}
+                  data={item}
+                  index={index}
+                  onPress={(item) => props.selectedService(item)}
+                />
+              ))}
+          </div>
         </InfiniteScroll>
+
         {props.dataService.data?.length < 1 && (
           <div className="d-flex self-center">
             <h2>Layanan sedang tidak tersedia</h2>

@@ -92,7 +92,7 @@ function Header(props) {
 
   return (
     <header
-      className="navbar navbar-expand-lg navbar-dark sticky-top"
+      className="navbar navbar-expand-lg navbar-dark sticky-top px-4"
       style={{ backgroundColor: "#8F1619" }}
     >
       <nav className="container">
@@ -101,7 +101,12 @@ function Header(props) {
           {props.title ? (
             <h4 className="title">{props.title}</h4>
           ) : props.search ? (
-            <input value={props.value} placeholder="Search" className="form-control nav-form" onChange={(event) => props.onChange(event)}/>
+            <input
+              value={props.value}
+              placeholder="Search"
+              className="form-control nav-form"
+              onChange={(event) => props.onChange(event)}
+            />
           ) : (
             <img
               src={Logo}

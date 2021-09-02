@@ -36,6 +36,8 @@
 }
 .flatlist {
   display: flex;
+  padding-left: 18px;
+  padding-right: 18px;
 }
 @media (min-width: 128px) {
   .flatlist {

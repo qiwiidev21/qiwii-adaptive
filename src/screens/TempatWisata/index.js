@@ -70,8 +70,8 @@ const TempatWisata = (props) => {
   return (
     <div className="container">
       <Header title="Tempat Wisata" back />
-      <div className="container-custom my-3 shadow-sm p-2">
-        <div className="form-group m-2">
+      <div className="container-custom my-1 shadow-sm p-2">
+        <div className="form-group mx-3 my-2">
           <input
             value={keyword}
             placeholder="Cari Nama Merchant"

@@ -72,8 +72,8 @@ const Event = (props) => {
       <Header title="Events" back />
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu">
-        <div className="container-custom my-3 shadow-sm p-2">
-          <div className="form-group m-2">
+        <div className="container-custom my-1 shadow-sm p-2">
+          <div className="form-group mx-3 my-2">
             <input
               value={keyword}
               placeholder="Cari Nama Event"

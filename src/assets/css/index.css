@@ -575,8 +575,6 @@ pre code {
 .container-md,
 .container-sm {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -584,22 +582,14 @@ pre code {
 @media (min-width: 576px) {
   .container-sm,
   .container {
-    max-width: 540px;
+    max-width: 576px;
   }
 }
 @media (min-width: 768px) {
   .container-md,
   .container-sm,
   .container {
-    max-width: 720px;
-  }
-}
-@media (min-width: 992px) {
-  .container-lg,
-  .container-md,
-  .container-sm,
-  .container {
-    max-width: 960px;
+    max-width: 768px;
   }
 }
 @media (min-width: 1200px) {
@@ -608,7 +598,7 @@ pre code {
   .container-md,
   .container-sm,
   .container {
-    max-width: 1140px;
+    max-width: 1000px;
   }
 }
 .row {
