@@ -111,8 +111,8 @@ const Schedule = (props) => {
 
   async function fetchServiceDetail() {
     await props.fetchServiceDetail(routeID);
-    await fetchDataCustomField();
     await props.fetchSlotTime(routeID, selectedDate.format);
+    await fetchDataCustomField();
   }
 
   function fetchDataCustomField() {
@@ -127,7 +127,7 @@ const Schedule = (props) => {
     if (props.dataServiceSelected.data) {
       const { data } = props.dataServiceSelected;
       return (
-        <div className="container my-5 card-item p-3 shadow-sm">
+        <div className="schedule-item my-5 p-3 shadow-sm">
           <h6 className="m-1">{data.name}</h6>
           <h5 className="unit-name m-1">{data.company_name}</h5>
           <div className="row m-1">
@@ -171,7 +171,7 @@ const Schedule = (props) => {
       week.push(objDate);
     }
     return (
-      <div className="container my-5 align-items-center justify-content-center">
+      <div className="slot-card my-5 align-items-center justify-content-center">
         <div className="justify-content-center">
           <h3 className="month-text">
             {monthNames[date.getMonth()]} {date.getFullYear()}
@@ -219,7 +219,7 @@ const Schedule = (props) => {
     if (props.dataServiceDetail.data) {
       const { data } = props.dataServiceDetail;
       return (
-        <div className="container">
+        <div className="slot-card">
           <div className="justify-content-between row mx-2">
             <p>Nomor mengantri saat ini</p>
             <p>{data.next_ticket}</p>
@@ -269,48 +269,60 @@ const Schedule = (props) => {
   function renderSlotTime() {
     if (props.dataSlotTime.data?.length) {
       return (
-        <div className="container my-2">
-          {props.dataSlotTime.data.map((item, index) => (
-            <div key={index}>
-              <button
-                className="btn-custom-slot btn-primary-outline"
-                onClick={async () => {
-                  await _timePressed(item, index);
-                  // await setSelectTime(item);
-                  // await props.setSlotTime(item);
-                }}
-              >
-                <div
-                  className="justify-content-between row mx-2"
-                  style={
-                    item.label === selectTime?.label
-                      ? { backgroundColor: "#8f1619" }
-                      : { backgroundColor: "#ffffff" }
-                  }
+        <div className="container slot-card my-2">
+          {props.dataSlotTime.data.map((item, index) => {
+            const currentTime = new Date();
+            const disableSlot =
+              currentTime.getHours() > parseInt(item.time) ? true : false;
+            return (
+              <div key={index}>
+                <button
+                  disabled={disableSlot}
+                  className="btn-custom-slot btn-primary-outline"
+                  onClick={async () => {
+                    await _timePressed(item, index);
+                    // await setSelectTime(item);
+                    // await props.setSlotTime(item);
+                  }}
                 >
-                  <p
+                  <div
+                    className="justify-content-between row mx-2"
                     style={
-                      item.label === selectTime?.label
-                        ? { color: "#ffffff" }
-                        : { color: "#333333" }
+                      currentTime.getHours() > parseInt(item.time)
+                        ? { backgroundColor: "#e6e6e6" }
+                        : item.label === selectTime?.label
+                        ? { backgroundColor: "#8f1619" }
+                        : { backgroundColor: "#ffffff" }
                     }
                   >
-                    {item.label}
-                  </p>
-                  <p
-                    style={
-                      item.label === selectTime?.label
-                        ? { color: "#ffffff" }
-                        : { color: "#333333" }
-                    }
-                  >
-                    Tersisa {item.quota} kuota
-                  </p>
-                </div>
-              </button>
-              <div className="dropdown-divider"></div>
-            </div>
-          ))}
+                    <p
+                      style={
+                        currentTime.getHours() > parseInt(item.time)
+                          ? { backgroundColor: "#e6e6e6" }
+                          : item.label === selectTime?.label
+                          ? { color: "#ffffff" }
+                          : { color: "#333333" }
+                      }
+                    >
+                      {item.label}
+                    </p>
+                    <p
+                      style={
+                        currentTime.getHours() > parseInt(item.time)
+                          ? { backgroundColor: "#e6e6e6" }
+                          : item.label === selectTime?.label
+                          ? { color: "#ffffff" }
+                          : { color: "#333333" }
+                      }
+                    >
+                      Tersisa {item.quota} kuota
+                    </p>
+                  </div>
+                </button>
+                <div className="dropdown-divider"></div>
+              </div>
+            );
+          })}
         </div>
       );
     }
@@ -320,7 +332,7 @@ const Schedule = (props) => {
     if (props.dataCustomField.data) {
       const { data } = props.dataCustomField;
       return (
-        <div className="container">
+        <div className="container slot-card">
           {data.map((item, index) => {
             return (
               <Form key={index} onSubmit={handleSubmit}>

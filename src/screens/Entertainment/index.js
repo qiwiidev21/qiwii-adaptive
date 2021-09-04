@@ -40,21 +40,29 @@ const Entertainment = (props) => {
 
   return (
     <div className="container">
-      <Header back title="Hiburan" />
-      <div className="d-flex container-custom justify-content-center py-3">
-        <button
-          className="btn-custom-slot btn-primary-outline"
-          onClick={() => history.push(`${location.pathname}/global`)}
-        >
-          <input
-            ref={textInput}
-            value={keyword}
-            placeholder="Search"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </button>
-      </div>
+      <Header
+        back
+        title="Hiburan"
+        search
+        placeholder={"Search"}
+        onSearch={() => history.push(`/global`)}
+        styles={{ "margin-left": "7vw", "margin-right": "7vw" }}
+      />
+      {/*
+        <div className="d-flex container-custom justify-content-center py-3">
+          <button
+            className="btn-custom-slot btn-primary-outline"
+            onClick={() => history.push(`${location.pathname}/global`)}
+          >
+            <input
+              ref={textInput}
+              value={keyword}
+              placeholder="Search"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </button>
+        </div>*/}
       <Hero url={promo} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="menu">

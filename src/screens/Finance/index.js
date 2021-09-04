@@ -69,17 +69,26 @@ const Finance = (props) => {
 
   return (
     <div className="container">
-      <Header title="Keuangan" back />
-      <div className="container-custom my-1 shadow-sm p-2">
-        <div className="form-group mx-3 my-2">
-          <input
-            value={keyword}
-            placeholder="Cari Nama Bank"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+      <Header
+        title="Keuangan"
+        back
+        search
+        placeholder="Search Bank"
+        onChange={handleChange}
+        value={keyword}
+        onSearch={() => {}}
+      />
+      {/*
+        <div className="container-custom my-1 shadow-sm p-2">
+          <div className="form-group mx-3 my-2">
+            <input
+              value={keyword}
+              placeholder="Cari Nama Bank"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </div>
+        </div>*/}
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu">
         <InfiniteScroll

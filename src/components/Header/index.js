@@ -10,7 +10,7 @@ import {
   ArrowLeft,
   PersonCircle,
   BoxArrowInRight,
-  ThreeDotsVertical,
+  List,
 } from "react-bootstrap-icons";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import _ from "lodash";
@@ -89,24 +89,15 @@ function Header(props) {
       </button>
     );
   };
-
   return (
     <header
-      className="navbar navbar-expand-lg navbar-dark sticky-top px-4"
+      className="d-flex navbar navbar-expand-lg navbar-dark sticky-top"
       style={{ backgroundColor: "#8F1619" }}
     >
-      <nav className="container">
-        {props.back ? renderBack() : <div className="px-4" />}
-        <div className="navbar-brand">
-          {props.title ? (
-            <h4 className="title">{props.title}</h4>
-          ) : props.search ? (
-            <input
-              value={props.value}
-              placeholder="Search"
-              className="form-control nav-form"
-              onChange={(event) => props.onChange(event)}
-            />
+      <nav className="container custom-width">
+        <div className="pl-2">
+          {props.back ? (
+            renderBack()
           ) : (
             <img
               src={Logo}
@@ -116,8 +107,30 @@ function Header(props) {
               className="img-fluid"
             />
           )}
+          <div className="navbar-brand navbar-custom">
+            {props.search && (
+              <button
+                className="btn-custom-slot btn-primary-outline"
+                onClick={() => props.onSearch()}
+              >
+                <input
+                  value={props.value}
+                  placeholder={props.placeholder}
+                  className="form-control nav-form"
+                  onChange={(event) => props.onChange(event)}
+                />
+              </button>
+            )}
+          </div>
         </div>
-        <div>
+
+        {!props.search && props.title && (
+          <div className="navbar-brand navbar-custom">
+            <h4 className="title">{props.title}</h4>
+          </div>
+        )}
+
+        <div className="px-4">
           {_.isEmpty(sessionStored) ? (
             <button
               className="btn btn-primary-outline"
@@ -126,20 +139,14 @@ function Header(props) {
               <BoxArrowInRight color="white" size={21} />
             </button>
           ) : (
-            <div className="row">
+            <div>
               <div className="row">
-                <button
-                  className="btn btn-primary-outline"
-                  onClick={() => history.push(`${url}profile`)}
-                >
-                  <PersonCircle color="white" size={20} />
-                </button>
                 <Dropdown>
                   <Dropdown.Toggle
                     as={CustomToggle}
                     id="dropdown-custom-components"
                   >
-                    <ThreeDotsVertical color="white" size={20} />
+                    <List color="white" size={20} />
                   </Dropdown.Toggle>
                   <Dropdown.Menu as={CustomMenu}>
                     <Dropdown.Item eventKey="1">
@@ -177,6 +184,7 @@ Header.propTypes = {
   back: PropTypes.bool,
   search: PropTypes.bool,
   title: PropTypes.string,
+  placeholder: PropTypes.string,
   onClick: PropTypes.func,
   value: PropTypes.string,
   onChange: PropTypes.func,
@@ -187,6 +195,7 @@ Header.defaultProps = {
   search: false,
   title: "",
   value: "",
+  placeholder: "",
   onClick: () => {},
   onChange: () => {},
 };

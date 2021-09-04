@@ -69,17 +69,16 @@ const PhotoStudio = (props) => {
 
   return (
     <div className="container">
-      <Header title="Photostudio" back />
-      <div className="container-custom my-1 shadow-sm p-2">
-        <div className="form-group mx-3 my-2">
-          <input
-            value={keyword}
-            placeholder="Cari Nama Merchant"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+      <Header
+        title="Photostudio"
+        back
+        search
+        placeholder="Search Merchant"
+        onChange={handleChange}
+        value={keyword}
+        onSearch={() => {}}
+      />
+
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu">
         <InfiniteScroll

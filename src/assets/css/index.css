@@ -582,14 +582,14 @@ pre code {
 @media (min-width: 576px) {
   .container-sm,
   .container {
-    max-width: 576px;
+    max-width: 456px;
   }
 }
 @media (min-width: 768px) {
   .container-md,
   .container-sm,
   .container {
-    max-width: 768px;
+    max-width: 576px;
   }
 }
 @media (min-width: 1200px) {
@@ -4247,6 +4247,9 @@ input[type="button"].btn-block {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  -webkit-box-shadow: 0 4px 6px -6px #333;
+  -moz-box-shadow: 0 4px 6px -6px #333;
+  box-shadow: 0 4px 6px -6px #333;
 }
 .navbar .container,
 .navbar .container-fluid,

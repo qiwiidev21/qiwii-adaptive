@@ -3,6 +3,7 @@
   border-radius: 0.8rem;
   height: 40px;
   max-height: 70px;
+  margin-right: 4px;
 }
 @media (min-width: 128px) {
   .card-item {
@@ -21,7 +22,7 @@
 }
 @media (min-width: 768px) {
   .card-item {
-    width: 49%;
+    width: 99%;
   }
 }
 @media (min-width: 992px) {
@@ -36,39 +37,51 @@
 }
 .flatlist {
   display: flex;
-  padding-left: 18px;
-  padding-right: 18px;
+  margin-left: auto;
+  margin-right: auto;
 }
 @media (min-width: 128px) {
   .flatlist {
     flex-direction: column;
+    margin-left: 2vw;
+    margin-right: 2vw;
   }
 }
 @media (min-width: 352px) {
   .flatlist {
     flex-direction: column;
+    margin-left: 6vw;
+    margin-right: 6vw;
   }
 }
 @media (min-width: 576px) {
   .flatlist {
     flex-direction: column;
+    margin-left: 8vw;
+    margin-right: 8vw;
   }
 }
 @media (min-width: 768px) {
   .flatlist {
     flex-direction: row;
+    margin-left: 8vw;
+    margin-right: 8vw;
     flex-wrap: wrap;
   }
 }
 @media (min-width: 992px) {
   .flatlist {
     flex-direction: row;
+    margin-left: 2vw;
+    margin-right: 2vw;
     flex-wrap: wrap;
   }
 }
 @media (min-width: 1200px) {
   .flatlist {
     flex-direction: row;
+    margin-left: 8vw;
+    margin-right: 8vw;
     flex-wrap: wrap;
   }
 }

@@ -71,23 +71,30 @@ const Home = (props) => {
 
   return (
     <div className="container">
-      <Header onClick={() => {}} search />
-      <div className="d-flex container-custom justify-content-center py-3">
-        <button
-          className="btn-custom-slot btn-primary-outline"
-          onClick={() => history.push(`${location.pathname}global`)}
-        >
-          <div className="form-group mx-3 my-1">
-            <input
-              ref={textInput}
-              value={keyword}
-              placeholder="Search"
-              className="form-control"
-              onChange={handleChange}
-            />
-          </div>
-        </button>
-      </div>
+      <Header
+        onClick={() => {}}
+        search
+        placeholder={"Search"}
+        onSearch={() => history.push(`${location.pathname}global`)}
+      />
+      {/*
+        <div className="d-flex container-custom justify-content-center py-3">
+          <button
+            className="btn-custom-slot btn-primary-outline"
+            onClick={() => history.push(`${location.pathname}global`)}
+          >
+            <div className="form-group mx-3 my-1">
+              <input
+                ref={textInput}
+                value={keyword}
+                placeholder="Search"
+                className="form-control"
+                onChange={handleChange}
+              />
+            </div>
+          </button>
+        </div>
+        */}
       <Hero url={promo} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="menu">

@@ -27,7 +27,7 @@ function ItemService({ data, index, category, onPress }) {
   let history = useHistory();
   let location = useLocation();
   return (
-    <div key={index} className="flex-row mx-1 d-flex my-3 card-item shadow-sm">
+    <div key={index} className="card-item shadow-sm flex-row d-flex">
       <div className="col-sm-auto card-icon bg-secondary d-flex justify-content-center align-content-center p-2">
         <img
           src={icon}

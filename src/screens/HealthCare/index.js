@@ -68,19 +68,28 @@ const HealthCare = (props) => {
 
   return (
     <div className="container">
-      <Header title="Kesehatan" back />
-      <div className="container-custom my-1 shadow-sm p-3">
-        <div className="form-group mx-3 my-2">
-          <input
-            value={keyword}
-            placeholder="Cari Nama Merchant"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+      <Header
+        title="Kesehatan"
+        back
+        search
+        placeholder="Search Health Care"
+        onChange={handleChange}
+        value={keyword}
+        onSearch={() => {}}
+      />
+      {/*
+        <div className="container-custom my-1 shadow-sm p-3">
+          <div className="form-group mx-3 my-2">
+            <input
+              value={keyword}
+              placeholder="Cari Nama Merchant"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </div>
+        </div>*/}
       <Hero url={promo} alt="Qiwii" />
-      <div className="container-custom menu">
+      <div className="container-custom menu pl-2 px-2">
         <InfiniteScroll
           dataLength={props.dataHealthCare.data.length ?? []}
           next={fetchMoreHealthCare}

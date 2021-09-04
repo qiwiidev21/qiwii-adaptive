@@ -81,7 +81,7 @@ export function fetchSlotTime(id, format) {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${SLOT_TIME}/${id}/${format}/mobile/`, qs.stringify(params))
         .then((response) => {
-          if (response.data?.length) {
+          if (response.status === 200) {
             dispatch(setDataSlotTime(response.data));
             resolve(response.data);
           } else {

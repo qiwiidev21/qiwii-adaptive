@@ -28,7 +28,7 @@ function ItemMerchant({ data, index, category, onPress }) {
   let history = useHistory();
 
   return (
-    <div key={index} className="flex-row mx-1 d-flex my-3 card-item shadow-sm">
+    <div key={index} className="flex-row d-flex my-2 mx-1 card-item shadow-sm">
       <div className="col-sm-auto card-icon bg-secondary d-flex justify-content-center align-content-center p-2">
         <img
           src={icon}

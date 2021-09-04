@@ -13,7 +13,7 @@
   position: relative;
   display: block;
   width: 100vw;
-  height: 30vh;
+  height: auto;
   max-width: 1000px;
   background-color: transparent;
 }
@@ -27,10 +27,16 @@
 }
 
 .img-custom {
-  height: 50%;
+  height: auto;
   /* border-radius: 8px; */
   border-style: none;
   width: 100%;
   background-color: transparent;
   object-fit: cover;
+}
+
+@media (min-width: 1200px) {
+  .img-custom {
+    height: 45vh;
+  }
 }

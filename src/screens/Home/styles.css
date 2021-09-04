@@ -4,15 +4,43 @@
   text-align: center;
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
-  min-width: 2vw;
-  max-width: 22vw;
-  min-height: 1vh;
-  padding: 3rem !important;
+  width: "80%";
+  height: auto;
+  /* min-width: 4vw; */
+  /* max-width: 24vw; */
+  /* min-height: 1vh; */
+  padding: 3.5rem !important;
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
   margin-left: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
+  margin-right: 0.5rem !important;
   /* max-height: 25vh; */
+}
+
+@media (min-width: 192px) {
+  .card-menu {
+    height: 18vh;
+  }
+}
+@media (min-width: 576px) {
+  .card-menu {
+    height: 25vh;
+  }
+}
+@media (min-width: 768px) {
+  .card-menu {
+    height: 19vh;
+  }
+}
+@media (min-width: 992px) {
+  .card-menu {
+    height: 18vh;
+  }
+}
+@media (min-width: 1200px) {
+  .card-menu {
+    height: 30vh;
+  }
 }
 
 .round {

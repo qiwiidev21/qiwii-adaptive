@@ -69,17 +69,26 @@ const Government = (props) => {
 
   return (
     <div className="container">
-      <Header title="Pemerintahan" back />
-      <div className="container-custom my-1 shadow-sm p-2">
-        <div className="form-group mx-3 my-2">
-          <input
-            value={keyword}
-            placeholder="Cari Nama Instansi"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+      <Header
+        title="Pemerintahan"
+        back
+        search
+        placeholder="Search government agencies"
+        onChange={handleChange}
+        value={keyword}
+        onSearch={() => {}}
+      />
+      {/*
+        <div className="container-custom my-1 shadow-sm p-2">
+          <div className="form-group mx-3 my-2">
+            <input
+              value={keyword}
+              placeholder="Cari Nama Instansi"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </div>
+        </div>*/}
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu">
         <InfiniteScroll

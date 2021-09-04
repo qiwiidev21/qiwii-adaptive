@@ -47,7 +47,7 @@ const Service = (props) => {
     if (props.dataMerchantProfile.data) {
       const data = props.dataMerchantProfile.data[0];
       return (
-        <div className="container my-5 merchant-item p-3 shadow-sm">
+        <div className="my-5 merchant-item p-3 shadow-sm">
           <h6 className="m-1">{data.category_name}</h6>
           <h5 className="unit-name m-1">{data.unit_name}</h5>
           <p className="address-text">{data.unit_address}</p>
@@ -60,8 +60,8 @@ const Service = (props) => {
     <div className="container">
       <Header back title="Layanan" profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
-      <div className="container-custom menu">
-        <section>{renderMerchant()}</section>
+      <div className="container-custom menu pl-2 px-2">
+        <section className="d-flex">{renderMerchant()}</section>
         <InfiniteScroll
           dataLength={
             props.dataService.data?.length ? props.dataService.data.length : []
