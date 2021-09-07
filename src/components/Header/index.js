@@ -94,7 +94,7 @@ function Header(props) {
       className="d-flex navbar navbar-expand-lg navbar-dark sticky-top"
       style={{ backgroundColor: "#8F1619" }}
     >
-      <nav className="container custom-width">
+      <nav className="container">
         <div className="pl-2">
           {props.back ? (
             renderBack()
@@ -107,21 +107,6 @@ function Header(props) {
               className="img-fluid"
             />
           )}
-          <div className="navbar-brand navbar-custom">
-            {props.search && (
-              <button
-                className="btn-custom-slot btn-primary-outline"
-                onClick={() => props.onSearch()}
-              >
-                <input
-                  value={props.value}
-                  placeholder={props.placeholder}
-                  className="form-control nav-form"
-                  onChange={(event) => props.onChange(event)}
-                />
-              </button>
-            )}
-          </div>
         </div>
 
         {!props.search && props.title && (
@@ -132,21 +117,53 @@ function Header(props) {
 
         <div className="px-4">
           {_.isEmpty(sessionStored) ? (
-            <button
-              className="btn btn-primary-outline"
-              onClick={() => history.push(`${url}login`)}
-            >
-              <BoxArrowInRight color="white" size={21} />
-            </button>
+            <div className="row">
+              <div className="navbar-brand navbar-custom">
+                {props.search && (
+                  <button
+                    className="btn-custom-slot btn-primary-outline"
+                    onClick={() => props.onSearch()}
+                  >
+                    <input
+                      value={props.value}
+                      placeholder={props.placeholder}
+                      className="form-control nav-form"
+                      onChange={(event) => props.onChange(event)}
+                    />
+                  </button>
+                )}
+              </div>
+              <button
+                className="btn btn-primary-outline"
+                onClick={() => history.push(`${url}login`)}
+              >
+                <BoxArrowInRight color="white" size={21} />
+              </button>
+            </div>
           ) : (
             <div>
               <div className="row">
+                <div>
+                  {props.search && (
+                    <button
+                      className="btn-custom-slot btn-primary-outline"
+                      onClick={() => props.onSearch()}
+                    >
+                      <input
+                        value={props.value}
+                        placeholder={props.placeholder}
+                        className="form-control nav-form"
+                        onChange={(event) => props.onChange(event)}
+                      />
+                    </button>
+                  )}
+                </div>
                 <Dropdown>
                   <Dropdown.Toggle
                     as={CustomToggle}
                     id="dropdown-custom-components"
                   >
-                    <List color="white" size={20} />
+                    <List color="white" size={25} />
                   </Dropdown.Toggle>
                   <Dropdown.Menu as={CustomMenu}>
                     <Dropdown.Item eventKey="1">
