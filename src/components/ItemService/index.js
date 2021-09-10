@@ -27,7 +27,7 @@ function ItemService({ data, index, category, onPress }) {
   let history = useHistory();
   let location = useLocation();
   return (
-    <div key={index} className="card-item shadow-sm flex-row d-flex">
+    <div key={index} className="card-item shadow-sm flex-row d-flex my-2">
       <div className="col-sm-auto card-icon bg-secondary d-flex justify-content-center align-content-center p-2">
         <img
           src={icon}
@@ -36,7 +36,7 @@ function ItemService({ data, index, category, onPress }) {
           alt={data.unit_name}
         />
       </div>
-      <div className="btn-group-vertical p-2 card-info">
+      <div className="btn-group-vertical p-2 card-info m-2 justify-content-center">
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
@@ -51,22 +51,9 @@ function ItemService({ data, index, category, onPress }) {
           }}
         >
           <h6>{data.company_name}</h6>
-        </button>
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            if (category === "global") {
-              history.push(
-                `${location.pathname}/${data.id_organization}/${data.id}`
-              );
-            } else {
-              history.push(`${location.pathname}/${data.id}`);
-            }
-            onPress(data);
-          }}
-        >
           <h6 className="unit-name">{data.name}</h6>
         </button>
+
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
