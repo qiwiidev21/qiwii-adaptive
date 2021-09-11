@@ -66,6 +66,38 @@ export const dataUserQueue = createReducer(initialState, {
     };
   },
 });
+export const dataUserQueueFinish = createReducer(initialState, {
+  [types.SET_DATA_USER_QUEUE_FINISH](state, action) {
+    return {
+      data: action.payload,
+      page: 1,
+      total: action.payload?.length,
+    };
+  },
+  [types.SET_DATA_IS_NULL](state, action) {
+    return {
+      data: [],
+      page: 0,
+      total: 0,
+    };
+  },
+});
+export const dataUserQueueReservasi = createReducer(initialState, {
+  [types.SET_DATA_USER_QUEUE_RESERVASI](state, action) {
+    return {
+      data: action.payload,
+      page: 1,
+      total: action.payload?.length,
+    };
+  },
+  [types.SET_DATA_IS_NULL](state, action) {
+    return {
+      data: [],
+      page: 0,
+      total: 0,
+    };
+  },
+});
 
 export const dataMenu = createReducer(
   {},

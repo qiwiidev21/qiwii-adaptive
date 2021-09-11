@@ -282,9 +282,12 @@ export function fetchDataCustomField(params) {
     return new Promise((resolve, reject) => {
       Qiwii.post(CUSTOM_FIELD, qs.stringify(params))
         .then(({ data }) => {
+          resolve(data.custom_field);
           dispatch(setDataCustomField(data.custom_field));
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          reject(error?.response);
+        });
     });
   };
 }

@@ -1,10 +1,11 @@
 .card-item {
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
-  height: 40px;
-  max-height: 70px;
+  height: 100px;
+  max-height: 110px;
   margin-right: 4px;
 }
+
 @media (min-width: 128px) {
   .card-item {
     width: 99%;
@@ -12,7 +13,7 @@
 }
 @media (min-width: 352px) {
   .card-item {
-    width: 99%;
+    width: 100%;
   }
 }
 @media (min-width: 576px) {
@@ -27,7 +28,7 @@
 }
 @media (min-width: 992px) {
   .card-item {
-    width: 49%;
+    width: 100%;
   }
 }
 @media (min-width: 1200px) {
@@ -90,10 +91,6 @@
   border-bottom-left-radius: 0.8rem;
   width: 100px;
   height: 100px;
-}
-
-.card-info {
-  max-width: 85%;
 }
 
 .form-custom {

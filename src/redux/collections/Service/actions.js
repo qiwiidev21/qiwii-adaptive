@@ -2,6 +2,7 @@ import * as types from "../types";
 import { GET_TICKET, MERCHANT, SERVICE, SLOT_TIME } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
+import _ from "lodash";
 
 const setDataService = (data) => ({
   type: types.SET_DATA_SERVICE,
@@ -67,10 +68,10 @@ export function fetchServiceDetail(id) {
   };
 }
 
-const setDataSlotTime = (data) => ({
-  type: types.SET_DATA_SLOT_TIME,
-  payload: data,
-});
+// const setDataSlotTime = (data) => ({
+//   type: types.SET_DATA_SLOT_TIME,
+//   payload: data,
+// });
 
 export function fetchSlotTime(id, format) {
   return (dispatch) => {
@@ -82,14 +83,19 @@ export function fetchSlotTime(id, format) {
       Qiwii.post(`${SLOT_TIME}/${id}/${format}/mobile/`, qs.stringify(params))
         .then((response) => {
           if (response.status === 200) {
-            dispatch(setDataSlotTime(response.data));
-            resolve(response.data);
+            if (!_.isEmpty(response.data)) {
+              let data = [];
+              Object.keys(response.data).forEach((e) => {
+                data.push(response.data[e]);
+              });
+              resolve(data);
+            }
           } else {
             resolve([]);
           }
         })
         .catch((error) => {
-          reject(error);
+          reject(error?.response);
         });
     });
   };

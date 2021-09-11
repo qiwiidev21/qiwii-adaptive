@@ -79,20 +79,49 @@ const Schedule = (props) => {
   const organizationID = parseUrl.substring(0, 3);
 
   const [customField, setValCustomField] = useState([]);
+  const [dataSlotTime, setDataSlotTime] = useState([]);
 
   useEffect(() => {
     fetchServiceDetail();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (organizationID && routeID) {
+      fetchDataCustomField();
+    }
+  }, [organizationID]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     if (routeID) {
-      props.fetchSlotTime(routeID, selectedDate.format);
+      if (props.dataServiceSelected.data?.slot_aktif === "1") {
+        props
+          .fetchSlotTime(routeID, selectedDate.format)
+          .then((response) => {
+            setDataSlotTime(response);
+          })
+          .catch((error) => {
+            if (error) {
+              setDataSlotTime([]);
+            }
+          });
+      }
     }
   }, [routeID]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (selectedDate) {
-      props.fetchSlotTime(routeID, selectedDate.format);
+      if (props.dataServiceSelected.data?.slot_aktif === "1") {
+        props
+          .fetchSlotTime(routeID, selectedDate.format)
+          .then((response) => {
+            setDataSlotTime(response);
+          })
+          .catch((error) => {
+            if (error) {
+              setDataSlotTime([]);
+            }
+          });
+      }
     }
   }, [selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -111,8 +140,6 @@ const Schedule = (props) => {
 
   async function fetchServiceDetail() {
     await props.fetchServiceDetail(routeID);
-    await props.fetchSlotTime(routeID, selectedDate.format);
-    await fetchDataCustomField();
   }
 
   function fetchDataCustomField() {
@@ -170,8 +197,13 @@ const Schedule = (props) => {
       };
       week.push(objDate);
     }
+    const isDisabled =
+      props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
     return (
-      <div className="slot-card my-5 align-items-center justify-content-center">
+      <div
+        className="slot-card my-5 p-3 align-items-center justify-content-center"
+        style={{ opacity: isDisabled ? 0.5 : 1 }}
+      >
         <div className="justify-content-center">
           <h3 className="month-text">
             {monthNames[date.getMonth()]} {date.getFullYear()}
@@ -192,8 +224,10 @@ const Schedule = (props) => {
                 <button
                   className="btn-custom-date"
                   onClick={async () => {
-                    await setSelectedDate(item);
-                    await props.setSelectedDate(item.format);
+                    if (!isDisabled) {
+                      await setSelectedDate(item);
+                      await props.setSelectedDate(item.format);
+                    }
                   }}
                 >
                   <p
@@ -239,25 +273,26 @@ const Schedule = (props) => {
       );
     }
   }
+
   const [code, setCode] = useState(""); // eslint-disable-line no-unused-vars
   async function _timePressed(item, index) {
     let itemTime = item.time;
     // await this._getSlotTime()
     await setSelectTime(item);
     // await this.setState({ selectedTime: item.time, selectedTimeIndex: index })
-    let status = await props.dataSlotTime.data.filter(
+    let status = await dataSlotTime.filter(
       // eslint-disable-line no-unused-vars
       (x) => x.time === itemTime
     );
     const timeSelect = `${status[0].time}:00`;
     await props.setSlotTime(timeSelect);
 
-    let number = (await parseInt(props.dataSlotTime.data[index].order)) + 1;
+    let number = (await parseInt(dataSlotTime[index].order)) + 1;
     let queNum = await _pad(number);
     let code = await `${props.dataServiceDetail.data.code}-${queNum}`;
     // this.setState({ code: code })
     await setCode(code);
-    // this.menit = (60 / parseInt(props.dataSlotTime.data[index].quota) ) * (parseInt(props.dataSlotTime.data[index].order) + 1)
+    // this.menit = (60 / parseInt(dataSlotTime[index].quota) ) * (parseInt(dataSlotTime[index].order) + 1)
   }
 
   function _pad(number) {
@@ -267,13 +302,18 @@ const Schedule = (props) => {
   }
 
   function renderSlotTime() {
-    if (props.dataSlotTime.data?.length) {
+    if (dataSlotTime?.length) {
       return (
-        <div className="container slot-card my-2">
-          {props.dataSlotTime.data.map((item, index) => {
+        <div className="container slot-card my-3">
+          {dataSlotTime.map((item, index) => {
             const currentTime = new Date();
+
             const disableSlot =
-              currentTime.getHours() > parseInt(item.time) ? true : false;
+              selectedDate.date > currentTime.getDate()
+                ? false
+                : currentTime.getHours() > parseInt(item.time)
+                ? true
+                : false;
             return (
               <div key={index}>
                 <button
@@ -288,7 +328,7 @@ const Schedule = (props) => {
                   <div
                     className="justify-content-between row mx-2"
                     style={
-                      currentTime.getHours() > parseInt(item.time)
+                      disableSlot
                         ? { backgroundColor: "#e6e6e6" }
                         : item.label === selectTime?.label
                         ? { backgroundColor: "#8f1619" }
@@ -297,7 +337,7 @@ const Schedule = (props) => {
                   >
                     <p
                       style={
-                        currentTime.getHours() > parseInt(item.time)
+                        disableSlot
                           ? { backgroundColor: "#e6e6e6" }
                           : item.label === selectTime?.label
                           ? { color: "#ffffff" }
@@ -308,7 +348,7 @@ const Schedule = (props) => {
                     </p>
                     <p
                       style={
-                        currentTime.getHours() > parseInt(item.time)
+                        disableSlot
                           ? { backgroundColor: "#e6e6e6" }
                           : item.label === selectTime?.label
                           ? { color: "#ffffff" }
@@ -332,7 +372,7 @@ const Schedule = (props) => {
     if (props.dataCustomField.data) {
       const { data } = props.dataCustomField;
       return (
-        <div className="container slot-card">
+        <div className="container slot-card my-3">
           {data.map((item, index) => {
             return (
               <Form key={index} onSubmit={handleSubmit}>
@@ -451,7 +491,7 @@ const Schedule = (props) => {
       <section>{renderAntrian()}</section>
       <section>{renderSlotTime()}</section>
       <section>{renderCustomField()}</section>
-      <div className="container my-5">
+      <div className="container-item my-5">
         <Button
           variant="primary"
           type="submit"

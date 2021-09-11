@@ -13,3 +13,15 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.tab-custom-antrian {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  width: 33%;
+  cursor: pointer;
+  text-align: center;
+}

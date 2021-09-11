@@ -29,7 +29,7 @@ const ReviewTicket = (props) => {
     if (props.dataTicket) {
       const { data } = props.dataTicket;
       return (
-        <div className="container">
+        <div className="container p-5">
           <h4 className="title-header">Terima kasih telah menggunakan Qiwii</h4>
           <div className="m-2">
             <p className="title-review">Kamu telah mengantri di</p>

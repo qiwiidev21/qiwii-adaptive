@@ -7,6 +7,11 @@ import { ActionCreators } from "../../redux/actions";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import ItemQueue from "../../components/ItemQueue";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import InfiniteScroll from "react-infinite-scroll-component";
+import merchantNull from "../../assets/images/merchant_null.png";
+import serviceNull from "../../assets/images/service_null.png";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -36,18 +41,101 @@ const Profile = (props) => {
   return (
     <div className="container">
       <Header back title="Antrian" profile={profile} />
-      <div className="container">
-        {props.dataUserQueue.data &&
-          props.dataUserQueue.data.map((item, index) => {
-            return (
-              <ItemQueue
-                key={index}
-                data={item}
-                index={index}
-                onPress={(item) => props.setDataTicket(item)}
-              />
-            );
-          })}
+      <div className="container-custom">
+        <div>
+          <Tabs>
+            <TabList>
+              <Tab className="tab-custom-antrian">Berlangsung</Tab>
+              <Tab className="tab-custom-antrian">Reservasi</Tab>
+              <Tab className="tab-custom-antrian">Selesai</Tab>
+            </TabList>
+
+            <TabPanel>
+              <div className="container-custom menu pl-2 px-2">
+                {props.dataUserQueue?.data.length && (
+                  <InfiniteScroll
+                    dataLength={props.dataUserQueue.data.length ?? []}
+                    hasMore={
+                      Number(props.dataUserQueue.page) <
+                      props.dataUserQueue.total
+                        ? true
+                        : false
+                    }
+                    loader={<h4>Loading...</h4>}
+                  >
+                    <div style={{ flex: 1 }}>
+                      {props.dataUserQueue.data &&
+                        props.dataUserQueue.data.map((item, index) => (
+                          <ItemQueue
+                            key={index}
+                            data={item}
+                            index={index}
+                            onPress={(item) => props.setDataTicket(item)}
+                          />
+                        ))}
+                    </div>
+                  </InfiniteScroll>
+                )}
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className="container-custom menu pl-2 px-2">
+                {props.dataUserQueueReservasi?.data.length && (
+                  <InfiniteScroll
+                    dataLength={props.dataUserQueueReservasi.data.length ?? []}
+                    hasMore={
+                      Number(props.dataUserQueueReservasi.page) <
+                      props.dataUserQueueReservasi.total
+                        ? true
+                        : false
+                    }
+                    loader={<h4>Loading...</h4>}
+                  >
+                    <div style={{ flex: 1 }}>
+                      {props.dataUserQueueReservasi.data &&
+                        props.dataUserQueueReservasi.data.map((item, index) => (
+                          <ItemQueue
+                            key={index}
+                            data={item}
+                            index={index}
+                            onPress={(item) => props.setDataTicket(item)}
+                          />
+                        ))}
+                    </div>
+                  </InfiniteScroll>
+                )}
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className="container-custom menu pl-2 px-2">
+                {props.dataUserQueueFinish?.data.length && (
+                  <InfiniteScroll
+                    dataLength={props.dataUserQueueFinish.data.length ?? []}
+                    hasMore={
+                      Number(props.dataUserQueueFinish.page) <
+                      props.dataUserQueueFinish.total
+                        ? true
+                        : false
+                    }
+                    loader={<h4>Loading...</h4>}
+                  >
+                    <div style={{ flex: 1 }}>
+                      {props.dataUserQueueFinish.data &&
+                        props.dataUserQueueFinish.data.map((item, index) => (
+                          <ItemQueue
+                            key={index}
+                            data={item}
+                            index={index}
+                            onPress={(item) => props.setDataTicket(item)}
+                          />
+                        ))}
+                    </div>
+                  </InfiniteScroll>
+                )}
+              </div>
+            </TabPanel>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
@@ -61,6 +149,8 @@ Profile.defaultProps = {
 
 Profile.propTypes = {
   dataUserQueue: PropTypes.object,
+  dataUserQueueFinish: PropTypes.object,
+  dataUserQueueReservasi: PropTypes.object,
   dataSelectedDate: PropTypes.object,
   dataSession: PropTypes.object,
   dataCustomFieldData: PropTypes.object,
@@ -68,6 +158,8 @@ Profile.propTypes = {
 
 const mapStateToProps = (state) => ({
   dataUserQueue: state.dataUserQueue,
+  dataUserQueueReservasi: state.dataUserQueueReservasi,
+  dataUserQueueFinish: state.dataUserQueueFinish,
   dataMerchantProfile: state.dataMerchantProfile,
   dataSelectedDate: state.dataSelectedDate,
   dataCustomFieldData: state.dataCustomFieldData,

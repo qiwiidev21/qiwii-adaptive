@@ -59,7 +59,7 @@ const ReviewQueue = (props) => {
     if (props.dataServiceDetail) {
       const { data } = props.dataServiceDetail;
       return (
-        <div className="container">
+        <div className="container p-5">
           <h4 className="title-header">Review antrian Anda</h4>
           <div className="m-2">
             <p className="title-review">Nama Layanan</p>

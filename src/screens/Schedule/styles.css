@@ -12,7 +12,7 @@
 }
 .calendar {
   overflow-y: scroll;
-  height: 90px;
+  height: auto;
 }
 .content-bg-hero {
   flex: 1;
@@ -81,8 +81,11 @@
 .slot-card {
   border-radius: 0.8rem;
   width: auto;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  margin-left: 8vw;
+  margin-right: 8vw;
+  background-color: #ffffff;
+  padding: 10px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 .schedule-item {
   border: 0.5px solid rgba(0, 0, 0, 0.1);
@@ -91,6 +94,7 @@
   width: auto;
   margin-left: 5vw;
   margin-right: 5vw;
+  background-color: #ffffff;
 }
 
 @media (min-width: 128px) {

@@ -93,7 +93,7 @@ const Salon = (props) => {
             </TabList>
 
             <TabPanel>
-              <div>
+              <div className="container-custom menu pl-2 px-2">
                 {props.dataGlobal?.data.length && keyword.length > 1 ? (
                   <InfiniteScroll
                     dataLength={props.dataGlobal.data.length ?? []}
@@ -105,16 +105,18 @@ const Salon = (props) => {
                     }
                     loader={<h4>Loading...</h4>}
                   >
-                    {props.dataGlobal.data &&
-                      props.dataGlobal.data.map((item, index) => (
-                        <ItemMerchant
-                          key={index}
-                          data={item}
-                          index={index}
-                          category="retail"
-                          onPress={(id) => props.fetchMerchantProfile(id)}
-                        />
-                      ))}
+                    <div className="flatlist" style={{ flex: 1 }}>
+                      {props.dataGlobal.data &&
+                        props.dataGlobal.data.map((item, index) => (
+                          <ItemMerchant
+                            key={index}
+                            data={item}
+                            index={index}
+                            category="retail"
+                            onPress={(id) => props.fetchMerchantProfile(id)}
+                          />
+                        ))}
+                    </div>
                   </InfiniteScroll>
                 ) : (
                   <img
@@ -126,7 +128,7 @@ const Salon = (props) => {
               </div>
             </TabPanel>
             <TabPanel>
-              <div>
+              <div className="container-custom menu pl-2 px-2">
                 {props.dataGlobal?.data.length && keyword.length > 1 ? (
                   <InfiniteScroll
                     dataLength={props.dataGlobalService.data.length ?? []}
@@ -139,16 +141,18 @@ const Salon = (props) => {
                     }
                     loader={<h4>Loading...</h4>}
                   >
-                    {props.dataGlobalService.data &&
-                      props.dataGlobalService.data.map((item, index) => (
-                        <ItemService
-                          key={index}
-                          data={item}
-                          index={index}
-                          category="global"
-                          onPress={(item) => props.selectedService(item)}
-                        />
-                      ))}
+                    <div className="flatlist" style={{ flex: 1 }}>
+                      {props.dataGlobalService.data &&
+                        props.dataGlobalService.data.map((item, index) => (
+                          <ItemService
+                            key={index}
+                            data={item}
+                            index={index}
+                            category="global"
+                            onPress={(item) => props.selectedService(item)}
+                          />
+                        ))}
+                    </div>
                   </InfiniteScroll>
                 ) : (
                   <img
