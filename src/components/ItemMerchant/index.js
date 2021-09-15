@@ -18,7 +18,9 @@ function ItemMerchant({ data, index, category, onPress }) {
         data.id_icon ===
         "https://app.qiwii.id/system/cms/themes/ace/img/logo_alt.png"
       ) {
-        setIcon(Logo);
+        setIcon(
+          "https://img.inews.co.id/media/822/files/inews_new/2021/02/09/erajaya.jpg"
+        );
       } else {
         setIcon(data.id_icon);
       }

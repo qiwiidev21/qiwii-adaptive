@@ -17,6 +17,16 @@ const setDataMoreHealthCare = (data) => ({
   payload: data,
 });
 
+const setDataEraJaya = (data) => ({
+  type: types.SET_DATA_ERAJAYA,
+  payload: data,
+});
+
+const setDataMoreEraJaya = (data) => ({
+  type: types.SET_DATA_MORE_ERAJAYA,
+  payload: data,
+});
+
 const setDataOrganization = (data) => ({
   type: types.SET_DATA_ORGANIZATION,
   payload: data,
@@ -142,6 +152,9 @@ export function fetchOrganizations(payload, organization) {
                 case "kesehatan":
                   dispatch(setDataHealthCare(response.data));
                   break;
+                case "erajaya":
+                  dispatch(setDataEraJaya(response.data));
+                  break;
                 case "pemerintahan":
                   dispatch(setDataOrganization(response.data));
                   break;
@@ -183,6 +196,9 @@ export function fetchOrganizations(payload, organization) {
               switch (organization) {
                 case "kesehatan":
                   dispatch(setDataMoreHealthCare(response.data));
+                  break;
+                case "erajaya":
+                  dispatch(setDataMoreEraJaya(response.data));
                   break;
                 case "pemerintahan":
                   dispatch(setDataMoreOrganization(response.data));

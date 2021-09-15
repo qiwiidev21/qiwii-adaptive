@@ -9,6 +9,7 @@ import {
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Home from "../screens/Home";
+import EraJaya from "../screens/EraJaya";
 import HealthCare from "../screens/HealthCare";
 import PhotoStudio from "../screens/PhotoStudio";
 import Entertainment from "../screens/Entertainment";
@@ -39,9 +40,10 @@ function Routes() {
   return (
     <Router basename={"/"}>
       <Switch>
-        <Route exact path={"/"} component={Home} />
+        <Route exact path={"/erajaya"} component={RouterEraJaya} />
         <Route path={"/profile"} component={RouteProfile} />
         <Route path={"/antrian"} component={RouteQueue} />
+        <Route path={"/erajaya"} component={RouterEraJaya} />
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
         <Route path={"/cafe"} component={RouteCafe} />
@@ -143,6 +145,15 @@ function RouterHealth() {
   return (
     <Switch>
       <Route exact path={path} component={HealthCare} />
+      <Route path={`${path}/:routeID`} component={RouteScedule} />
+    </Switch>
+  );
+}
+function RouterEraJaya() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={EraJaya} />
       <Route path={`${path}/:routeID`} component={RouteScedule} />
     </Switch>
   );

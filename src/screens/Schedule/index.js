@@ -217,7 +217,7 @@ const Schedule = (props) => {
                 className="date-round mx-3 justify-content-center"
                 style={
                   item.date === selectedDate?.date
-                    ? { backgroundColor: "#8f1619" }
+                    ? { backgroundColor: "#323334" }
                     : { backgroundColor: "#ffffff" }
                 }
               >
@@ -331,7 +331,7 @@ const Schedule = (props) => {
                       disableSlot
                         ? { backgroundColor: "#e6e6e6" }
                         : item.label === selectTime?.label
-                        ? { backgroundColor: "#8f1619" }
+                        ? { backgroundColor: "#323334" }
                         : { backgroundColor: "#ffffff" }
                     }
                   >

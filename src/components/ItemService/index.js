@@ -12,7 +12,7 @@ function ItemService({ data, index, category, onPress }) {
   const [icon, setIcon] = useState(
     data.id_icon !==
       ("https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png" || null)
-      ? Logo
+      ? "https://img.inews.co.id/media/822/files/inews_new/2021/02/09/erajaya.jpg"
       : data.id_icon
   );
 

@@ -31,6 +31,30 @@ export const dataHealthCare = createReducer(initialState, {
   },
 });
 
+export const dataEraJaya = createReducer(initialState, {
+  [types.SET_DATA_ERAJAYA](state, action) {
+    return {
+      data: action.payload.data,
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_MORE_ERAJAYA](state, action) {
+    return {
+      data: state.data.concat(action.payload.data),
+      page: action.payload.current_page,
+      total: action.payload.total_page,
+    };
+  },
+  [types.SET_DATA_IS_NULL](state, action) {
+    return {
+      data: [],
+      page: 0,
+      total: 0,
+    };
+  },
+});
+
 export const dataExpedition = createReducer(initialState, {
   [types.SET_DATA_EXPEDITION](state, action) {
     return {

@@ -5,7 +5,7 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
-import Logo from "../../assets/images/header-logo.png";
+import Logo from "../../assets/images/header-ibox.png";
 import {
   ArrowLeft,
   PersonCircle,
@@ -92,7 +92,7 @@ function Header(props) {
   return (
     <header
       className="d-flex navbar navbar-expand-lg navbar-dark sticky-top"
-      style={{ backgroundColor: "#8F1619" }}
+      style={{ backgroundColor: "#323334" }}
     >
       <nav className="container">
         <div className="pl-2">
