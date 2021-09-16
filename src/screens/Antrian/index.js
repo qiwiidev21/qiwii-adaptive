@@ -52,9 +52,9 @@ const Profile = (props) => {
 
             <TabPanel>
               <div className="container-custom menu pl-2 px-2">
-                {props.dataUserQueue?.data.length && (
+                {props.dataUserQueue.data?.length && (
                   <InfiniteScroll
-                    dataLength={props.dataUserQueue.data.length ?? []}
+                    dataLength={props.dataUserQueue.data?.length ?? []}
                     hasMore={
                       Number(props.dataUserQueue.page) <
                       props.dataUserQueue.total
@@ -80,9 +80,9 @@ const Profile = (props) => {
             </TabPanel>
             <TabPanel>
               <div className="container-custom menu pl-2 px-2">
-                {props.dataUserQueueReservasi?.data.length && (
+                {props.dataUserQueueReservasi.data?.length && (
                   <InfiniteScroll
-                    dataLength={props.dataUserQueueReservasi.data.length ?? []}
+                    dataLength={props.dataUserQueueReservasi.data?.length ?? []}
                     hasMore={
                       Number(props.dataUserQueueReservasi.page) <
                       props.dataUserQueueReservasi.total
@@ -108,9 +108,9 @@ const Profile = (props) => {
             </TabPanel>
             <TabPanel>
               <div className="container-custom menu pl-2 px-2">
-                {props.dataUserQueueFinish?.data.length && (
+                {props.dataUserQueueFinish.data?.length && (
                   <InfiniteScroll
-                    dataLength={props.dataUserQueueFinish.data.length ?? []}
+                    dataLength={props.dataUserQueueFinish.data?.length ?? []}
                     hasMore={
                       Number(props.dataUserQueueFinish.page) <
                       props.dataUserQueueFinish.total

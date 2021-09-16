@@ -21,6 +21,7 @@ const createAPI = (baseURL) => {
   api.interceptors.request.use(
     function (config) {
       // Do something before request is sent
+      console.log(config);
       return config;
     },
     function (error) {
@@ -31,9 +32,11 @@ const createAPI = (baseURL) => {
 
   api.interceptors.response.use(
     (response) => {
+      console.log(response);
       return response;
     },
     (error) => {
+      console.log(error);
       return Promise.reject(error);
     }
   );

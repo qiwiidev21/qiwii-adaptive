@@ -135,7 +135,7 @@ function Header(props) {
               </div>
               <button
                 className="btn btn-primary-outline"
-                onClick={() => history.push(`${url}login`)}
+                onClick={() => history.push(`/login`)}
               >
                 <BoxArrowInRight color="white" size={21} />
               </button>
@@ -180,7 +180,8 @@ function Header(props) {
                           await sessionStorage.removeItem("user");
                           await sessionStorage.removeItem("token");
                           await sessionStorage.removeItem("unique_identifier");
-                          await history.push("/");
+                          await window.location.reload(false);
+                          await history.push("/erajaya");
                         }}
                       >
                         Keluar
