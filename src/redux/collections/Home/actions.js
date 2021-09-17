@@ -10,6 +10,7 @@ import {
   GET_PROMO,
   GET_CATEGORIES,
   GET_TYPES,
+  VERIFY,
 } from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
@@ -149,6 +150,35 @@ export function loginQiwii(email, phone, password) {
   };
 }
 
+export function verifyCode(verification_code, unique_identifier) {
+  let payload = {
+    uuid: "ABCD1234",
+    verification_code,
+    unique_identifier,
+  };
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.post(VERIFY, qs.stringify(payload))
+        .then(({ data }) => {
+          if (data.status === "Success") {
+            resolve(data);
+          } else {
+            reject(data.message);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response);
+          } else if (error.request) {
+            reject(error.request);
+          } else if (error.message) {
+            reject(error.message);
+          }
+        });
+    });
+  };
+}
+
 export function registerQiwii(name, email, phone, password) {
   let payload = {
     name,
@@ -162,7 +192,6 @@ export function registerQiwii(name, email, phone, password) {
       Qiwii.post(REGISTER, qs.stringify(payload))
         .then(({ data }) => {
           if (data.status === "Success") {
-            // dispatch(setDataSession(data));
             resolve(data);
           } else {
             reject(data.message);
@@ -307,6 +336,7 @@ export function getDataUser(unique_identifier, uuid, token) {
       };
       Qiwii.get(`${GET_USER}?` + qs.stringify(params))
         .then((response) => {
+          resolve(response.data);
           dispatch(setDataUserProfile(response.data));
         })
         .catch((error) => reject(error?.message));

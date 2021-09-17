@@ -10,8 +10,6 @@ import ItemQueue from "../../components/ItemQueue";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import merchantNull from "../../assets/images/merchant_null.png";
-import serviceNull from "../../assets/images/service_null.png";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -52,7 +50,7 @@ const Profile = (props) => {
 
             <TabPanel>
               <div className="container-custom menu pl-2 px-2">
-                {props.dataUserQueue?.data.length && (
+                {props.dataUserQueue.data?.length && (
                   <InfiniteScroll
                     dataLength={props.dataUserQueue.data.length ?? []}
                     hasMore={
@@ -80,7 +78,7 @@ const Profile = (props) => {
             </TabPanel>
             <TabPanel>
               <div className="container-custom menu pl-2 px-2">
-                {props.dataUserQueueReservasi?.data.length && (
+                {props.dataUserQueueReservasi.data?.length && (
                   <InfiniteScroll
                     dataLength={props.dataUserQueueReservasi.data.length ?? []}
                     hasMore={
@@ -108,7 +106,7 @@ const Profile = (props) => {
             </TabPanel>
             <TabPanel>
               <div className="container-custom menu pl-2 px-2">
-                {props.dataUserQueueFinish?.data.length && (
+                {props.dataUserQueueFinish.data?.length && (
                   <InfiniteScroll
                     dataLength={props.dataUserQueueFinish.data.length ?? []}
                     hasMore={

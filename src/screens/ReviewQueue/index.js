@@ -9,6 +9,7 @@ import moment from "moment";
 import { Button, Container, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
+import OtpInput from "react-otp-input";
 
 const ReviewQueue = (props) => {
   let history = useHistory();
@@ -27,6 +28,9 @@ const ReviewQueue = (props) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showModalLogin, setShowModalLogin] = useState(false);
+  const [uniqueIdentifier, setUniqueIdentifier] = useState("");
+  const [modalOTP, showModalOTP] = useState(false);
+  const [otp, setOTP] = useState("");
 
   const [profile, setProfile] = useState({});
 
@@ -395,18 +399,23 @@ const ReviewQueue = (props) => {
   function handleRegister() {
     props
       .registerQiwii(username, email, phone, password)
-      .then((user) => {
+      .then(async (user) => {
         if (user.status === "Success") {
           // setShowModalLogin(!showModalLogin);
-          setRegisterForm(!registerForm);
-          setShowModalReport(true);
-          setTitleReport(user.status);
-          setMessageReport(user.message);
+          await setRegisterForm(!registerForm);
+          // setShowModalReport(true);
+          await showModalOTP(!modalOTP);
+          await setUniqueIdentifier(user.unique_identifier);
+          await sessionStorage.setItem(
+            "unique_identifier",
+            user.unique_identifier
+          );
+          // setTitleReport(user.status);
+          // setMessageReport(user.message);
         } else {
           setShowModalReport(true);
-          setTitleReport(user.status);
+          setTitleReport("Error");
           setMessageReport(user.message);
-          setShowModalLogin(!showModalLogin);
         }
       })
       .catch((error) => {
@@ -417,6 +426,80 @@ const ReviewQueue = (props) => {
         }
       });
   }
+
+  const handleSubmitOTP = async () => {
+    await props
+      .verifyCode(otp, uniqueIdentifier)
+      .then(async (user) => {
+        if (user.status === "Success") {
+          const sessionUser = {
+            message: "Selamat anda berhasil login.",
+            status: "Success",
+            token: user.token,
+            unique_identifier: uniqueIdentifier,
+            uuid: "ABCD1234",
+          };
+          await showModalOTP(false);
+          await setOTP("");
+          await sessionStorage.setItem("token", user.token);
+          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
+          await props
+            .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
+            .then(async (response) => {
+              if (response.status === "Success") {
+                await setShowModalLogin(false);
+                await setShowModalReport(false);
+              }
+            });
+        }
+      })
+      .catch((error) => {
+        if (error.status === 401) {
+          alert(error.data.message);
+        }
+      });
+  };
+
+  function renderModalOTP() {
+    return (
+      <Modal show={modalOTP} onHide={() => showModalOTP(!modalOTP)}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Masukkan kode verifikasi yang telah dikirim via Email Anda.
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <OtpInput
+              containerStyle={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              inputStyle={{ margin: 10, width: 50, height: 80, fontSize: 20 }}
+              placeholder={"0"}
+              value={otp}
+              hasErrored
+              onChange={(otp) => setOTP(otp)}
+              numInputs={4}
+              separator={<p>-</p>}
+            />
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            className="next-button"
+            onClick={async () => {
+              await handleSubmitOTP();
+            }}
+          >
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   return (
     <div className="container">
       <Header back title="Review Antrian" profile={profile} />
@@ -434,6 +517,7 @@ const ReviewQueue = (props) => {
       {renderModal()}
       {renderModalReport()}
       {renderModalLogin()}
+      {renderModalOTP()}
       {renderModalSuccess()}
     </div>
   );

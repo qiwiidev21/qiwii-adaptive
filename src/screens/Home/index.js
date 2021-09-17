@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import { connect } from "react-redux";
@@ -11,8 +11,6 @@ import PropTypes from "prop-types";
 
 const Home = (props) => {
   const [promo, setPromo] = useState([]);
-  const [keyword, setKeyword] = useState("");
-  const textInput = useRef(null);
 
   let history = useHistory();
   let location = useLocation();
@@ -50,25 +48,6 @@ const Home = (props) => {
     props.getTypes();
   }
 
-  function handleChange(event) {
-    setKeyword(event.target.value);
-    // if (textInput.current) {
-    //   textInput.current?.focus();
-    // setTimeout(() => {
-    //   history.push(`${location.pathname}global`);
-    // }, 1000);
-    // }
-  }
-
-  // useEffect(() => {
-  //   if (textInput.current) {
-  //     textInput.current?.focus();
-  //     setTimeout(() => {
-  //       history.push(`${location.pathname}global`)
-  //     }, 1000);
-  //   }
-  // }, [textInput]);
-
   return (
     <div className="container">
       <Header
@@ -77,24 +56,7 @@ const Home = (props) => {
         placeholder={"Search"}
         onSearch={() => history.push(`${location.pathname}global`)}
       />
-      {/*
-        <div className="d-flex container-custom justify-content-center py-3">
-          <button
-            className="btn-custom-slot btn-primary-outline"
-            onClick={() => history.push(`${location.pathname}global`)}
-          >
-            <div className="form-group mx-3 my-1">
-              <input
-                ref={textInput}
-                value={keyword}
-                placeholder="Search"
-                className="form-control"
-                onChange={handleChange}
-              />
-            </div>
-          </button>
-        </div>
-        */}
+
       <Hero url={promo} alt="Qiwii" />
       {/* Start Of Menu */}
       <div className="menu">

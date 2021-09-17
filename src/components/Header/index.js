@@ -6,12 +6,7 @@ import React, { useEffect, useState, forwardRef } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
-import {
-  ArrowLeft,
-  PersonCircle,
-  BoxArrowInRight,
-  List,
-} from "react-bootstrap-icons";
+import { ArrowLeft, BoxArrowInRight, List } from "react-bootstrap-icons";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import _ from "lodash";
 import { connect } from "react-redux";
@@ -180,6 +175,7 @@ function Header(props) {
                           await sessionStorage.removeItem("user");
                           await sessionStorage.removeItem("token");
                           await sessionStorage.removeItem("unique_identifier");
+                          await window.location.reload(false);
                           await history.push("/");
                         }}
                       >
