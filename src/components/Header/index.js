@@ -7,7 +7,7 @@ import "./styles.css";
 import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
 import { ArrowLeft, BoxArrowInRight, List } from "react-bootstrap-icons";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -162,10 +162,20 @@ function Header(props) {
                   </Dropdown.Toggle>
                   <Dropdown.Menu as={CustomMenu}>
                     <Dropdown.Item eventKey="1">
-                      <Link to={"/profile"}>Profil</Link>
+                      <button
+                        className="btn-custom btn-primary-outline"
+                        onClick={async () => await history.push("/profile")}
+                      >
+                        Profil
+                      </button>
                     </Dropdown.Item>
                     <Dropdown.Item eventKey="2">
-                      <Link to={"/antrian"}>Antrian Saya</Link>
+                      <button
+                        className="btn-custom btn-primary-outline"
+                        onClick={async () => await history.push("/antrian")}
+                      >
+                        Antrian Saya
+                      </button>
                     </Dropdown.Item>
                     <div className="dropdown-divider"></div>
                     <Dropdown.Item eventKey="3">
@@ -175,8 +185,8 @@ function Header(props) {
                           await sessionStorage.removeItem("user");
                           await sessionStorage.removeItem("token");
                           await sessionStorage.removeItem("unique_identifier");
-                          await window.location.reload(false);
                           await history.push("/");
+                          await window.location.reload(false);
                         }}
                       >
                         Keluar

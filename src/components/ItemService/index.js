@@ -26,6 +26,7 @@ function ItemService({ data, index, category, onPress }) {
   // const handleJson = (data) => setSetting(JSON.parse(data.setting));
   let history = useHistory();
   let location = useLocation();
+  const rata = JSON.parse(data.setting);
   return (
     <div key={index} className="card-item shadow-sm flex-row d-flex my-2">
       <div className="col-sm-auto card-icon bg-secondary d-flex justify-content-center align-content-center p-2">
@@ -69,7 +70,11 @@ function ItemService({ data, index, category, onPress }) {
         >
           {
             <p className="unit-address">
-              Saat ini ada {data.queue} orang yang mengantri
+              Saat ini ada{" "}
+              {rata.checkin === 1
+                ? data.front_queue_active.checkin
+                : data.front_queue_active.new}{" "}
+              orang yang mengantri
             </p>
           }
         </button>

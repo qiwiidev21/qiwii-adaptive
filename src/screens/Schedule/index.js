@@ -355,7 +355,7 @@ const Schedule = (props) => {
                           : { color: "#333333" }
                       }
                     >
-                      Tersisa {item.quota} kuota
+                      Tersisa {Number(item.quota) - Number(item.queues)} kuota
                     </p>
                   </div>
                 </button>
