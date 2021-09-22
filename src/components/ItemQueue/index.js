@@ -45,23 +45,18 @@ function ItemService({ data, index, category, onPress }) {
             onPress(data);
           }}
         >
-          <h6 className="unit-address">
+          <p className="unit-address">
             <h6 style={{ fontWeight: "bold" }}>
-              {data.organization_name} - {data.category_name} {"\n"}
+              {data.organization_name} - {data.category_name}
             </h6>
-            {moment(data.estimated_date).format("LL")}, {data.estimated_time}
-          </h6>
-        </button>
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            history.push(`${location.pathname}/ticket`);
-            onPress(data);
-          }}
-        >
-          <h6 className="unit-address">
-            {data.front_queue} antrian didepan Anda
-          </h6>
+            <h6 className="unit-address">
+              {moment(data.estimated_date).format("LL")}, Pukul{" "}
+              {data.estimated_time}
+            </h6>
+            <h6 className="unit-address">
+              {data.front_queue} antrian didepan Anda
+            </h6>
+          </p>
         </button>
       </div>
       <div className="justify-content-center align-content-center mx-2 my-4">

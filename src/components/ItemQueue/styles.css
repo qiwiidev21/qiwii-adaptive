@@ -2,6 +2,7 @@
   background-color: transparent;
   border: 1px solid transparent;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .content-bg {
