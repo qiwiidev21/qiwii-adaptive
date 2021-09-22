@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import moment from "moment";
+import "moment/locale/id";
 
 function ItemService({ data, index, category, onPress }) {
   const [icon, setIcon] = useState(
@@ -36,18 +37,7 @@ function ItemService({ data, index, category, onPress }) {
           alt={data.organization_name}
         />
       </div>
-      <div className="btn-group-vertical p-2 card-info">
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            onPress(data);
-            history.push(`${location.pathname}/ticket`);
-          }}
-        >
-          <h6>
-            {data.organization_name} - {data.category_name}
-          </h6>
-        </button>
+      <div className="btn-group-vertical p-2 card-infoQueue">
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
@@ -56,7 +46,10 @@ function ItemService({ data, index, category, onPress }) {
           }}
         >
           <h6 className="unit-address">
-            {moment(data.estimated_date).format("LLLL")}
+            <h6 style={{ fontWeight: "bold" }}>
+              {data.organization_name} - {data.category_name} {"\n"}
+            </h6>
+            {moment(data.estimated_date).format("LL")}, {data.estimated_time}
           </h6>
         </button>
         <button

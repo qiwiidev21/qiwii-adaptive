@@ -370,16 +370,13 @@ export function getDataQueue(unique_identifier, uuid, token) {
       Qiwii.post(`${GET_QUEUE}`, qs.stringify(params))
         .then((response) => {
           if (response.data.status === "Success") {
-            if (response.data.data.berlangsung) {
-              dispatch(setDataQueue(response.data.data.berlangsung));
-              resolve(response.data.data.berlangsung);
-            } else if (response.data.data.selesai) {
-              dispatch(setDataQueueFinish(response.data.data.selesai));
-              resolve(response.data.data.selesai);
-            } else {
-              dispatch(setDataQueueReservasi(response.data.data.reservasi));
-              resolve(response.data.data.reservasi);
-            }
+            Promise.all([
+              dispatch(setDataQueue(response.data.data.berlangsung)),
+              dispatch(setDataQueueReservasi(response.data.data.reservasi)),
+              dispatch(setDataQueueFinish(response.data.data.selesai)),
+            ]).then(() => {
+              resolve(response.data.data);
+            });
           }
         })
         .catch((error) => reject(error?.message));

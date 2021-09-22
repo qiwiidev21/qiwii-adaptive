@@ -21,6 +21,9 @@
   background-color: #ffff;
 }
 
+.card-infoQueue {
+  max-width: 50%;
+}
 .unit-name {
   font-family: "Rubik Normal";
   color: #33333;

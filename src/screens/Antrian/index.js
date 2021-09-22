@@ -35,7 +35,6 @@ const Profile = (props) => {
     await props.getDataQueue(user.unique_identifier, user.uuid, user.token);
     await props.getDataUser(user.unique_identifier, user.uuid, user.token);
   }
-
   return (
     <div className="container">
       <Header back title="Antrian" profile={profile} />
