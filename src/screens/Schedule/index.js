@@ -65,6 +65,8 @@ const Schedule = (props) => {
     format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
   });
 
+  const [emptyCF, setEmptyCF] = useState(null);
+
   const [selectTime, setSelectTime] = useState({
     disabled: "true",
     estimated_next_called_time: "05:00:00",
@@ -78,7 +80,8 @@ const Schedule = (props) => {
   const parseUrl = typeof url === "string" ? url.substr(url.length - 7) : null;
   const organizationID = parseUrl.substring(0, 3);
 
-  const [customField, setValCustomField] = useState([]);
+  const [customFieldValue, setValCustomField] = useState([]);
+  const [dataCustomField, setDataCustomField] = useState([]);
   const [dataSlotTime, setDataSlotTime] = useState([]);
 
   useEffect(() => {
@@ -146,8 +149,17 @@ const Schedule = (props) => {
     let params = {
       organization_id: organizationID,
       service_id: routeID,
+      "f-show_on_web": 1,
     };
-    props.fetchDataCustomField(params);
+    props
+      .fetchDataCustomField(params)
+      .then((response) => {
+        console.log("CUSTOM_FIELD", response);
+        setDataCustomField(response);
+      })
+      .catch((error) => {
+        setDataCustomField([]);
+      });
   }
 
   function renderMerchant() {
@@ -369,11 +381,10 @@ const Schedule = (props) => {
   }
 
   function renderCustomField() {
-    if (props.dataCustomField.data) {
-      const { data } = props.dataCustomField;
+    if (dataCustomField?.length) {
       return (
         <div className="container slot-card my-3">
-          {data.map((item, index) => {
+          {dataCustomField.map((item, index) => {
             return (
               <Form key={index} onSubmit={handleSubmit}>
                 {item.configuration?.input_type === "text_input" &&
@@ -395,9 +406,22 @@ const Schedule = (props) => {
   }
 
   async function handleSubmit() {
-    await props.setSelectedDate(selectedDate.format);
-    await props.setCustomField(customField);
-    await history.push(`${location.pathname}/review`);
+    await setEmptyCF(0);
+    if (dataCustomField?.length) {
+      await dataCustomField.forEach((item, index) => {
+        if (Number(item.required_web) === 1) {
+          dataCustomField[item.slot_number] === "" && setEmptyCF(emptyCF + 1);
+        }
+      });
+    }
+
+    if (emptyCF) {
+      await props.setSelectedDate(selectedDate.format);
+      await props.setCustomField(customFieldValue);
+      await history.push(`${location.pathname}/review`);
+    } else {
+      alert("Harap isi form terlebih dahulu");
+    }
   }
 
   function setCustomField(value, index) {
@@ -515,7 +539,6 @@ Schedule.defaultProps = {
 Schedule.propTypes = {
   dataSlotTime: PropTypes.object,
   dataPromo: PropTypes.object,
-  dataCustomField: PropTypes.object,
   dataServiceDetail: PropTypes.object,
   dataService: PropTypes.object,
   fetchServiceDetail: PropTypes.func,
@@ -527,7 +550,6 @@ Schedule.propTypes = {
 const mapStateToProps = (state) => ({
   dataMerchantProfile: state.dataMerchantProfile,
   dataPromo: state.dataPromo,
-  dataCustomField: state.dataCustomField,
   dataServiceDetail: state.dataServiceDetail,
   dataSlotTime: state.dataSlotTime,
   dataService: state.dataService,
