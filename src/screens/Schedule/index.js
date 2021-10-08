@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 03-October-2021
+ * @Last modified time: 08-October-2021
  */
 
 import React, { useEffect, useState } from "react";
@@ -34,8 +34,6 @@ const Schedule = (props) => {
   let location = useLocation();
   const date = new Date();
   const currentDate = date.getDate();
-
-  const [isDisabled, setDisabled] = useState(true);
 
   const lastDay = new Date(
     date.getFullYear(),
@@ -71,8 +69,6 @@ const Schedule = (props) => {
     date: currentDate,
     format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
   });
-
-  const [emptyCF, setEmptyCF] = useState(0);
 
   const [selectTime, setSelectTime] = useState({
     disabled: "true",
