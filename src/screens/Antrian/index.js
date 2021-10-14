@@ -10,8 +10,6 @@ import ItemQueue from "../../components/ItemQueue";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import merchantNull from "../../assets/images/merchant_null.png";
-import serviceNull from "../../assets/images/service_null.png";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -37,7 +35,6 @@ const Profile = (props) => {
     await props.getDataQueue(user.unique_identifier, user.uuid, user.token);
     await props.getDataUser(user.unique_identifier, user.uuid, user.token);
   }
-
   return (
     <div className="container">
       <Header back title="Antrian" profile={profile} />

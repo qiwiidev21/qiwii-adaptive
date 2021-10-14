@@ -1,3 +1,10 @@
+/**
+ * @Author: Raka Mahardika <rakamahardika>
+ * @Date:   02-October-2021
+ * @Last modified by:   rakamahardika
+ * @Last modified time: 08-October-2021
+ */
+
 import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Header from "../../components/Header";
@@ -27,8 +34,6 @@ const Schedule = (props) => {
   let location = useLocation();
   const date = new Date();
   const currentDate = date.getDate();
-
-  // const [banner, setBanner] = useState("https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit");
 
   const lastDay = new Date(
     date.getFullYear(),
@@ -78,7 +83,8 @@ const Schedule = (props) => {
   const parseUrl = typeof url === "string" ? url.substr(url.length - 7) : null;
   const organizationID = parseUrl.substring(0, 3);
 
-  const [customField, setValCustomField] = useState([]);
+  const [customFieldValue, setValCustomField] = useState([]);
+  const [dataCustomField, setDataCustomField] = useState([]);
   const [dataSlotTime, setDataSlotTime] = useState([]);
 
   useEffect(() => {
@@ -146,8 +152,17 @@ const Schedule = (props) => {
     let params = {
       organization_id: organizationID,
       service_id: routeID,
+      "f-show_on_web": 1,
     };
-    props.fetchDataCustomField(params);
+    props
+      .fetchDataCustomField(params)
+      .then((response) => {
+        console.log("CUSTOM_FIELD", response);
+        setDataCustomField(response);
+      })
+      .catch((error) => {
+        setDataCustomField([]);
+      });
   }
 
   function renderMerchant() {
@@ -355,7 +370,7 @@ const Schedule = (props) => {
                           : { color: "#333333" }
                       }
                     >
-                      Tersisa {item.quota} kuota
+                      Tersisa {Number(item.quota) - Number(item.queues)} kuota
                     </p>
                   </div>
                 </button>
@@ -369,11 +384,10 @@ const Schedule = (props) => {
   }
 
   function renderCustomField() {
-    if (props.dataCustomField.data) {
-      const { data } = props.dataCustomField;
+    if (dataCustomField?.length) {
       return (
         <div className="container slot-card my-3">
-          {data.map((item, index) => {
+          {dataCustomField.map((item, index) => {
             return (
               <Form key={index} onSubmit={handleSubmit}>
                 {item.configuration?.input_type === "text_input" &&
@@ -394,16 +408,40 @@ const Schedule = (props) => {
     }
   }
 
+  function validateCustomField() {
+    return new Promise((resolve, reject) => {
+      if (dataCustomField.length) {
+        return dataCustomField.forEach((item, index) => {
+          if (
+            Number(item.required_web) === 1 &&
+            customFieldValue[item.slot_number]
+          ) {
+            resolve(true);
+          } else {
+            reject("Harap mengisi form terlebih dahulu!");
+          }
+        });
+      }
+      resolve(true);
+    });
+  }
+
   async function handleSubmit() {
-    await props.setSelectedDate(selectedDate.format);
-    await props.setCustomField(customField);
-    await history.push(`${location.pathname}/review`);
+    try {
+      const results = await validateCustomField();
+      if (results) {
+        await props.setSelectedDate(selectedDate.format);
+        await props.setCustomField(customFieldValue);
+        await history.push(`${location.pathname}/review`);
+      }
+    } catch (e) {
+      alert(e);
+    }
   }
 
   function setCustomField(value, index) {
-    let custom_field = [];
-    custom_field[index] = value;
-    setValCustomField(custom_field);
+    customFieldValue[index] = value;
+    setValCustomField(customFieldValue);
   }
 
   function renderInputText(data, index) {
@@ -411,9 +449,16 @@ const Schedule = (props) => {
       <Form.Group controlId={data.field_name}>
         <Form.Label>{data.field_name}</Form.Label>
         <Form.Control
-          type="text"
+          type={data.configuration.value_type === "angka" ? "number" : "text"}
+          maxLength={
+            data.configuration.pembanding === "max"
+              ? data.configuration.karakter1
+              : data.configuration.karakter2
+          }
           placeholder={data.help_text}
-          onChange={(event) => setCustomField(event.target.value, index)}
+          onChange={(event) =>
+            setCustomField(event.target.value, data.slot_number)
+          }
         />
       </Form.Group>
     );
@@ -515,7 +560,6 @@ Schedule.defaultProps = {
 Schedule.propTypes = {
   dataSlotTime: PropTypes.object,
   dataPromo: PropTypes.object,
-  dataCustomField: PropTypes.object,
   dataServiceDetail: PropTypes.object,
   dataService: PropTypes.object,
   fetchServiceDetail: PropTypes.func,
@@ -527,11 +571,9 @@ Schedule.propTypes = {
 const mapStateToProps = (state) => ({
   dataMerchantProfile: state.dataMerchantProfile,
   dataPromo: state.dataPromo,
-  dataCustomField: state.dataCustomField,
   dataServiceDetail: state.dataServiceDetail,
   dataSlotTime: state.dataSlotTime,
   dataService: state.dataService,
-  dataSlotTimes: state.dataSlotTimes,
   dataServiceSelected: state.dataServiceSelected,
 });
 

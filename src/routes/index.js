@@ -8,7 +8,6 @@ import {
 
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import Home from "../screens/Home";
 import EraJaya from "../screens/EraJaya";
 import HealthCare from "../screens/HealthCare";
 import PhotoStudio from "../screens/PhotoStudio";

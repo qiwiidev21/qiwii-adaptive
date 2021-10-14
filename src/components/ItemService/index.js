@@ -1,3 +1,10 @@
+/**
+ * @Author: Raka Mahardika <rakamahardika>
+ * @Date:   16-September-2021
+ * @Last modified by:   rakamahardika
+ * @Last modified time: 02-October-2021
+ */
+
 /*
  * ItemService Component
  */
@@ -26,6 +33,7 @@ function ItemService({ data, index, category, onPress }) {
   // const handleJson = (data) => setSetting(JSON.parse(data.setting));
   let history = useHistory();
   let location = useLocation();
+  const rata = JSON.parse(data.setting);
   return (
     <div key={index} className="card-item shadow-sm flex-row d-flex my-2">
       <div className="col-sm-auto card-icon bg-secondary d-flex justify-content-center align-content-center p-2">
@@ -50,28 +58,15 @@ function ItemService({ data, index, category, onPress }) {
             }
           }}
         >
-          <h6>{data.company_name}</h6>
+          <h6 className="unit-name">{data.company_name}</h6>
           <h6 className="unit-name">{data.name}</h6>
-        </button>
-
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            if (category === "global") {
-              history.push(
-                `${location.pathname}/${data.id_organization}/${data.id}`
-              );
-            } else {
-              history.push(`${location.pathname}/${data.id}`);
-            }
-            onPress(data);
-          }}
-        >
-          {
-            <p className="unit-address">
-              Saat ini ada {data.queue} orang yang mengantri
-            </p>
-          }
+          <p className="unit-address">
+            Saat ini ada{" "}
+            {rata.checkin === 1
+              ? data.front_queue_active.checkin
+              : data.front_queue_active.new}{" "}
+            orang yang mengantri
+          </p>
         </button>
       </div>
     </div>

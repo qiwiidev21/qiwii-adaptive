@@ -291,7 +291,6 @@ export function fetchEntertainmentCategory() {
     return new Promise((resolve, reject) => {
       Qiwii.get(MENUS)
         .then(({ data }) => {
-          console.log(data);
           if (data.status === "Success") {
             dispatch(setDataEntertainment(data.data));
           }
@@ -301,18 +300,12 @@ export function fetchEntertainmentCategory() {
   };
 }
 
-const setDataCustomField = (data) => ({
-  type: types.SET_DATA_CUSTOM_FIELD,
-  payload: data,
-});
-
 export function fetchDataCustomField(params) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       Qiwii.post(CUSTOM_FIELD, qs.stringify(params))
         .then(({ data }) => {
           resolve(data.custom_field);
-          dispatch(setDataCustomField(data.custom_field));
         })
         .catch((error) => {
           reject(error?.response);
@@ -370,16 +363,13 @@ export function getDataQueue(unique_identifier, uuid, token) {
       Qiwii.post(`${GET_QUEUE}`, qs.stringify(params))
         .then((response) => {
           if (response.data.status === "Success") {
-            if (response.data.data.berlangsung) {
-              dispatch(setDataQueue(response.data.data.berlangsung));
-              resolve(response.data.data.berlangsung);
-            } else if (response.data.data.selesai) {
-              dispatch(setDataQueueFinish(response.data.data.selesai));
-              resolve(response.data.data.selesai);
-            } else {
-              dispatch(setDataQueueReservasi(response.data.data.reservasi));
-              resolve(response.data.data.reservasi);
-            }
+            Promise.all([
+              dispatch(setDataQueue(response.data.data.berlangsung)),
+              dispatch(setDataQueueReservasi(response.data.data.reservasi)),
+              dispatch(setDataQueueFinish(response.data.data.selesai)),
+            ]).then(() => {
+              resolve(response.data.data);
+            });
           }
         })
         .catch((error) => reject(error?.message));

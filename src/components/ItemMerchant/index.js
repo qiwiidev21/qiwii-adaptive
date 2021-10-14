@@ -1,3 +1,10 @@
+/**
+ * @Author: Raka Mahardika <rakamahardika>
+ * @Date:   16-September-2021
+ * @Last modified by:   rakamahardika
+ * @Last modified time: 02-October-2021
+ */
+
 /*
  * ItemMerchant Component
  */
@@ -39,7 +46,7 @@ function ItemMerchant({ data, index, category, onPress }) {
           alt={data.unit_name}
         />
       </div>
-      <div className="btn-group-vertical p-2 card-info">
+      <div className="btn-group-vertical p-1 card-info">
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
@@ -48,14 +55,6 @@ function ItemMerchant({ data, index, category, onPress }) {
           }}
         >
           <h6 className="unit-name">{data.unit_name}</h6>
-        </button>
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            onPress(data.id);
-            history.push(`${url}/${data.id}`);
-          }}
-        >
           <h6 className="unit-address">{data.unit_address}</h6>
         </button>
       </div>

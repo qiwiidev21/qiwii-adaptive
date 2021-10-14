@@ -8,12 +8,13 @@ import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import moment from "moment";
+import "moment/locale/id";
 
 function ItemService({ data, index, category, onPress }) {
   const [icon, setIcon] = useState(
     data.id_icon !==
       ("https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png" || null)
-      ? Logo
+      ? "https://img.inews.co.id/media/822/files/inews_new/2021/02/09/erajaya.jpg"
       : data.id_icon
   );
 
@@ -36,18 +37,7 @@ function ItemService({ data, index, category, onPress }) {
           alt={data.organization_name}
         />
       </div>
-      <div className="btn-group-vertical p-2 card-info">
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            onPress(data);
-            history.push(`${location.pathname}/ticket`);
-          }}
-        >
-          <h6>
-            {data.organization_name} - {data.category_name}
-          </h6>
-        </button>
+      <div className="btn-group-vertical p-2 card-infoQueue">
         <button
           className="btn-custom btn-primary-outline"
           onClick={() => {
@@ -55,20 +45,18 @@ function ItemService({ data, index, category, onPress }) {
             onPress(data);
           }}
         >
-          <h6 className="unit-address">
-            {moment(data.estimated_date).format("LLLL")}
-          </h6>
-        </button>
-        <button
-          className="btn-custom btn-primary-outline"
-          onClick={() => {
-            history.push(`${location.pathname}/ticket`);
-            onPress(data);
-          }}
-        >
-          <h6 className="unit-address">
-            {data.front_queue} antrian didepan Anda
-          </h6>
+          <p className="unit-address">
+            <h6 style={{ fontWeight: "bold" }}>
+              {data.organization_name} - {data.category_name}
+            </h6>
+            <h6 className="unit-address">
+              {moment(data.estimated_date).format("LL")}, Pukul{" "}
+              {data.estimated_time}
+            </h6>
+            <h6 className="unit-address">
+              {data.front_queue} antrian didepan Anda
+            </h6>
+          </p>
         </button>
       </div>
       <div className="justify-content-center align-content-center mx-2 my-4">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/header-ibox.png";
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
@@ -9,13 +10,14 @@ import { Link } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { useHistory } from "react-router-dom";
 
-function Login(props) {
+function Register(props) {
   let history = useHistory();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [rePassword, setRePassword] = useState("");
   const [modalOTP, showModalOTP] = useState(false);
   const [uniqueIdentifier, setUniqueIdentifier] = useState("");
@@ -252,4 +254,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(ActionCreators, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

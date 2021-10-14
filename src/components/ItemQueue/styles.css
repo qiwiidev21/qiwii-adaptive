@@ -2,6 +2,7 @@
   background-color: transparent;
   border: 1px solid transparent;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .content-bg {
@@ -21,6 +22,9 @@
   background-color: #ffff;
 }
 
+.card-infoQueue {
+  max-width: 50%;
+}
 .unit-name {
   font-family: "Rubik Normal";
   color: #33333;
