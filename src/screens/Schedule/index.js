@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 08-October-2021
+ * @Last modified time: 15-October-2021
  */
 
 import React, { useEffect, useState } from "react";
@@ -289,25 +289,107 @@ const Schedule = (props) => {
     }
   }
 
-  const [code, setCode] = useState(""); // eslint-disable-line no-unused-vars
-  async function _timePressed(item, index) {
-    let itemTime = item.time;
-    // await this._getSlotTime()
-    await setSelectTime(item);
-    // await this.setState({ selectedTime: item.time, selectedTimeIndex: index })
-    let status = await dataSlotTime.filter(
-      // eslint-disable-line no-unused-vars
-      (x) => x.time === itemTime
-    );
-    const timeSelect = `${status[0].time}:00`;
-    await props.setSlotTime(timeSelect);
+  function getDay(day) {
+    let dayNumber;
+    switch (day) {
+      case 0:
+        dayNumber = 7;
+        break;
+      case 1:
+        dayNumber = 1;
+        break;
+      case 2:
+        dayNumber = 2;
+        break;
+      case 3:
+        dayNumber = 3;
+        break;
+      case 4:
+        dayNumber = 4;
+        break;
+      case 5:
+        dayNumber = 5;
+        break;
+      case 6:
+        dayNumber = 6;
+        break;
+    }
+    return dayNumber;
+  }
 
-    let number = (await parseInt(dataSlotTime[index].order)) + 1;
-    let queNum = await _pad(number);
-    let code = await `${props.dataServiceDetail.data.code}-${queNum}`;
-    // this.setState({ code: code })
-    await setCode(code);
-    // this.menit = (60 / parseInt(dataSlotTime[index].quota) ) * (parseInt(dataSlotTime[index].order) + 1)
+  const [code, setCode] = useState(""); // eslint-disable-line no-unused-vars
+
+  async function timeSlotValidation() {
+    const currentTime = new Date();
+    const currentDay = await getDay(currentTime.getDay());
+
+    let slotSetting;
+    if (typeof props.dataServiceDetail.data.setting == "string") {
+      slotSetting = JSON.parse(props.dataServiceDetail.data.setting);
+    } else {
+      slotSetting = props.dataServiceDetail.data.setting;
+    }
+    let message = "";
+    if (slotSetting.pengaturan_jam !== "jam") {
+      if (
+        currentTime.getHours() <=
+        parseInt(slotSetting.daftar_buka[currentDay].mobile)
+      ) {
+        message = `Jam pendaftaran dibuka ${slotSetting.daftar_buka[currentDay].mobile}`;
+        return {
+          status: false,
+          message,
+        };
+      } else if (
+        currentTime.getHours() >=
+        parseInt(slotSetting.daftar_tutup[currentDay].mobile)
+      ) {
+        message = `Jam pendaftaran sudah tutup pada pukul ${slotSetting.daftar_tutup[currentDay].mobile}`;
+        return {
+          status: false,
+          message,
+        };
+      } else {
+        return {
+          status: true,
+          message: "Silahkan melanjutkan pendaftaran.",
+        };
+      }
+    } else {
+      return {
+        status: true,
+        message: "Silahkan melanjutkan pendaftaran.",
+      };
+    }
+  }
+
+  async function _timePressed(item, index) {
+    try {
+      const result = await timeSlotValidation();
+      if (result.status) {
+        let itemTime = item.time;
+        // await this._getSlotTime()
+        await setSelectTime(item);
+        // await this.setState({ selectedTime: item.time, selectedTimeIndex: index })
+        let status = await dataSlotTime.filter(
+          // eslint-disable-line no-unused-vars
+          (x) => x.time === itemTime
+        );
+        const timeSelect = `${status[0].time}:00`;
+        await props.setSlotTime(timeSelect);
+
+        let number = (await parseInt(dataSlotTime[index].order)) + 1;
+        let queNum = await _pad(number);
+        let code = await `${props.dataServiceDetail.data.code}-${queNum}`;
+        // this.setState({ code: code })
+        await setCode(code);
+        // this.menit = (60 / parseInt(dataSlotTime[index].quota) ) * (parseInt(dataSlotTime[index].order) + 1)
+      } else {
+        alert(result.message);
+      }
+    } catch (e) {
+      alert(e);
+    }
   }
 
   function _pad(number) {
@@ -335,7 +417,11 @@ const Schedule = (props) => {
                   disabled={disableSlot}
                   className="btn-custom-slot btn-primary-outline"
                   onClick={async () => {
-                    await _timePressed(item, index);
+                    if (Number(item.queues) < Number(item.quota)) {
+                      await _timePressed(item, index);
+                    } else {
+                      alert("Kouta sudah penuh, silahkan pilih slot tersedia.");
+                    }
                     // await setSelectTime(item);
                     // await props.setSlotTime(item);
                   }}
