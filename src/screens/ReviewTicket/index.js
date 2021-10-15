@@ -60,7 +60,7 @@ const ReviewTicket = (props) => {
   }
 
   function handleSubmit() {
-    history.push(`/erajaya`);
+    history.push(`/adaptive`);
   }
 
   return (

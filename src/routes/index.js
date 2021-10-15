@@ -39,10 +39,10 @@ function Routes() {
   return (
     <Router basename={"/"}>
       <Switch>
-        <Route exact path={"/erajaya"} component={RouterEraJaya} />
+        <Route exact path={"/adaptive"} component={RouterEraJaya} />
         <Route path={"/profile"} component={RouteProfile} />
         <Route path={"/antrian"} component={RouteQueue} />
-        <Route path={"/erajaya"} component={RouterEraJaya} />
+        <Route path={"/adaptive"} component={RouterEraJaya} />
         <Route path={"/kesehatan"} component={RouterHealth} />
         <Route path={"/bioskop"} component={RouteMovies} />
         <Route path={"/cafe"} component={RouteCafe} />

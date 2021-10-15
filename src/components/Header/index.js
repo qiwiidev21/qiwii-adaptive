@@ -183,7 +183,7 @@ function Header(props) {
                           await sessionStorage.removeItem("user");
                           await sessionStorage.removeItem("token");
                           await sessionStorage.removeItem("unique_identifier");
-                          await history.push("/erajaya");
+                          await history.push("/adaptive");
                           await window.location.reload(false);
                         }}
                       >

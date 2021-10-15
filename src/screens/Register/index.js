@@ -64,7 +64,7 @@ function Register(props) {
             .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
             .then(async (response) => {
               if (response.status === "Success") {
-                await history.push("/erajaya");
+                await history.push("/adaptive");
               }
             });
         }

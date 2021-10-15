@@ -313,6 +313,9 @@ const Schedule = (props) => {
       case 6:
         dayNumber = 6;
         break;
+      default:
+        dayNumber = 1;
+        break;
     }
     return dayNumber;
   }
