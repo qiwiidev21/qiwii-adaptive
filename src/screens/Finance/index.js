@@ -8,6 +8,7 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Helmet} from "react-helmet";
 
 const Finance = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -69,6 +70,14 @@ const Finance = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk sektor keuangan"
+        />
+      <title>Qiwii: Antrian sektor keuangan</title>
+      </Helmet>
       <Header
         title="Keuangan"
         back

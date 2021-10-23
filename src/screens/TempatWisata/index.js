@@ -8,6 +8,7 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Helmet} from "react-helmet";
 
 const TempatWisata = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -69,6 +70,14 @@ const TempatWisata = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk sektor tempat wisata"
+        />
+      <title>Qiwii: Antrian sektor tempat wisata</title>
+      </Helmet>
       <Header
         title="Tempat Wisata"
         back

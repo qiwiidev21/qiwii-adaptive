@@ -7,6 +7,7 @@ import { ActionCreators } from "../../redux/actions";
 import { Link, useHistory } from "react-router-dom";
 import "./styles.css";
 import PropTypes from "prop-types";
+import {Helmet} from "react-helmet";
 
 const Entertainment = (props) => {
   useEffect(() => {
@@ -33,6 +34,14 @@ const Entertainment = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk sektor hiburan"
+        />
+      <title>Qiwii: Antrian sektor hiburan</title>
+      </Helmet>
       <Header
         back
         title="Hiburan"

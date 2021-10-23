@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 08-October-2021
+ * @Last modified time: 23-October-2021
  */
 
 import React, { useEffect, useState } from "react";
@@ -26,6 +26,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-dropdown/style.css";
 import _ from "lodash";
+import {Helmet} from "react-helmet";
 
 const Schedule = (props) => {
   const { url } = useRouteMatch();
@@ -143,6 +144,14 @@ const Schedule = (props) => {
       }
     }
   }, [props.dataMerchantProfile]);
+
+  const [companyName, setCompanyName] = useState("Merchant Name")
+
+  useEffect(() => {
+    if (!_.isEmpty(props.dataServiceSelected.data)) {
+      setCompanyName(props.dataServiceSelected.data.company_name)
+    }
+  }, [props.dataServiceSelected.data])
 
   async function fetchServiceDetail() {
     await props.fetchServiceDetail(routeID);
@@ -528,6 +537,14 @@ const Schedule = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content={`Qiwii: Sistem antrian/booking online untuk berbagai layanan dari ${companyName}`}
+        />
+      <title>Qiwii: {companyName}</title>
+      </Helmet>
       <Header back title="Pilih Jadwal" profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
       <div className="menu"></div>

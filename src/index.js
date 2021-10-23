@@ -3,11 +3,22 @@ import ReactDOM from "react-dom";
 import "./assets/css/index.css";
 import App from "./main/App";
 import reportWebVitals from "./reportWebVitals";
+import { FirebaseAppProvider } from 'reactfire';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC22mJMmB9JeiXHeWQKnme12nWAEwxjm6k",
+  authDomain: "qiwii-bd85e.firebaseapp.com",
+  databaseURL: "https://qiwii-bd85e.firebaseio.com",
+  projectId: "qiwii-bd85e",
+  storageBucket: "qiwii-bd85e.appspot.com",
+  messagingSenderId: "870706612213",
+  appId: "1:870706612213:web:7b9eb33d5b446fd1a682bc"
+};
 
 ReactDOM.render(
-  <React.StrictMode>
+  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <App />
-  </React.StrictMode>,
+  </FirebaseAppProvider>,
   document.getElementById("root")
 );
 

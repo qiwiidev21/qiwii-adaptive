@@ -8,6 +8,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import "./styles.css";
 import PropTypes from "prop-types";
 // import { useCookies } from "react-cookie";
+import {Helmet} from "react-helmet";
 
 const Home = (props) => {
   const [promo, setPromo] = useState([]);
@@ -50,6 +51,14 @@ const Home = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk berbagai macam sektor industri dan berbagai macam skala usaha"
+        />
+      <title>Qiwii: Sistem antrian online</title>
+      </Helmet>
       <Header
         onClick={() => {}}
         search

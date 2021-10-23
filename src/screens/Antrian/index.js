@@ -10,6 +10,7 @@ import ItemQueue from "../../components/ItemQueue";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Helmet} from "react-helmet";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -37,6 +38,14 @@ const Profile = (props) => {
   }
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk berbagai macam sektor industri dan berbagai macam skala usaha"
+        />
+      <title>Qiwii: Sistem antrian online</title>
+      </Helmet>
       <Header back title="Antrian" profile={profile} />
       <div className="container-custom">
         <div>

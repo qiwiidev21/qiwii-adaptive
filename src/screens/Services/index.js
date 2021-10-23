@@ -8,6 +8,7 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Helmet} from "react-helmet";
 
 const Services = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -67,6 +68,14 @@ const Services = (props) => {
   }
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk sektor service center"
+        />
+      <title>Qiwii: Antrian sektor service center</title>
+      </Helmet>
       <Header
         title="Service"
         back

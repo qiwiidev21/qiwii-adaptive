@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./styles.css";
 import _ from "lodash";
+import {Helmet} from "react-helmet";
 
 const Service = (props) => {
   const { url } = useRouteMatch();
@@ -31,6 +32,7 @@ const Service = (props) => {
   }
 
   const [profile, setProfile] = useState({});
+  const [serviceName, setServiceName] = useState("Merchant");
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
@@ -42,6 +44,12 @@ const Service = (props) => {
       }
     }
   }, [props.dataMerchantProfile]);
+
+  useEffect(() => {
+    if (!_.isEmpty(profile)) {
+      setServiceName(profile.unit_name)
+    }
+  }, [profile])
 
   function renderMerchant() {
     if (props.dataMerchantProfile.data) {
@@ -58,6 +66,14 @@ const Service = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content={`Qiwii: Sistem antrian/booking online untuk berbagai layanan dari ${serviceName}`}
+        />
+      <title>Qiwii: {serviceName}</title>
+      </Helmet>
       <Header back title="Layanan" profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
       <div className="container-custom menu pl-2 px-2">
