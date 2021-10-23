@@ -12,6 +12,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import merchantNull from "../../assets/images/merchant_null.png";
 import serviceNull from "../../assets/images/service_null.png";
+import { Helmet } from "react-helmet";
 
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -73,6 +74,14 @@ const Salon = (props) => {
 
   return (
     <div className="container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Qiwii: Sistem antrian online untuk berbagai macam sektor industri dan berbagai macam skala usaha"
+        />
+        <title>Qiwii: Sistem antrian online</title>
+      </Helmet>
       <Header title="" back />
       <div className="container-custom my-1 shadow-sm p-2">
         <div className="form-group mx-3 my-2">
