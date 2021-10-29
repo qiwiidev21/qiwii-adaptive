@@ -378,6 +378,7 @@ const ReviewQueue = (props) => {
           await setShowModalReport(true);
           await setTitleReport(user.status);
           await setMessageReport(user.message);
+          await notificationRequest();
           await setUser(user);
         } else {
           await setShowModalReport(true);
@@ -394,6 +395,19 @@ const ReviewQueue = (props) => {
           setMessageReport(error.message);
         }
       });
+  }
+
+  async function notificationRequest() {
+    try {
+      let permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        sessionStorage.setItem("permission", permission)
+      } else if (permission === 'denied') {
+        sessionStorage.setItem("permission", permission)
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   function handleRegister() {

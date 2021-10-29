@@ -26,6 +26,7 @@ function Login(props) {
         sessionStorage.setItem("unique_identifier", user.unique_identifier);
         sessionStorage.setItem("user", JSON.stringify(user));
         props.getDataUser(user.unique_identifier, user.uuid, user.token);
+        notificationRequest();
       })
       .catch((error) => {
         if (error.status === 400) {
@@ -43,6 +44,20 @@ function Login(props) {
         }
       });
   };
+
+  async function notificationRequest() {
+    try {
+      let permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        sessionStorage.setItem("permission", permission)
+      } else if (permission === 'denied') {
+        sessionStorage.setItem("permission", permission)
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   function validateEmail(email) {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
