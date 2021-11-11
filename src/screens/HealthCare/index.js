@@ -8,7 +8,8 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
+import Undefined from "../../assets/images/layanan-undefined.jpg";
 
 const HealthCare = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -99,6 +100,15 @@ const HealthCare = (props) => {
         </div>*/}
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu pl-2 px-2">
+        {props.dataHealthCare.data.length < 1 && (
+          <div>
+            <img
+              src={Undefined}
+              alt={"Data Not Found"}
+              className="img-fluid img-custom"
+            />
+          </div>
+        )}
         <InfiniteScroll
           dataLength={props.dataHealthCare.data.length ?? []}
           next={fetchMoreHealthCare}

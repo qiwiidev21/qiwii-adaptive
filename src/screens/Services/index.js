@@ -8,7 +8,8 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
+import Undefined from "../../assets/images/layanan-undefined.jpg";
 
 const Services = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -74,7 +75,7 @@ const Services = (props) => {
           name="description"
           content="Qiwii: Sistem antrian online untuk sektor service center"
         />
-      <title>Qiwii: Antrian sektor service center</title>
+        <title>Qiwii: Antrian sektor service center</title>
       </Helmet>
       <Header
         title="Service"
@@ -88,6 +89,15 @@ const Services = (props) => {
 
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu">
+        {props.dataServices.data.length < 1 && (
+          <div>
+            <img
+              src={Undefined}
+              alt={"Data Not Found"}
+              className="img-fluid img-custom"
+            />
+          </div>
+        )}
         <InfiniteScroll
           dataLength={props.dataServices.data.length ?? []}
           next={fetchMoreServices}

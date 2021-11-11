@@ -7,8 +7,9 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
+import Undefined from "../../assets/images/layanan-undefined.jpg";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 const Event = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -76,7 +77,7 @@ const Event = (props) => {
           name="description"
           content="Qiwii: Sistem antrian online untuk sektor Event"
         />
-      <title>Qiwii: Antrian sektor Event</title>
+        <title>Qiwii: Antrian sektor Event</title>
       </Helmet>
       <Header title="Events" back />
       <Hero url={promo} alt="Qiwii" />
@@ -91,6 +92,15 @@ const Event = (props) => {
             />
           </div>
         </div>
+        {props.dataEvents.data.length < 1 && (
+          <div>
+            <img
+              src={Undefined}
+              alt={"Data Not Found"}
+              className="img-fluid img-custom"
+            />
+          </div>
+        )}
         <InfiniteScroll
           dataLength={props.dataEvents.data.length ?? []}
           next={fetchMoreEvent}

@@ -8,7 +8,8 @@ import { ActionCreators } from "../../redux/actions";
 import "./styles.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
+import Undefined from "../../assets/images/layanan-undefined.jpg";
 
 const TempatWisata = (props) => {
   const [keyword, setKeyword] = useState("");
@@ -76,7 +77,7 @@ const TempatWisata = (props) => {
           name="description"
           content="Qiwii: Sistem antrian online untuk sektor tempat wisata"
         />
-      <title>Qiwii: Antrian sektor tempat wisata</title>
+        <title>Qiwii: Antrian sektor tempat wisata</title>
       </Helmet>
       <Header
         title="Tempat Wisata"
@@ -90,6 +91,15 @@ const TempatWisata = (props) => {
 
       <Hero url={promo} alt="Qiwii" />
       <div className="container-custom menu">
+        {props.dataTempatWisata.data.length < 1 && (
+          <div>
+            <img
+              src={Undefined}
+              alt={"Data Not Found"}
+              className="img-fluid img-custom"
+            />
+          </div>
+        )}
         <InfiniteScroll
           dataLength={props.dataTempatWisata.data.length ?? []}
           next={fetchMoreTempatWisata}
