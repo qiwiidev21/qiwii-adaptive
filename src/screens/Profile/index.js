@@ -9,7 +9,7 @@ import _ from "lodash";
 import { Button } from "react-bootstrap";
 import { ChevronRight } from "react-bootstrap-icons";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -59,7 +59,7 @@ const Profile = (props) => {
           name="description"
           content="Qiwii: Sistem antrian online untuk berbagai macam sektor industri dan berbagai macam skala usaha"
         />
-      <title>Qiwii: Sistem antrian online</title>
+        <title>Qiwii: Sistem antrian online</title>
       </Helmet>
       <Header back title="Profile" profile={profile} />
       <div className="container my-5">
@@ -96,6 +96,18 @@ const Profile = (props) => {
         >
           <div className="justify-content-between row mx-2">
             <p className="title-review">Kata Sandi</p>
+            <ChevronRight />
+          </div>
+        </button>
+        <div className="dropdown-divider"></div>
+        <button
+          className="btn-custom-slot btn-primary-outline"
+          onClick={() =>
+            window.open("http://qiwii.id/kebijakan-privasi/", "_blank")
+          }
+        >
+          <div className="justify-content-between row mx-2">
+            <p className="title-review">Kebijakan Privasi</p>
             <ChevronRight />
           </div>
         </button>
