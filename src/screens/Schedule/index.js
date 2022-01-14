@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 23-October-2021
+ * @Last modified time: 14-January-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-dropdown/style.css";
 import _ from "lodash";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 const Schedule = (props) => {
   const { url } = useRouteMatch();
@@ -145,13 +145,13 @@ const Schedule = (props) => {
     }
   }, [props.dataMerchantProfile]);
 
-  const [companyName, setCompanyName] = useState("Merchant Name")
+  const [companyName, setCompanyName] = useState("Merchant Name");
 
   useEffect(() => {
     if (!_.isEmpty(props.dataServiceSelected.data)) {
-      setCompanyName(props.dataServiceSelected.data.company_name)
+      setCompanyName(props.dataServiceSelected.data.company_name);
     }
-  }, [props.dataServiceSelected.data])
+  }, [props.dataServiceSelected.data]);
 
   async function fetchServiceDetail() {
     await props.fetchServiceDetail(routeID);
@@ -332,12 +332,12 @@ const Schedule = (props) => {
           {dataSlotTime.map((item, index) => {
             const currentTime = new Date();
 
-            const disableSlot =
-              selectedDate.date > currentTime.getDate()
-                ? false
-                : currentTime.getHours() > parseInt(item.time)
-                ? true
-                : false;
+            const disableSlot = item.disabled === "false" ? false : true;
+            // selectedDate.date > currentTime.getDate()
+            //   ? false
+            //   : currentTime.getHours() > parseInt(item.time)
+            //   ? true
+            //   : false;
             return (
               <div key={index}>
                 <button
@@ -543,7 +543,7 @@ const Schedule = (props) => {
           name="description"
           content={`Qiwii: Sistem antrian/booking online untuk berbagai layanan dari ${companyName}`}
         />
-      <title>Qiwii: {companyName}</title>
+        <title>Qiwii: {companyName}</title>
       </Helmet>
       <Header back title="Pilih Jadwal" profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
