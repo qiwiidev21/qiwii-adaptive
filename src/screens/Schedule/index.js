@@ -223,6 +223,10 @@ const Schedule = (props) => {
       const formatDate = new Date(
         `${date.getFullYear()}-${formatMonth}-${formatDay}`
       );
+      const setting =
+        typeof props.dataServiceSelected.data?.setting === "string"
+          ? JSON.parse(props.dataServiceSelected.data?.setting)
+          : props.dataServiceSelected.data?.setting;
       const objDate = {
         day: days[formatDate.getDay()],
         date: i,
@@ -231,10 +235,6 @@ const Schedule = (props) => {
       week.push(objDate);
     }
 
-    const setting =
-      typeof props.dataServiceSelected.data?.setting === "string"
-        ? JSON.parse(props.dataServiceSelected.data?.setting)
-        : props.dataServiceSelected.data?.setting;
     // let isOpen = null
     // for (const property in setting.operasional_buka) {
     //   if (`${setting.operasional_buka[property]}` === '00:00') {
@@ -264,40 +264,42 @@ const Schedule = (props) => {
           </h3>
         </div>
         <div className="row-custom calendar">
-          {week.map((item, index) => (
-            <div key={index} className="my-1">
-              <p className="date-text">{item.day}</p>
-              <div
-                className="date-round mx-3 justify-content-center"
-                style={
-                  item.date === selectedDate?.date
-                    ? { backgroundColor: "#8f1619" }
-                    : { backgroundColor: "#ffffff" }
-                }
-              >
-                <button
-                  className="btn-custom-date"
-                  onClick={async () => {
-                    if (!isDisabled) {
-                      await setSelectedDate(item);
-                      await props.setSelectedDate(item.format);
-                    }
-                  }}
+          {week.map((item, index) => {
+            return (
+              <div key={index} className="my-1">
+                <p className="date-text">{item.day}</p>
+                <div
+                  className="date-round mx-3 justify-content-center"
+                  style={
+                    item.date === selectedDate?.date
+                      ? { backgroundColor: "#8f1619" }
+                      : { backgroundColor: "#ffffff" }
+                  }
                 >
-                  <p
-                    className="date-text"
-                    style={
-                      item.date === selectedDate?.date
-                        ? { color: "#ffffff" }
-                        : { color: "#333333" }
-                    }
+                  <button
+                    className="btn-custom-date"
+                    onClick={async () => {
+                      if (!isDisabled) {
+                        await setSelectedDate(item);
+                        await props.setSelectedDate(item.format);
+                      }
+                    }}
                   >
-                    {item.date}
-                  </p>
-                </button>
+                    <p
+                      className="date-text"
+                      style={
+                        item.date === selectedDate?.date
+                          ? { color: "#ffffff" }
+                          : { color: "#333333" }
+                      }
+                    >
+                      {item.date}
+                    </p>
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
