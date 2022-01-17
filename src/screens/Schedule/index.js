@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 17-January-2022
+ * @Last modified time: 18-January-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -56,6 +56,7 @@ const Schedule = (props) => {
     "December",
   ];
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const daysIndo = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const formatDay = currentDate < 10 ? `0${currentDate}` : `${currentDate}`;
   const formatMonth =
     date.getMonth() + 1 < 10
@@ -203,6 +204,13 @@ const Schedule = (props) => {
     }
   }
 
+  const checkIsOpen = (data) => {
+    // console.log(Object.values(setting.operasional_buka));
+    // if (data?.setting.pengaturan_jam === 'hari') {
+    //   console.log(data?.setting.hari.length);
+    // }
+  };
+
   function renderCalendar() {
     const week = [];
     // const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
@@ -222,11 +230,29 @@ const Schedule = (props) => {
       };
       week.push(objDate);
     }
+
+    const setting =
+      typeof props.dataServiceSelected.data?.setting === "string"
+        ? JSON.parse(props.dataServiceSelected.data?.setting)
+        : props.dataServiceSelected.data?.setting;
+    // let isOpen = null
+    // for (const property in setting.operasional_buka) {
+    //   if (`${setting.operasional_buka[property]}` === '00:00') {
+    //     // isOpen = true
+    //     console.log(true);
+    //   } else {
+    //     console.log(false);
+    //     // isOpen = false
+    //   }
+    // }
+
+    // console.log(
+    //   Object.values(setting.operasional_buka)[formatDate.getDay()] === '00:00'
+    // );
+    // console.log(daysIndo[formatDate.getDay()]);
+    // console.log(Object.keys(setting.operasional_tutup).length);
     const isDisabled =
-      props.dataServiceSelected.data?.slot_aktif === "0" &&
-      props.dataServiceSelected.data?.buka === "00:00:00"
-        ? true
-        : false;
+      props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
     return (
       <div
         className="slot-card my-5 p-3 align-items-center justify-content-center"
