@@ -46,7 +46,7 @@ const ReviewTicket = (props) => {
           <div className="justify-content-between row mx-1">
             <div className="mx-2">
               <p className="title-review">Tanggal</p>
-              <p>{moment(data?.estimasi_tangal).format("DD MMM YYYY")}</p>
+              <p>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</p>
             </div>
             <div className="mx-2">
               <p className="title-review">Estimasi Nomor Antrian</p>

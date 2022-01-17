@@ -82,6 +82,7 @@ export function fetchSlotTime(id, format) {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${SLOT_TIME}/${id}/${format}/mobile/`, qs.stringify(params))
         .then((response) => {
+          console.log(response);
           if (response.status === 200) {
             if (!_.isEmpty(response.data)) {
               let data = [];

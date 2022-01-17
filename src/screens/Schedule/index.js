@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 14-January-2022
+ * @Last modified time: 17-January-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -205,6 +205,7 @@ const Schedule = (props) => {
 
   function renderCalendar() {
     const week = [];
+    // const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
     for (let i = currentDate; i <= lastDay; i++) {
       const formatDay = i < 10 ? `0${i}` : `${i}`;
       const formatMonth =
@@ -222,7 +223,10 @@ const Schedule = (props) => {
       week.push(objDate);
     }
     const isDisabled =
-      props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
+      props.dataServiceSelected.data?.slot_aktif === "0" &&
+      props.dataServiceSelected.data?.buka === "00:00:00"
+        ? true
+        : false;
     return (
       <div
         className="slot-card my-5 p-3 align-items-center justify-content-center"
@@ -326,18 +330,19 @@ const Schedule = (props) => {
   }
 
   function renderSlotTime() {
-    if (dataSlotTime?.length) {
+    if (dataSlotTime?.length > 0) {
+      console.log(dataSlotTime);
       return (
         <div className="container slot-card my-3">
           {dataSlotTime.map((item, index) => {
             const currentTime = new Date();
 
-            const disableSlot = item.disabled === "false" ? false : true;
-            // selectedDate.date > currentTime.getDate()
-            //   ? false
-            //   : currentTime.getHours() > parseInt(item.time)
-            //   ? true
-            //   : false;
+            const disableSlot =
+              selectedDate.date > currentTime.getDate()
+                ? false
+                : currentTime.getHours() > parseInt(item.time)
+                ? true
+                : false;
             return (
               <div key={index}>
                 <button
