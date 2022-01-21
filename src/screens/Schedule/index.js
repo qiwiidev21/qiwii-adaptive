@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 18-January-2022
+ * @Last modified time: 21-January-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -56,7 +56,6 @@ const Schedule = (props) => {
     "December",
   ];
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const daysIndo = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const formatDay = currentDate < 10 ? `0${currentDate}` : `${currentDate}`;
   const formatMonth =
     date.getMonth() + 1 < 10
@@ -204,13 +203,6 @@ const Schedule = (props) => {
     }
   }
 
-  const checkIsOpen = (data) => {
-    // console.log(Object.values(setting.operasional_buka));
-    // if (data?.setting.pengaturan_jam === 'hari') {
-    //   console.log(data?.setting.hari.length);
-    // }
-  };
-
   function renderCalendar() {
     const week = [];
     // const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
@@ -227,30 +219,46 @@ const Schedule = (props) => {
         typeof props.dataServiceSelected.data?.setting === "string"
           ? JSON.parse(props.dataServiceSelected.data?.setting)
           : props.dataServiceSelected.data?.setting;
+
+      const isOpen =
+        days[formatDate.getDay()] === "Mon" &&
+        Object.keys(setting.hari)[0] !== undefined &&
+        Object.keys(setting.hari)[0] === "1"
+          ? true
+          : days[formatDate.getDay()] === "Tue" &&
+            Object.keys(setting.hari)[1] !== undefined &&
+            Object.keys(setting.hari)[1] === "2"
+          ? true
+          : days[formatDate.getDay()] === "Wed" &&
+            Object.keys(setting.hari)[2] !== undefined &&
+            Object.keys(setting.hari)[2] === "3"
+          ? true
+          : days[formatDate.getDay()] === "Thu" &&
+            Object.keys(setting.hari)[3] !== undefined &&
+            Object.keys(setting.hari)[3] === "4"
+          ? true
+          : days[formatDate.getDay()] === "Fri" &&
+            Object.keys(setting.hari)[4] !== undefined &&
+            Object.keys(setting.hari)[4] === "5"
+          ? true
+          : days[formatDate.getDay()] === "Sat" &&
+            Object.keys(setting.hari)[5] !== undefined &&
+            Object.keys(setting.hari)[5] === "6"
+          ? true
+          : days[formatDate.getDay()] === "Sun" &&
+            Object.keys(setting.hari)[6] !== undefined &&
+            Object.keys(setting.hari)[6] === "7"
+          ? true
+          : false;
       const objDate = {
         day: days[formatDate.getDay()],
         date: i,
+        isOpen: isOpen,
         format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
       };
       week.push(objDate);
     }
 
-    // let isOpen = null
-    // for (const property in setting.operasional_buka) {
-    //   if (`${setting.operasional_buka[property]}` === '00:00') {
-    //     // isOpen = true
-    //     console.log(true);
-    //   } else {
-    //     console.log(false);
-    //     // isOpen = false
-    //   }
-    // }
-
-    // console.log(
-    //   Object.values(setting.operasional_buka)[formatDate.getDay()] === '00:00'
-    // );
-    // console.log(daysIndo[formatDate.getDay()]);
-    // console.log(Object.keys(setting.operasional_tutup).length);
     const isDisabled =
       props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
     return (
@@ -271,7 +279,9 @@ const Schedule = (props) => {
                 <div
                   className="date-round mx-3 justify-content-center"
                   style={
-                    item.date === selectedDate?.date
+                    item.isOpen === false
+                      ? { backgroundColor: "rgba(0, 0, 0, 0.1)" }
+                      : item.date === selectedDate?.date
                       ? { backgroundColor: "#8f1619" }
                       : { backgroundColor: "#ffffff" }
                   }
@@ -279,7 +289,7 @@ const Schedule = (props) => {
                   <button
                     className="btn-custom-date"
                     onClick={async () => {
-                      if (!isDisabled) {
+                      if (item.isOpen && !isDisabled) {
                         await setSelectedDate(item);
                         await props.setSelectedDate(item.format);
                       }
