@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 21-January-2022
+ * @Last modified time: 01-February-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-dropdown/style.css";
 import _ from "lodash";
 import { Helmet } from "react-helmet";
-
+import moment from "moment";
 const Schedule = (props) => {
   const { url } = useRouteMatch();
   const { routeID } = useParams();
@@ -205,8 +205,10 @@ const Schedule = (props) => {
 
   function renderCalendar() {
     const week = [];
-    // const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
-    for (let i = currentDate; i <= lastDay; i++) {
+    const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
+    // const rentant = new Date(date.setDate(date.getDate() + max));
+    const rentant = new Date(moment(date, "DD-MM-YYYY").add(max, "days"));
+    for (let i = currentDate; i <= rentant.getDate(); i++) {
       const formatDay = i < 10 ? `0${i}` : `${i}`;
       const formatMonth =
         date.getMonth() + 1 < 10
