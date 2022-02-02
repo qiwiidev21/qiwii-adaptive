@@ -208,7 +208,7 @@ const Schedule = (props) => {
     const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
     // const rentant = new Date(date.setDate(date.getDate() + max));
     const rentant = new Date(moment(date, "DD-MM-YYYY").add(max, "days"));
-    for (let i = currentDate; i <= rentant.getDate(); i++) {
+    for (let i = currentDate; i <= lastDay; i++) {
       const formatDay = i < 10 ? `0${i}` : `${i}`;
       const formatMonth =
         date.getMonth() + 1 < 10
@@ -217,41 +217,45 @@ const Schedule = (props) => {
       const formatDate = new Date(
         `${date.getFullYear()}-${formatMonth}-${formatDay}`
       );
+      const rentang_maksimal = moment(rentant).format("YYYY-MM-DD");
       const setting =
         typeof props.dataServiceSelected.data?.setting === "string"
           ? JSON.parse(props.dataServiceSelected.data?.setting)
           : props.dataServiceSelected.data?.setting;
 
-      const isOpen =
-        days[formatDate.getDay()] === "Mon" &&
-        Object.keys(setting.hari)[0] !== undefined &&
-        Object.keys(setting.hari)[0] === "1"
-          ? true
-          : days[formatDate.getDay()] === "Tue" &&
-            Object.keys(setting.hari)[1] !== undefined &&
-            Object.keys(setting.hari)[1] === "2"
-          ? true
-          : days[formatDate.getDay()] === "Wed" &&
-            Object.keys(setting.hari)[2] !== undefined &&
-            Object.keys(setting.hari)[2] === "3"
-          ? true
-          : days[formatDate.getDay()] === "Thu" &&
-            Object.keys(setting.hari)[3] !== undefined &&
-            Object.keys(setting.hari)[3] === "4"
-          ? true
-          : days[formatDate.getDay()] === "Fri" &&
-            Object.keys(setting.hari)[4] !== undefined &&
-            Object.keys(setting.hari)[4] === "5"
-          ? true
-          : days[formatDate.getDay()] === "Sat" &&
-            Object.keys(setting.hari)[5] !== undefined &&
-            Object.keys(setting.hari)[5] === "6"
-          ? true
-          : days[formatDate.getDay()] === "Sun" &&
-            Object.keys(setting.hari)[6] !== undefined &&
-            Object.keys(setting.hari)[6] === "7"
-          ? true
-          : false;
+      const isOpen = moment(
+        `${date.getFullYear()}-${formatMonth}-${formatDay}`
+      ).isSameOrAfter(rentang_maksimal)
+        ? false
+        : days[formatDate.getDay()] === "Mon" &&
+          Object.values(setting.operasional_buka)[0] !== undefined &&
+          Object.values(setting.operasional_buka)[0] !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Tue" &&
+          Object.values(setting.operasional_buka)[1] !== undefined &&
+          Object.values(setting.operasional_buka)[1] !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Wed" &&
+          Object.values(setting.operasional_buka)[2] !== undefined &&
+          Object.values(setting.operasional_buka)[2] !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Thu" &&
+          Object.values(setting.operasional_buka)[3] !== undefined &&
+          Object.values(setting.operasional_buka)[3] !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Fri" &&
+          Object.values(setting.operasional_buka)[4] !== undefined &&
+          Object.values(setting.operasional_buka)[4] !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Sat" &&
+          Object.values(setting.operasional_buka)[5] !== undefined &&
+          Object.values(setting.operasional_buka)[5] !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Sun" &&
+          Object.values(setting.operasional_buka)[6] !== undefined &&
+          Object.values(setting.operasional_buka)[6] !== "00:00"
+        ? true
+        : false;
       const objDate = {
         day: days[formatDate.getDay()],
         date: i,
