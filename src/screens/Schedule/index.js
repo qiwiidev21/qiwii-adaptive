@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 02-February-2022
+ * @Last modified time: 03-February-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -222,38 +222,37 @@ const Schedule = (props) => {
         typeof props.dataServiceSelected.data?.setting === "string"
           ? JSON.parse(props.dataServiceSelected.data?.setting)
           : props.dataServiceSelected.data?.setting;
-
       const isOpen = moment(
         `${date.getFullYear()}-${formatMonth}-${formatDay}`
       ).isSameOrAfter(rentang_maksimal)
         ? false
         : days[formatDate.getDay()] === "Mon" &&
-          Object.values(setting.operasional_buka)[0] !== undefined &&
-          Object.values(setting.operasional_buka)[0] !== "00:00"
+          Object.values(setting.daftar_buka)[0].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[0].kiosk !== "00:00"
         ? true
         : days[formatDate.getDay()] === "Tue" &&
-          Object.values(setting.operasional_buka)[1] !== undefined &&
-          Object.values(setting.operasional_buka)[1] !== "00:00"
+          Object.values(setting.daftar_buka)[1].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[1].kiosk !== "00:00"
         ? true
         : days[formatDate.getDay()] === "Wed" &&
-          Object.values(setting.operasional_buka)[2] !== undefined &&
-          Object.values(setting.operasional_buka)[2] !== "00:00"
+          Object.values(setting.daftar_buka)[2].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[2].kiosk !== "00:00"
         ? true
         : days[formatDate.getDay()] === "Thu" &&
-          Object.values(setting.operasional_buka)[3] !== undefined &&
-          Object.values(setting.operasional_buka)[3] !== "00:00"
+          Object.values(setting.daftar_buka)[3].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[3].kiosk !== "00:00"
         ? true
         : days[formatDate.getDay()] === "Fri" &&
-          Object.values(setting.operasional_buka)[4] !== undefined &&
-          Object.values(setting.operasional_buka)[4] !== "00:00"
+          Object.values(setting.daftar_buka)[4].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[4].kiosk !== "00:00"
         ? true
         : days[formatDate.getDay()] === "Sat" &&
-          Object.values(setting.operasional_buka)[5] !== undefined &&
-          Object.values(setting.operasional_buka)[5] !== "00:00"
+          Object.values(setting.daftar_buka)[5].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[5].kiosk !== "00:00"
         ? true
         : days[formatDate.getDay()] === "Sun" &&
-          Object.values(setting.operasional_buka)[6] !== undefined &&
-          Object.values(setting.operasional_buka)[6] !== "00:00"
+          Object.values(setting.daftar_buka)[6].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[6].kiosk !== "00:00"
         ? true
         : false;
       const objDate = {
