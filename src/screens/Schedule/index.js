@@ -23,7 +23,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 // import launchImage from "../../assets/images/header-qiwii-launch.png";
-import { Container, Form, Button, Modal } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import Dropdown from "react-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -38,7 +38,6 @@ const Schedule = (props) => {
   let location = useLocation();
   const date = new Date();
   const currentDate = date.getDate();
-  const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState("");
   const lastDay = new Date(
     date.getFullYear(),
@@ -605,26 +604,6 @@ const Schedule = (props) => {
           onChange={(date) => setStartDate(date)}
         />
       </div>
-    );
-  }
-
-  function renderModal() {
-    return (
-      <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Terima kasih telah menggunakan Qiwii</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Container>
-            <ReactMidtrans
-              clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
-              token={token}
-            >
-              <button>payme</button>
-            </ReactMidtrans>
-          </Container>
-        </Modal.Body>
-      </Modal>
     );
   }
 
