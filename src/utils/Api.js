@@ -41,5 +41,5 @@ const createAPI = (baseURL) => {
   return api;
 };
 
-export const Qiwii = createAPI("https://app.qiwii.id");
+export const Qiwii = createAPI("https://dev.qiwii.id");
 if (MOCK_NETWORK) mockQiwii(new MockAdapter(Qiwii));

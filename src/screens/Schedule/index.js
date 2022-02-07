@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 03-February-2022
+ * @Last modified time: 07-February-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -334,6 +334,15 @@ const Schedule = (props) => {
             <p>Rata-rata lama per antrian</p>
             <p>{data.rata !== null ? data.rata : "0"}</p>
           </div>
+          {data.price_active === "1" && (
+            <div>
+              <div className="dropdown-divider"></div>
+              <div className="justify-content-between row mx-2">
+                <p>Harga</p>
+                <p>{data.price !== null ? `Rp.${data.price}` : "Rp.0"}</p>
+              </div>
+            </div>
+          )}
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-2">
             <p>Estimasi waktu dilayani</p>
