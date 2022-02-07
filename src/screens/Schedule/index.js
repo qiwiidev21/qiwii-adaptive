@@ -10,17 +10,20 @@ import "./styles.css";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import PropTypes from "prop-types";
+import ReactMidtrans from "../../components/Midtrans";
+
 import {
   useRouteMatch,
   useParams,
   useHistory,
   useLocation,
 } from "react-router-dom";
+import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 // import launchImage from "../../assets/images/header-qiwii-launch.png";
-import { Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Modal } from "react-bootstrap";
 import Dropdown from "react-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -35,7 +38,8 @@ const Schedule = (props) => {
   let location = useLocation();
   const date = new Date();
   const currentDate = date.getDate();
-
+  const [showModal, setShowModal] = useState(false);
+  const [token, setToken] = useState("");
   const lastDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
@@ -83,7 +87,6 @@ const Schedule = (props) => {
 
   const parseUrl = typeof url === "string" ? url.substr(url.length - 7) : null;
   const organizationID = parseUrl.substring(0, 3);
-
   const [customFieldValue, setValCustomField] = useState([]);
   const [dataCustomField, setDataCustomField] = useState([]);
   const [dataSlotTime, setDataSlotTime] = useState([]);
@@ -97,6 +100,19 @@ const Schedule = (props) => {
       fetchDataCustomField();
     }
   }, [organizationID]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (props.dataServiceSelected.data.price_active === "1") {
+      getToken(props.dataServiceSelected.data.id);
+    }
+  }, [props.dataServiceSelected.data]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function getToken(id) {
+    const windowsNew = await axios.get(
+      `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
+    );
+    setToken(windowsNew.data.token);
+  }
 
   useEffect(() => {
     if (routeID) {
@@ -592,6 +608,26 @@ const Schedule = (props) => {
     );
   }
 
+  function renderModal() {
+    return (
+      <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Terima kasih telah menggunakan Qiwii</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <ReactMidtrans
+              clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
+              token={token}
+            >
+              <button>payme</button>
+            </ReactMidtrans>
+          </Container>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
   return (
     <div className="container">
       <Helmet>
@@ -611,14 +647,25 @@ const Schedule = (props) => {
       <section>{renderSlotTime()}</section>
       <section>{renderCustomField()}</section>
       <div className="container-item my-5">
-        <Button
-          variant="primary"
-          type="submit"
-          className="next-button"
-          onClick={handleSubmit}
-        >
-          Lanjutkan
-        </Button>
+        {props.dataServiceDetail.data?.price_active === "1" ? (
+          <ReactMidtrans
+            clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
+            token={token}
+          >
+            <Button variant="primary" type="submit" className="next-button">
+              Lanjutkan Pembayaran
+            </Button>
+          </ReactMidtrans>
+        ) : (
+          <Button
+            variant="primary"
+            type="submit"
+            className="next-button"
+            onClick={handleSubmit}
+          >
+            Lanjutkan
+          </Button>
+        )}
       </div>
     </div>
   );
