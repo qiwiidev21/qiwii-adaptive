@@ -12,7 +12,7 @@ import Hero from "../../components/Hero";
 import PropTypes from "prop-types";
 import ReactMidtrans from "../../components/Midtrans";
 import OtpInput from "react-otp-input";
-
+import { Carousel } from "react-responsive-carousel";
 import {
   useRouteMatch,
   useParams,
@@ -38,12 +38,14 @@ const Schedule = (props) => {
   let history = useHistory();
   let location = useLocation();
   const date = new Date();
+  const dates = new Date(date.getFullYear(), date.getMonth() + 1, 1);
   const [messageReport, setMessageReport] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const currentDate = date.getDate();
+  const currentDates = dates.getDate();
   const [token, setToken] = useState("");
   const [otp, setOTP] = useState("");
   const [user, setUser] = useState({});
@@ -52,6 +54,11 @@ const Schedule = (props) => {
   const lastDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
+    0
+  ).getDate();
+  const lastDays = new Date(
+    date.getFullYear(),
+    date.getMonth() + 2,
     0
   ).getDate();
   const monthNames = [
@@ -242,7 +249,8 @@ const Schedule = (props) => {
     }
   }
   function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
   function setPhoneOrMail(value) {
@@ -254,6 +262,7 @@ const Schedule = (props) => {
 
   function renderCalendar() {
     const week = [];
+    const weeks = [];
     const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
     // const rentant = new Date(date.setDate(date.getDate() + max));
     const rentant = new Date(moment(date, "DD-MM-YYYY").add(max, "days"));
@@ -312,6 +321,61 @@ const Schedule = (props) => {
       };
       week.push(objDate);
     }
+    for (let i = currentDates; i <= lastDays; i++) {
+      const formatDay = i < 10 ? `0${i}` : `${i}`;
+      const formatMonth =
+        date.getMonth() + 1 < 10
+          ? `0${date.getMonth() + 1}`
+          : `${date.getMonth() + 1}`;
+      const formatDate = new Date(
+        `${date.getFullYear()}-${formatMonth}-${formatDay}`
+      );
+      const rentang_maksimal = moment(rentant).format("YYYY-MM-DD");
+      const setting =
+        typeof props.dataServiceSelected.data?.setting === "string"
+          ? JSON.parse(props.dataServiceSelected.data?.setting)
+          : props.dataServiceSelected.data?.setting;
+      const isOpen = moment(
+        `${date.getFullYear()}-${formatMonth}-${formatDay}`
+      ).isSameOrAfter(rentang_maksimal)
+        ? false
+        : days[formatDate.getDay()] === "Mon" &&
+          Object.values(setting.daftar_buka)[0].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[0].kiosk !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Tue" &&
+          Object.values(setting.daftar_buka)[1].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[1].kiosk !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Wed" &&
+          Object.values(setting.daftar_buka)[2].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[2].kiosk !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Thu" &&
+          Object.values(setting.daftar_buka)[3].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[3].kiosk !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Fri" &&
+          Object.values(setting.daftar_buka)[4].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[4].kiosk !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Sat" &&
+          Object.values(setting.daftar_buka)[5].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[5].kiosk !== "00:00"
+        ? true
+        : days[formatDate.getDay()] === "Sun" &&
+          Object.values(setting.daftar_buka)[6].kiosk !== undefined &&
+          Object.values(setting.daftar_buka)[6].kiosk !== "00:00"
+        ? true
+        : false;
+      const objDate = {
+        day: days[formatDate.getDay()],
+        date: i,
+        isOpen: isOpen,
+        format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
+      };
+      weeks.push(objDate);
+    }
 
     const isDisabled =
       props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
@@ -320,51 +384,108 @@ const Schedule = (props) => {
         className="slot-card my-5 p-3 align-items-center justify-content-center"
         style={{ opacity: isDisabled ? 0.5 : 1 }}
       >
-        <div className="justify-content-center">
-          <h3 className="month-text">
-            {monthNames[date.getMonth()]} {date.getFullYear()}
-          </h3>
-        </div>
-        <div className="row-custom calendar">
-          {week.map((item, index) => {
-            return (
-              <div key={index} className="my-1">
-                <p className="date-text">{item.day}</p>
-                <div
-                  className="date-round mx-3 justify-content-center"
-                  style={
-                    item.isOpen === false
-                      ? { backgroundColor: "rgba(0, 0, 0, 0.1)" }
-                      : item.date === selectedDate?.date
-                      ? { backgroundColor: "#8f1619" }
-                      : { backgroundColor: "#ffffff" }
-                  }
-                >
-                  <button
-                    className="btn-custom-date"
-                    onClick={async () => {
-                      if (item.isOpen && !isDisabled) {
-                        await setSelectedDate(item);
-                        await props.setSelectedDate(item.format);
-                      }
-                    }}
-                  >
-                    <p
-                      className="date-text"
+        <Carousel
+          width={"100%"}
+          showThumbs={false}
+          showStatus={false}
+          showArrows={true}
+          centerSlidePercentage={100}
+        >
+          <div>
+            <div className="justify-content-center">
+              <h3 className="month-text">
+                {monthNames[date.getMonth()]} {date.getFullYear()}
+              </h3>
+            </div>
+            <div className="row-custom calendar">
+              {week.map((item, index) => {
+                return (
+                  <div key={index} className="my-1">
+                    <p className="date-text">{item.day}</p>
+                    <div
+                      className="date-round mx-3 justify-content-center"
                       style={
-                        item.date === selectedDate?.date
-                          ? { color: "#ffffff" }
-                          : { color: "#333333" }
+                        item.isOpen === false
+                          ? { backgroundColor: "rgba(0, 0, 0, 0.1)" }
+                          : item.date === selectedDate?.date
+                          ? { backgroundColor: "#8f1619" }
+                          : { backgroundColor: "#ffffff" }
                       }
                     >
-                      {item.date}
-                    </p>
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                      <button
+                        className="btn-custom-date"
+                        onClick={async () => {
+                          if (item.isOpen && !isDisabled) {
+                            await setSelectedDate(item);
+                            await props.setSelectedDate(item.format);
+                          }
+                        }}
+                      >
+                        <p
+                          className="date-text"
+                          style={
+                            item.date === selectedDate?.date
+                              ? { color: "#ffffff" }
+                              : { color: "#333333" }
+                          }
+                        >
+                          {item.date}
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="justify-content-center">
+              <h3 className="month-text">
+                {monthNames[date.getMonth() + 1]} {date.getFullYear()}
+              </h3>
+            </div>
+            <div className="row-custom calendar">
+              {weeks.map((item, index) => {
+                return (
+                  <div key={index} className="my-1">
+                    <p className="date-text">{item.day}</p>
+                    <div
+                      className="date-round mx-3 justify-content-center"
+                      style={
+                        item.isOpen === false
+                          ? { backgroundColor: "rgba(0, 0, 0, 0.1)" }
+                          : item.date === selectedDate?.date
+                          ? { backgroundColor: "#8f1619" }
+                          : { backgroundColor: "#ffffff" }
+                      }
+                    >
+                      <button
+                        className="btn-custom-date"
+                        onClick={async () => {
+                          if (item.isOpen && !isDisabled) {
+                            await setSelectedDate(item);
+                            await props.setSelectedDate(item.format);
+                          }
+                        }}
+                      >
+                        <p
+                          className="date-text"
+                          style={
+                            item.date === selectedDate?.date
+                              ? { color: "#ffffff" }
+                              : { color: "#333333" }
+                          }
+                        >
+                          {item.date}
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Carousel>
       </div>
     );
   }
