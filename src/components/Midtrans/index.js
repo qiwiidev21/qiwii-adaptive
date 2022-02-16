@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   07-February-2022
  * @Last modified by:   rakamahardika
- * @Last modified time: 07-February-2022
+ * @Last modified time: 16-February-2022
  */
 
 import { cloneElement, PureComponent } from "react";
@@ -50,8 +50,8 @@ export default class SnapMidtrans extends PureComponent {
 
   onLoad(e) {
     if ("snap" in window) {
-      const { snap } = window;
-      this.setState({ snap });
+      const { snap, onSuccess } = window;
+      this.setState({ snap, onSuccess });
     }
   }
 
@@ -70,15 +70,15 @@ export default class SnapMidtrans extends PureComponent {
           children.onClick && children.onClick();
           if (this.state.token && this.state.token !== "") {
             this.state.snap.pay(
-              this.state.token
+              this.state.token,
               /** @todo options **/
+              this.state.onSuccess && this.state.onSuccess()
             );
           }
           this.props.onClick && this.props.onClick();
         },
       }
     );
-
     this.setState({
       children,
     });

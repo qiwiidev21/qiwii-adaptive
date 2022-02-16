@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 07-February-2022
+ * @Last modified time: 16-February-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import PropTypes from "prop-types";
 import ReactMidtrans from "../../components/Midtrans";
+import OtpInput from "react-otp-input";
 
 import {
   useRouteMatch,
@@ -23,7 +24,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 // import launchImage from "../../assets/images/header-qiwii-launch.png";
-import { Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Modal } from "react-bootstrap";
 import Dropdown from "react-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -37,8 +38,17 @@ const Schedule = (props) => {
   let history = useHistory();
   let location = useLocation();
   const date = new Date();
+  const [messageReport, setMessageReport] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
   const currentDate = date.getDate();
   const [token, setToken] = useState("");
+  const [otp, setOTP] = useState("");
+  const [user, setUser] = useState({});
+  const [showModalReport, setShowModalReport] = useState(false);
+
   const lastDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
@@ -68,6 +78,10 @@ const Schedule = (props) => {
     `${date.getFullYear()}-${formatMonth}-${formatDay}`
   );
 
+  const [uniqueIdentifier, setUniqueIdentifier] = useState("");
+
+  const [modalOTP, showModalOTP] = useState(false);
+
   const [selectedDate, setSelectedDate] = useState({
     day: days[formatDate.getDay()],
     date: currentDate,
@@ -89,6 +103,7 @@ const Schedule = (props) => {
   const [customFieldValue, setValCustomField] = useState([]);
   const [dataCustomField, setDataCustomField] = useState([]);
   const [dataSlotTime, setDataSlotTime] = useState([]);
+  const [sessionStored, setSessionStored] = useState({});
 
   useEffect(() => {
     fetchServiceDetail();
@@ -111,6 +126,15 @@ const Schedule = (props) => {
       `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
     );
     setToken(windowsNew.data.token);
+  }
+
+  useEffect(() => {
+    getSession();
+  }, []);
+
+  function getSession() {
+    const user = sessionStorage.getItem("user");
+    setSessionStored(JSON.parse(user));
   }
 
   useEffect(() => {
@@ -216,6 +240,16 @@ const Schedule = (props) => {
         </div>
       );
     }
+  }
+  function validateEmail(email) {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    return re.test(email);
+  }
+  function setPhoneOrMail(value) {
+    let email = validateEmail(value) ? value : "";
+    let phone = !validateEmail(value) ? value : "";
+    setUsername(email);
+    setPhone(phone);
   }
 
   function renderCalendar() {
@@ -398,7 +432,6 @@ const Schedule = (props) => {
 
   function renderSlotTime() {
     if (dataSlotTime?.length > 0) {
-      console.log(dataSlotTime);
       return (
         <div className="container slot-card my-3">
           {dataSlotTime.map((item, index) => {
@@ -507,6 +540,209 @@ const Schedule = (props) => {
     });
   }
 
+  const [showModalLogin, setShowModalLogin] = useState(false);
+
+  const [registerForm, setRegisterForm] = useState(false);
+
+  function renderModalLogin() {
+    return (
+      <Modal
+        size="md"
+        aria-labelledby="example-modal-sizes-title-lg"
+        show={showModalLogin}
+        onHide={() => setShowModalLogin(!showModalLogin)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            {registerForm ? "Register" : "Login"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {registerForm ? (
+            <Form>
+              <Form.Group controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={(event) => setUsername(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Email"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="phone">
+                <Form.Label>Nomor Telepon</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Nomor Telepon"
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          ) : (
+            <Form>
+              <Form.Group controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={(event) => setPhoneOrMail(event.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="container my-5">
+            <Button
+              variant="primary"
+              type="submit"
+              className="next-button"
+              onClick={() => {
+                if (registerForm) {
+                  handleRegister();
+                } else {
+                  handleLogin();
+                }
+              }}
+            >
+              Submit
+            </Button>
+            <div>
+              <h6 className="register-text">
+                {registerForm ? "Sudah" : "Belum"} punya akun?
+                <button
+                  className="btn-custom btn-primary-outline"
+                  onClick={() => setRegisterForm(!registerForm)}
+                >
+                  <h6 className="register-text-button">
+                    {registerForm ? "Masuk" : "Daftar"}
+                  </h6>
+                </button>
+              </h6>
+            </div>
+          </div>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
+  function handleLogin() {
+    props
+      .loginQiwii(username, phone, password)
+      .then(async (user) => {
+        if (user.status === "Success") {
+          await setShowModalLogin(!showModalLogin);
+          await setShowModalReport(true);
+          await setTitleReport(user.status);
+          await setMessageReport(user.message);
+          await notificationRequest();
+          await setUser(user);
+        } else {
+          await setShowModalReport(true);
+          await setTitleReport(user.status);
+          await setMessageReport(user.message);
+          await setShowModalLogin(!showModalLogin);
+          await setUser({});
+        }
+      })
+      .catch((error) => {
+        if (error.status === 400) {
+          setShowModalReport(true);
+          setTitleReport("Error");
+          setMessageReport(error.message);
+        }
+      });
+  }
+
+  async function notificationRequest() {
+    try {
+      let permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        sessionStorage.setItem("permission", permission);
+      } else if (permission === "denied") {
+        sessionStorage.setItem("permission", permission);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  const [titleReport, setTitleReport] = useState("");
+
+  function handleRegister() {
+    props
+      .registerQiwii(username, email, phone, password)
+      .then(async (user) => {
+        if (user.status === "Success") {
+          // setShowModalLogin(!showModalLogin);
+          await setRegisterForm(!registerForm);
+          await showModalOTP(!modalOTP);
+          await setUniqueIdentifier(user.unique_identifier);
+          await sessionStorage.setItem(
+            "unique_identifier",
+            user.unique_identifier
+          );
+          // setTitleReport(user.status);
+        } else {
+          setTitleReport("Error");
+        }
+      })
+      .catch((error) => {
+        if (error.status === 400) {
+          setTitleReport("Error");
+        }
+      });
+  }
+
+  const [showModal, setShowModal] = useState(false);
+
+  function renderModal() {
+    return (
+      <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Anda belum login.</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Silahkan login untuk melanjutkan!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="light" onClick={() => setShowModal(!showModal)}>
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={async () => {
+              await setShowModal(!showModal);
+              await setShowModalLogin(true);
+            }}
+          >
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   async function handleSubmit() {
     try {
       const results = await validateCustomField();
@@ -607,6 +843,118 @@ const Schedule = (props) => {
     );
   }
 
+  const handleSubmitOTP = async () => {
+    await props
+      .verifyCode(otp, uniqueIdentifier)
+      .then(async (user) => {
+        if (user.status === "Success") {
+          const sessionUser = {
+            message: "Selamat anda berhasil login.",
+            status: "Success",
+            token: user.token,
+            unique_identifier: uniqueIdentifier,
+            uuid: "ABCD1234",
+          };
+          await showModalOTP(false);
+          await setOTP("");
+          await sessionStorage.setItem("token", user.token);
+          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
+          await props
+            .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
+            .then(async (response) => {
+              if (response.status === "Success") {
+                await setShowModalLogin(false);
+                await setShowModalReport(false);
+              }
+            });
+        }
+      })
+      .catch((error) => {
+        if (error.status === 401) {
+          alert(error.data.message);
+        }
+      });
+  };
+
+  function renderModalOTP() {
+    return (
+      <Modal show={modalOTP} onHide={() => showModalOTP(!modalOTP)}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Masukkan kode verifikasi yang telah dikirim via Email Anda.
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <OtpInput
+              containerStyle={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              inputStyle={{ margin: 10, width: 50, height: 80, fontSize: 20 }}
+              placeholder={"0"}
+              value={otp}
+              hasErrored
+              onChange={(otp) => setOTP(otp)}
+              numInputs={4}
+              separator={<p>-</p>}
+            />
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            className="next-button"
+            onClick={async () => {
+              await handleSubmitOTP();
+            }}
+          >
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
+  function renderModalReport() {
+    return (
+      <Modal
+        show={showModalReport}
+        onHide={() => setShowModalReport(!showModalReport)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{titleReport}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{messageReport}</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={async () => {
+              if (!_.isEmpty(user)) {
+                await setShowModalReport(false);
+                await sessionStorage.setItem("token", user.token);
+                await sessionStorage.setItem(
+                  "unique_identifier",
+                  user.unique_identifier
+                );
+                await sessionStorage.setItem("user", JSON.stringify(user));
+                await props.getDataUser(
+                  user.unique_identifier,
+                  user.uuid,
+                  user.token
+                );
+              } else {
+                await setShowModalReport(!showModalReport);
+              }
+            }}
+          >
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   return (
     <div className="container">
       <Helmet>
@@ -626,9 +974,20 @@ const Schedule = (props) => {
       <section>{renderSlotTime()}</section>
       <section>{renderCustomField()}</section>
       <div className="container-item my-5">
-        {props.dataServiceDetail.data?.price_active === "1" ? (
+        {_.isEmpty(sessionStored) ? (
+          <Button
+            variant="primary"
+            type="submit"
+            className="next-button"
+            onClick={() => setShowModal(true)}
+          >
+            Masuk untuk melanjutkan
+          </Button>
+        ) : !_.isEmpty(sessionStored) &&
+          props.dataServiceDetail.data?.price_active === "1" ? (
           <ReactMidtrans
-            clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
+            onClick={(result) => console.log(result)}
+            clientKey={"SB-Mid-client-7NWm_GuTs-DvTwEt"}
             token={token}
           >
             <Button variant="primary" type="submit" className="next-button">
@@ -646,6 +1005,10 @@ const Schedule = (props) => {
           </Button>
         )}
       </div>
+      {renderModal()}
+      {renderModalOTP()}
+      {renderModalLogin()}
+      {renderModalReport()}
     </div>
   );
 };
