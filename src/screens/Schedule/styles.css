@@ -11,8 +11,8 @@
   line-height: 1.5;
 }
 .calendar {
-  overflow-y: scroll;
-  height: auto;
+  display: flex;
+  flex-direction: row;
 }
 .content-bg-hero {
   flex: 1;

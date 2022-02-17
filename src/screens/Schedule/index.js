@@ -12,7 +12,7 @@ import Hero from "../../components/Hero";
 import PropTypes from "prop-types";
 import ReactMidtrans from "../../components/Midtrans";
 import OtpInput from "react-otp-input";
-import { Carousel } from "react-responsive-carousel";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import {
   useRouteMatch,
   useParams,
@@ -260,9 +260,19 @@ const Schedule = (props) => {
     setPhone(phone);
   }
 
-  function renderCalendar() {
-    const week = [];
-    const weeks = [];
+  const [week, setWeek] = useState([]);
+
+  useEffect(() => {
+    loadDataWeek();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (week.length <= 30) {
+      loadDataWeekTwo();
+    }
+  }, [week]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function loadDataWeek() {
     const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
     // const rentant = new Date(date.setDate(date.getDate() + max));
     const rentant = new Date(moment(date, "DD-MM-YYYY").add(max, "days"));
@@ -320,15 +330,21 @@ const Schedule = (props) => {
         format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
       };
       week.push(objDate);
+      setWeek(week);
     }
+  }
+
+  function loadDataWeekTwo() {
+    const max = parseInt(props.dataServiceSelected.data?.rentang_maksimal);
+    const rentant = new Date(moment(date, "DD-MM-YYYY").add(max, "days"));
     for (let i = currentDates; i <= lastDays; i++) {
       const formatDay = i < 10 ? `0${i}` : `${i}`;
       const formatMonth =
-        date.getMonth() + 1 < 10
-          ? `0${date.getMonth() + 1}`
-          : `${date.getMonth() + 1}`;
+        dates.getMonth() + 1 < 10
+          ? `0${dates.getMonth() + 1}`
+          : `${dates.getMonth() + 1} `;
       const formatDate = new Date(
-        `${date.getFullYear()}-${formatMonth}-${formatDay}`
+        `${dates.getFullYear()}-${formatMonth}-${formatDay}`
       );
       const rentang_maksimal = moment(rentant).format("YYYY-MM-DD");
       const setting =
@@ -336,7 +352,7 @@ const Schedule = (props) => {
           ? JSON.parse(props.dataServiceSelected.data?.setting)
           : props.dataServiceSelected.data?.setting;
       const isOpen = moment(
-        `${date.getFullYear()}-${formatMonth}-${formatDay}`
+        `${dates.getFullYear()}-${formatMonth}-${formatDay}`
       ).isSameOrAfter(rentang_maksimal)
         ? false
         : days[formatDate.getDay()] === "Mon" &&
@@ -374,9 +390,12 @@ const Schedule = (props) => {
         isOpen: isOpen,
         format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
       };
-      weeks.push(objDate);
+      week.push(objDate);
+      setWeek(week);
     }
+  }
 
+  function renderCalendar() {
     const isDisabled =
       props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
     return (
@@ -384,20 +403,14 @@ const Schedule = (props) => {
         className="slot-card my-5 p-3 align-items-center justify-content-center"
         style={{ opacity: isDisabled ? 0.5 : 1 }}
       >
-        <Carousel
-          width={"100%"}
-          showThumbs={false}
-          showStatus={false}
-          showArrows={true}
-          centerSlidePercentage={100}
-        >
+        <div>
+          <div className="justify-content-center">
+            <h3 className="month-text">
+              {monthNames[date.getMonth()]} {date.getFullYear()}
+            </h3>
+          </div>
           <div>
-            <div className="justify-content-center">
-              <h3 className="month-text">
-                {monthNames[date.getMonth()]} {date.getFullYear()}
-              </h3>
-            </div>
-            <div className="row-custom calendar">
+            <ScrollMenu className="calendar">
               {week.map((item, index) => {
                 return (
                   <div key={index} className="my-1">
@@ -436,56 +449,9 @@ const Schedule = (props) => {
                   </div>
                 );
               })}
-            </div>
+            </ScrollMenu>
           </div>
-          <div>
-            <div className="justify-content-center">
-              <h3 className="month-text">
-                {monthNames[date.getMonth() + 1]} {date.getFullYear()}
-              </h3>
-            </div>
-            <div className="row-custom calendar">
-              {weeks.map((item, index) => {
-                return (
-                  <div key={index} className="my-1">
-                    <p className="date-text">{item.day}</p>
-                    <div
-                      className="date-round mx-3 justify-content-center"
-                      style={
-                        item.isOpen === false
-                          ? { backgroundColor: "rgba(0, 0, 0, 0.1)" }
-                          : item.date === selectedDate?.date
-                          ? { backgroundColor: "#8f1619" }
-                          : { backgroundColor: "#ffffff" }
-                      }
-                    >
-                      <button
-                        className="btn-custom-date"
-                        onClick={async () => {
-                          if (item.isOpen && !isDisabled) {
-                            await setSelectedDate(item);
-                            await props.setSelectedDate(item.format);
-                          }
-                        }}
-                      >
-                        <p
-                          className="date-text"
-                          style={
-                            item.date === selectedDate?.date
-                              ? { color: "#ffffff" }
-                              : { color: "#333333" }
-                          }
-                        >
-                          {item.date}
-                        </p>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Carousel>
+        </div>
       </div>
     );
   }
