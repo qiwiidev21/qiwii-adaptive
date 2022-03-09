@@ -254,7 +254,8 @@ const ReviewQueue = (props) => {
     );
   }
   function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
 
@@ -400,10 +401,10 @@ const ReviewQueue = (props) => {
   async function notificationRequest() {
     try {
       let permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        sessionStorage.setItem("permission", permission)
-      } else if (permission === 'denied') {
-        sessionStorage.setItem("permission", permission)
+      if (permission === "granted") {
+        sessionStorage.setItem("permission", permission);
+      } else if (permission === "denied") {
+        sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
       console.log(e);
@@ -415,8 +416,8 @@ const ReviewQueue = (props) => {
       .registerQiwii(username, email, phone, password)
       .then(async (user) => {
         if (user.status === "Success") {
-          // setShowModalLogin(!showModalLogin);
-          await setRegisterForm(!registerForm);
+          await setShowModalLogin(!showModalLogin);
+          // await setRegisterForm(!registerForm);
           // setShowModalReport(true);
           await showModalOTP(!modalOTP);
           await setUniqueIdentifier(user.unique_identifier);
@@ -476,7 +477,7 @@ const ReviewQueue = (props) => {
 
   function renderModalOTP() {
     return (
-      <Modal show={modalOTP} onHide={() => showModalOTP(!modalOTP)}>
+      <Modal show={modalOTP} onHide={() => {}}>
         <Modal.Header closeButton>
           <Modal.Title>
             Masukkan kode verifikasi yang telah dikirim via Email Anda.

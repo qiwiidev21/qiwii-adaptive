@@ -722,7 +722,9 @@ const Schedule = (props) => {
                 {registerForm ? "Sudah" : "Belum"} punya akun?
                 <button
                   className="btn-custom btn-primary-outline"
-                  onClick={() => setRegisterForm(!registerForm)}
+                  onClick={() => {
+                    setRegisterForm(!registerForm);
+                  }}
                 >
                   <h6 className="register-text-button">
                     {registerForm ? "Masuk" : "Daftar"}
@@ -784,7 +786,8 @@ const Schedule = (props) => {
       .then(async (user) => {
         if (user.status === "Success") {
           // setShowModalLogin(!showModalLogin);
-          await setRegisterForm(!registerForm);
+          await setShowModalLogin(!showModalLogin);
+          // await setRegisterForm(!registerForm);
           await showModalOTP(!modalOTP);
           await setUniqueIdentifier(user.unique_identifier);
           await sessionStorage.setItem(
@@ -965,7 +968,7 @@ const Schedule = (props) => {
 
   function renderModalOTP() {
     return (
-      <Modal show={modalOTP} onHide={() => showModalOTP(!modalOTP)}>
+      <Modal show={modalOTP} onHide={() => {}}>
         <Modal.Header closeButton>
           <Modal.Title>
             Masukkan kode verifikasi yang telah dikirim via Email Anda.
