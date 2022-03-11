@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   16-September-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 02-October-2021
+ * @Last modified time: 11-March-2022
  */
 
 /*
@@ -60,13 +60,13 @@ function ItemService({ data, index, category, onPress }) {
         >
           <h6 className="unit-name">{data.company_name}</h6>
           <h6 className="unit-name">{data.name}</h6>
-          <p className="unit-address">
+          <h6 className="unit-address">
             Saat ini ada{" "}
             {rata.checkin === 1
               ? data.front_queue_active.checkin
               : data.front_queue_active.new}{" "}
             orang yang mengantri
-          </p>
+          </h6>
         </button>
       </div>
     </div>

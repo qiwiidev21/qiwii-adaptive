@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 16-February-2022
+ * @Last modified time: 11-March-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -229,28 +229,27 @@ const Schedule = (props) => {
           <h5 className="unit-name m-1">{data.company_name}</h5>
           <div className="row m-1">
             <div className="d-flex status-open">
-              <p className="status-text">
+              <h6 className="status-text">
                 {data.buka === "00:00:00" && data.tutup === "00:00:00"
                   ? "OPEN"
                   : data.tutup <= data.buka
                   ? "CLOSE"
                   : "OPEN"}
-              </p>
+              </h6>
             </div>
-            <p className="time-text">
+            <h6 className="time-text">
               Jam Buka:{" "}
               {data.buka === "00:00:00" && data.tutup === "00:00:00"
                 ? "24 Jam"
                 : data.buka + " - " + data.tutup}
-            </p>
+            </h6>
           </div>
         </div>
       );
     }
   }
   function validateEmail(email) {
-    let re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
   function setPhoneOrMail(value) {
@@ -414,7 +413,7 @@ const Schedule = (props) => {
               {week.map((item, index) => {
                 return (
                   <div key={index} className="my-1">
-                    <p className="date-text">{item.day}</p>
+                    <h6 className="date-text">{item.day}</h6>
                     <div
                       className="date-round mx-3 justify-content-center"
                       style={
@@ -434,7 +433,7 @@ const Schedule = (props) => {
                           }
                         }}
                       >
-                        <p
+                        <h6
                           className="date-text"
                           style={
                             item.date === selectedDate?.date
@@ -443,7 +442,7 @@ const Schedule = (props) => {
                           }
                         >
                           {item.date}
-                        </p>
+                        </h6>
                       </button>
                     </div>
                   </div>
@@ -462,27 +461,27 @@ const Schedule = (props) => {
       return (
         <div className="slot-card">
           <div className="justify-content-between row mx-2">
-            <p>Nomor mengantri saat ini</p>
-            <p>{data.next_ticket}</p>
+            <h6>Nomor mengantri saat ini</h6>
+            <h6>{data.next_ticket}</h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-2">
-            <p>Rata-rata lama per antrian</p>
-            <p>{data.rata !== null ? data.rata : "0"}</p>
+            <h6>Rata-rata lama per antrian</h6>
+            <h6>{data.rata !== null ? data.rata : "0"}</h6>
           </div>
           {data.price_active === "1" && (
             <div>
               <div className="dropdown-divider"></div>
               <div className="justify-content-between row mx-2">
-                <p>Harga</p>
-                <p>{data.price !== null ? `Rp.${data.price}` : "Rp.0"}</p>
+                <h6>Harga</h6>
+                <h6>{data.price !== null ? `Rp.${data.price}` : "Rp.0"}</h6>
               </div>
             </div>
           )}
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-2">
-            <p>Estimasi waktu dilayani</p>
-            <p>{data.estimated_next_called_time}</p>
+            <h6>Estimasi waktu dilayani</h6>
+            <h6>{data.estimated_next_called_time}</h6>
           </div>
           <div className="dropdown-divider"></div>
         </div>
@@ -551,7 +550,7 @@ const Schedule = (props) => {
                         : { backgroundColor: "#ffffff" }
                     }
                   >
-                    <p
+                    <h6
                       style={
                         disableSlot
                           ? { backgroundColor: "#e6e6e6" }
@@ -561,8 +560,8 @@ const Schedule = (props) => {
                       }
                     >
                       {item.label}
-                    </p>
-                    <p
+                    </h6>
+                    <h6
                       style={
                         disableSlot
                           ? { backgroundColor: "#e6e6e6" }
@@ -572,7 +571,7 @@ const Schedule = (props) => {
                       }
                     >
                       Tersisa {Number(item.quota) - Number(item.queues)} kuota
-                    </p>
+                    </h6>
                   </div>
                 </button>
                 <div className="dropdown-divider"></div>
@@ -987,7 +986,7 @@ const Schedule = (props) => {
               hasErrored
               onChange={(otp) => setOTP(otp)}
               numInputs={4}
-              separator={<p>-</p>}
+              separator={<h6>-</h6>}
             />
           </Container>
         </Modal.Body>

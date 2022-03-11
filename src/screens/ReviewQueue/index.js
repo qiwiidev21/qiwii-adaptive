@@ -66,25 +66,25 @@ const ReviewQueue = (props) => {
         <div className="container p-5">
           <h4 className="title-header">Review antrian Anda</h4>
           <div className="m-2">
-            <p className="title-review">Nama Layanan</p>
-            <p>{data?.name}</p>
+            <h6 className="title-review">Nama Layanan</h6>
+            <h6>{data?.name}</h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="mx-2">
-            <p className="title-review">Nama Merchant</p>
-            <p>{data?.company_name}</p>
+            <h6 className="title-review">Nama Merchant</h6>
+            <h6>{data?.company_name}</h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-1">
             <div className="mx-2">
-              <p className="title-review">Tanggal</p>
-              <p>
+              <h6 className="title-review">Tanggal</h6>
+              <h6>
                 {moment(props.dataSelectedDate?.data).format("DD MMM YYYY")}
-              </p>
+              </h6>
             </div>
             <div className="mx-2">
-              <p className="title-review">Estimasi Nomor Antrian</p>
-              <p>{data?.next_ticket}</p>
+              <h6 className="title-review">Estimasi Nomor Antrian</h6>
+              <h6>{data?.next_ticket}</h6>
             </div>
           </div>
           <div className="dropdown-divider"></div>
@@ -149,27 +149,29 @@ const ReviewQueue = (props) => {
         <Modal.Body>
           <Container>
             <div className="m-2">
-              <p className="title-review">Kamu telah mengantri di</p>
-              <p>
+              <h6 className="title-review">Kamu telah mengantri di</h6>
+              <h6>
                 {dataTicket?.layanan} - {dataTicket?.organization_name}
-              </p>
+              </h6>
             </div>
             <div className="dropdown-divider"></div>
             <div className="mx-2">
-              <p className="title-review">Informasi antrian telah dikirim ke</p>
-              <p>{props.dataUserProfile.data?.email}</p>
+              <h6 className="title-review">
+                Informasi antrian telah dikirim ke
+              </h6>
+              <h6>{props.dataUserProfile.data?.email}</h6>
             </div>
             <div className="dropdown-divider"></div>
             <div className="justify-content-between row mx-1">
               <div className="mx-2">
-                <p className="title-review">Tanggal</p>
-                <p>
+                <h6 className="title-review">Tanggal</h6>
+                <h6>
                   {moment(dataTicket?.estimasi_tangal).format("DD MMM YYYY")}
-                </p>
+                </h6>
               </div>
               <div className="mx-2">
-                <p className="title-review">Estimasi Nomor Antrian</p>
-                <p>{dataTicket?.antrian}</p>
+                <h6 className="title-review">Estimasi Nomor Antrian</h6>
+                <h6>{dataTicket?.antrian}</h6>
               </div>
             </div>
             <div className="dropdown-divider"></div>
@@ -254,8 +256,7 @@ const ReviewQueue = (props) => {
     );
   }
   function validateEmail(email) {
-    let re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
 
@@ -496,7 +497,7 @@ const ReviewQueue = (props) => {
               hasErrored
               onChange={(otp) => setOTP(otp)}
               numInputs={4}
-              separator={<p>-</p>}
+              separator={<h6>-</h6>}
             />
           </Container>
         </Modal.Body>

@@ -94,7 +94,7 @@ function Register(props) {
               hasErrored
               onChange={(otp) => setOTP(otp)}
               numInputs={4}
-              separator={<p>-</p>}
+              separator={<h6>-</h6>}
             />
           </Container>
         </Modal.Body>
@@ -223,14 +223,14 @@ function Register(props) {
                       </div>
 
                       <div className="col-12 text-center">
-                        <p className="mb-0 mt-3">
+                        <h6 className="mb-0 mt-3">
                           <small className="text-dark me-2">
                             Sudah punya akun ?
                           </small>{" "}
                           <Link to="/login">
                             <h6 className="text-dark fw-bold">Masuk</h6>
                           </Link>
-                        </p>
+                        </h6>
                       </div>
                     </div>
                   </Form>

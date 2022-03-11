@@ -45,7 +45,7 @@ function ItemService({ data, index, category, onPress }) {
             onPress(data);
           }}
         >
-          <p className="unit-address">
+          <div className="unit-address">
             <h6 style={{ fontWeight: "bold" }}>
               {data.organization_name} - {data.category_name}
             </h6>
@@ -56,7 +56,7 @@ function ItemService({ data, index, category, onPress }) {
             <h6 className="unit-address">
               {data.front_queue} antrian didepan Anda
             </h6>
-          </p>
+          </div>
         </button>
       </div>
       <div className="justify-content-center align-content-center mx-2 my-4">

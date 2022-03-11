@@ -32,25 +32,25 @@ const ReviewTicket = (props) => {
         <div className="container p-5">
           <h4 className="title-header">Terima kasih telah menggunakan Qiwii</h4>
           <div className="m-2">
-            <p className="title-review">Kamu telah mengantri di</p>
-            <p>
+            <h6 className="title-review">Kamu telah mengantri di</h6>
+            <h6>
               {data?.layanan} - {data?.organization_name}
-            </p>
+            </h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="mx-2">
-            <p className="title-review">Informasi antrian telah dikirim ke</p>
-            <p>{props.dataUserProfile.data?.email}</p>
+            <h6 className="title-review">Informasi antrian telah dikirim ke</h6>
+            <h6>{props.dataUserProfile.data?.email}</h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-1">
             <div className="mx-2">
-              <p className="title-review">Tanggal</p>
-              <p>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</p>
+              <h6 className="title-review">Tanggal</h6>
+              <h6>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</h6>
             </div>
             <div className="mx-2">
-              <p className="title-review">Estimasi Nomor Antrian</p>
-              <p>{data?.antrian || data?.ticket}</p>
+              <h6 className="title-review">Estimasi Nomor Antrian</h6>
+              <h6>{data?.antrian || data?.ticket}</h6>
             </div>
           </div>
           <div className="dropdown-divider"></div>
