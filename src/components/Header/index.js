@@ -132,7 +132,7 @@ function Header(props) {
                 className="btn btn-primary-outline"
                 onClick={() => history.push(`${url}login`)}
               >
-                <BoxArrowInRight color="white" size={21} />
+                <h5 className="title">Masuk</h5>
               </button>
             </div>
           ) : (

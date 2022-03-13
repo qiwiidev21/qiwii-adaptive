@@ -249,7 +249,8 @@ const Schedule = (props) => {
     }
   }
   function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
   function setPhoneOrMail(value) {
@@ -640,7 +641,7 @@ const Schedule = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
-            {registerForm ? "Register" : "Login"}
+            {registerForm ? "Daftar" : "Masuk"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -815,17 +816,25 @@ const Schedule = (props) => {
         </Modal.Header>
         <Modal.Body>Silahkan login untuk melanjutkan!</Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={() => setShowModal(!showModal)}>
-            Cancel
+          <Button
+            variant="light"
+            onClick={async () => {
+              await setShowModal(!showModal);
+              await setShowModalLogin(true);
+              await setRegisterForm(true);
+            }}
+          >
+            Daftar
           </Button>
           <Button
             variant="primary"
             onClick={async () => {
               await setShowModal(!showModal);
               await setShowModalLogin(true);
+              await setRegisterForm(!registerForm);
             }}
           >
-            Login
+            Masuk
           </Button>
         </Modal.Footer>
       </Modal>

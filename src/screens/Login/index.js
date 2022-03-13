@@ -5,10 +5,13 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import { Button, Form } from "react-bootstrap";
 // import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 function Login(props) {
   let history = useHistory();
+
+  const { url } = useRouteMatch();
+
   // let location = useLocation();
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
@@ -48,10 +51,10 @@ function Login(props) {
   async function notificationRequest() {
     try {
       let permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        sessionStorage.setItem("permission", permission)
-      } else if (permission === 'denied') {
-        sessionStorage.setItem("permission", permission)
+      if (permission === "granted") {
+        sessionStorage.setItem("permission", permission);
+      } else if (permission === "denied") {
+        sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
       console.log(e);
@@ -59,7 +62,8 @@ function Login(props) {
   }
 
   function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
   function setPhoneOrMail(value) {
@@ -110,9 +114,17 @@ function Login(props) {
                         {passwordError}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="Ingatkan saya" />
-                    </Form.Group>
+                    <div className="row justify-content-between px-2 pl-2 pr-2">
+                      <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check type="checkbox" label="Ingatkan saya" />
+                      </Form.Group>
+                      <button
+                        className="btn btn-primary-outline"
+                        onClick={() => history.push(`/register`)}
+                      >
+                        <h6>Daftar</h6>
+                      </button>
+                    </div>
                     <Button
                       variant="primary"
                       type="submit"
