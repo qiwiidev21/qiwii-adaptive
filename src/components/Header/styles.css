@@ -5,7 +5,15 @@
   width: 20vw;
   align-items: flex-start;
 }
-
+.tooltips {
+  min-height: 40px;
+  background-color: #f3f3f3;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+.info-login {
+  padding-top: 5px;
+}
 .title {
   margin-top: 2px;
   font-family: "Rubik";

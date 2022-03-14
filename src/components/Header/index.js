@@ -85,60 +85,36 @@ function Header(props) {
     );
   };
   return (
-    <header
-      className="d-flex navbar navbar-expand-lg navbar-dark sticky-top"
-      style={{ backgroundColor: "#8F1619" }}
-    >
-      <nav className="container">
-        <div className="pl-2">
-          {props.back ? (
-            renderBack()
-          ) : (
-            <img
-              src={Logo}
-              alt=""
-              width="90"
-              height="45"
-              className="img-fluid"
-            />
-          )}
-        </div>
-
-        {!props.search && props.title && (
-          <div className="navbar-brand navbar-custom">
-            <h4 className="title">{props.title}</h4>
+    <>
+      <header
+        className="d-flex navbar navbar-expand-lg navbar-dark sticky-top"
+        style={{ backgroundColor: "#8F1619" }}
+      >
+        <nav className="container">
+          <div className="pl-2">
+            {props.back ? (
+              renderBack()
+            ) : (
+              <img
+                src={Logo}
+                alt=""
+                width="90"
+                height="45"
+                className="img-fluid"
+              />
+            )}
           </div>
-        )}
 
-        <div className="px-4">
-          {_.isEmpty(sessionStored) ? (
-            <div className="row">
-              <div className="navbar-brand navbar-custom">
-                {props.search && (
-                  <button
-                    className="btn-custom-slot btn-primary-outline"
-                    onClick={() => props.onSearch()}
-                  >
-                    <input
-                      value={props.value}
-                      placeholder={props.placeholder}
-                      className="form-control nav-form"
-                      onChange={(event) => props.onChange(event)}
-                    />
-                  </button>
-                )}
-              </div>
-              <button
-                className="btn btn-primary-outline"
-                onClick={() => history.push(`${url}login`)}
-              >
-                <h5 className="title">Masuk</h5>
-              </button>
+          {!props.search && props.title && (
+            <div className="navbar-brand navbar-custom">
+              <h4 className="title">{props.title}</h4>
             </div>
-          ) : (
-            <div>
+          )}
+
+          <div className="px-4">
+            {_.isEmpty(sessionStored) ? (
               <div className="row">
-                <div>
+                <div className="navbar-brand navbar-custom">
                   {props.search && (
                     <button
                       className="btn-custom-slot btn-primary-outline"
@@ -153,53 +129,88 @@ function Header(props) {
                     </button>
                   )}
                 </div>
-                <Dropdown>
-                  <Dropdown.Toggle
-                    as={CustomToggle}
-                    id="dropdown-custom-components"
-                  >
-                    <List color="white" size={25} />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu as={CustomMenu}>
-                    <Dropdown.Item eventKey="1">
-                      <button
-                        className="btn-custom btn-primary-outline"
-                        onClick={async () => await history.push("/profile")}
-                      >
-                        Profil
-                      </button>
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="2">
-                      <button
-                        className="btn-custom btn-primary-outline"
-                        onClick={async () => await history.push("/antrian")}
-                      >
-                        Antrian Saya
-                      </button>
-                    </Dropdown.Item>
-                    <div className="dropdown-divider"></div>
-                    <Dropdown.Item eventKey="3">
-                      <button
-                        className="btn-custom btn-primary-outline"
-                        onClick={async () => {
-                          await sessionStorage.removeItem("user");
-                          await sessionStorage.removeItem("token");
-                          await sessionStorage.removeItem("unique_identifier");
-                          await history.push("/");
-                          await window.location.reload(false);
-                        }}
-                      >
-                        Keluar
-                      </button>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <button
+                  className="btn btn-primary-outline"
+                  onClick={() => history.push(`${url}login`)}
+                >
+                  <h5 className="title">Masuk</h5>
+                </button>
               </div>
-            </div>
-          )}
+            ) : (
+              <div>
+                <div className="row">
+                  <div>
+                    {props.search && (
+                      <button
+                        className="btn-custom-slot btn-primary-outline"
+                        onClick={() => props.onSearch()}
+                      >
+                        <input
+                          value={props.value}
+                          placeholder={props.placeholder}
+                          className="form-control nav-form"
+                          onChange={(event) => props.onChange(event)}
+                        />
+                      </button>
+                    )}
+                  </div>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    >
+                      <List color="white" size={25} />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu as={CustomMenu}>
+                      <Dropdown.Item eventKey="1">
+                        <button
+                          className="btn-custom btn-primary-outline"
+                          onClick={async () => await history.push("/profile")}
+                        >
+                          Profil
+                        </button>
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="2">
+                        <button
+                          className="btn-custom btn-primary-outline"
+                          onClick={async () => await history.push("/antrian")}
+                        >
+                          Antrian Saya
+                        </button>
+                      </Dropdown.Item>
+                      <div className="dropdown-divider"></div>
+                      <Dropdown.Item eventKey="3">
+                        <button
+                          className="btn-custom btn-primary-outline"
+                          onClick={async () => {
+                            await sessionStorage.removeItem("user");
+                            await sessionStorage.removeItem("token");
+                            await sessionStorage.removeItem(
+                              "unique_identifier"
+                            );
+                            await history.push("/");
+                            await window.location.reload(false);
+                          }}
+                        >
+                          Keluar
+                        </button>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </div>
+            )}
+          </div>
+        </nav>
+      </header>
+      {_.isEmpty(sessionStored) && (
+        <div className="tooltips">
+          <h5 className="info-login">
+            Silahkan masuk untuk melanjutkan pengambilan antrian Anda
+          </h5>
         </div>
-      </nav>
-    </header>
+      )}
+    </>
   );
 }
 
