@@ -6,7 +6,7 @@ import React, { useEffect, useState, forwardRef } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
-import { ArrowLeft, BoxArrowInRight, List } from "react-bootstrap-icons";
+import { ArrowLeft, List } from "react-bootstrap-icons";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import _ from "lodash";
 import { connect } from "react-redux";
@@ -210,6 +210,12 @@ function Header(props) {
           </h5>
         </div>
       )}
+      {props.dataUserProfile.data &&
+        props.dataUserProfile.data.verification_status !== "1" && (
+          <div className="tooltips">
+            <h5 className="info-login">Segera lakukan verifikasi user Anda</h5>
+          </div>
+        )}
     </>
   );
 }
@@ -236,6 +242,7 @@ Header.defaultProps = {
 
 const mapStateToProps = (state) => ({
   dataSession: state.dataSession,
+  dataUserProfile: state.dataUserProfile,
 });
 
 const mapDispatchToProps = (dispatch) =>

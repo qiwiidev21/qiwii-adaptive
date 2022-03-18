@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import { Button, Form } from "react-bootstrap";
 // import { Link } from "react-router-dom";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Login(props) {
   let history = useHistory();
 
-  const { url } = useRouteMatch();
+  // const { url } = useRouteMatch();
 
   // let location = useLocation();
   const [username, setUsername] = useState("");

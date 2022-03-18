@@ -90,6 +90,21 @@ const Profile = (props) => {
           </div>
         </button>
         <div className="dropdown-divider"></div>
+        {props.dataUserProfile.data &&
+          props.dataUserProfile.data.verification_status === "1" && (
+            <>
+              <button
+                className="btn-custom-slot btn-primary-outline"
+                onClick={() => history.push(`${url}/edit`)}
+              >
+                <div className="justify-content-between row mx-2">
+                  <h6 className="title-review">Verifikasi OTP</h6>
+                  <ChevronRight />
+                </div>
+              </button>
+              <div className="dropdown-divider"></div>
+            </>
+          )}
         <button
           className="btn-custom-slot btn-primary-outline"
           onClick={() => history.push(`${url}/password`)}
