@@ -95,7 +95,7 @@ const Profile = (props) => {
             <>
               <button
                 className="btn-custom-slot btn-primary-outline"
-                onClick={() => history.push(`${url}/edit`)}
+                onClick={() => history.push(`${url}/otp`)}
               >
                 <div className="justify-content-between row mx-2">
                   <h6 className="title-review">Verifikasi OTP</h6>

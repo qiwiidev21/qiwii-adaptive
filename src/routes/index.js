@@ -16,6 +16,7 @@ import Events from "../screens/Event";
 import Government from "../screens/Government";
 import Finance from "../screens/Finance";
 import Salon from "../screens/Salon";
+import OTPScreen from "../screens/OTP";
 import Global from "../screens/Global";
 import Schedule from "../screens/Schedule";
 import Service from "../screens/Service";
@@ -174,6 +175,7 @@ function RouteProfile() {
       <Route exact path={path} component={Profile} />
       <Route path={`${path}/edit`} component={ProfileEdit} />
       <Route path={`${path}/password`} component={PasswordEdit} />
+      <Route path={`${path}/otp`} component={OTPScreen} />
     </Switch>
   );
 }
