@@ -44,6 +44,17 @@ export function selectedService(data) {
   };
 }
 
+const setPaymentService = (data) => ({
+  type: types.SET_DATA_PAYMENT_SERVICE,
+  payload: data,
+});
+
+export function setPaymentMethod(data) {
+  return (dispatch) => {
+    dispatch(setPaymentService(data));
+  };
+}
+
 const setDetailService = (data) => ({
   type: types.SET_DETAIL_SERVICE,
   payload: data,
@@ -56,6 +67,10 @@ export function fetchServiceDetail(id) {
         .then((response) => {
           if (response.status === 200) {
             dispatch(setDetailService(response.data));
+            sessionStorage.setItem(
+              "dataServiceDetail",
+              JSON.stringify(response.data)
+            );
             resolve(response.data);
           } else {
             resolve([]);
@@ -82,7 +97,6 @@ export function fetchSlotTime(id, format) {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${SLOT_TIME}/${id}/${format}/mobile/`, qs.stringify(params))
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             if (!_.isEmpty(response.data)) {
               let data = [];
@@ -168,7 +182,7 @@ export function getTicket(id, data, customField) {
           resolve(response);
         })
         .catch((error) => {
-          reject(error.bodyString);
+          reject(error);
         });
     });
   };

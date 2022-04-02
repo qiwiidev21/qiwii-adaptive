@@ -10,6 +10,8 @@ import { Button, Container, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 import OtpInput from "react-otp-input";
+import axios from "axios";
+import ReactMidtrans from "../../components/Midtrans";
 
 const ReviewQueue = (props) => {
   let history = useHistory();
@@ -31,8 +33,26 @@ const ReviewQueue = (props) => {
   const [uniqueIdentifier, setUniqueIdentifier] = useState("");
   const [modalOTP, showModalOTP] = useState(false);
   const [otp, setOTP] = useState("");
-
+  const [payment, setPayment] = useState({});
   const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    window.addEventListener("focus", () => {
+      getPayment();
+    });
+
+    return () => {
+      window.removeEventListener("focus", () => console.log("unfocus"));
+    };
+  }, []);
+
+  function getPayment() {
+    const payment = sessionStorage.getItem("payment");
+    if (!_.isEmpty(JSON.parse(payment))) {
+      setPayment(JSON.parse(payment));
+      handleSubmitPayment(JSON.parse(payment));
+    }
+  }
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
@@ -44,6 +64,47 @@ const ReviewQueue = (props) => {
       }
     }
   }, [props.dataMerchantProfile]);
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    if (props.dataServiceSelected?.data?.price_active === "1") {
+      getToken(props.dataServiceSelected?.data?.id);
+    }
+  }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function getToken(id) {
+    const userSession = sessionStorage.getItem("user");
+    const user = JSON.parse(userSession);
+
+    const token = _.isEmpty(props.dataSession)
+      ? user.token
+      : props.dataSession.data.token;
+    const uuid = _.isEmpty(props.dataSession)
+      ? user.uuid
+      : props.dataSession.data.uuid;
+    const unique_identifier = _.isEmpty(props.dataSession)
+      ? user.unique_identifier
+      : props.dataSession.data.unique_identifier;
+    const slot_date = props.dataSelectedDate?.data;
+    const layanan_id = props.dataServiceDetail?.data?.id;
+    const service_id = props.dataServiceDetail?.data?.id;
+    const organization_id = props.dataServiceDetail?.data?.id_organization;
+    const code = props.dataServiceDetail?.data?.code;
+    const slot_time = !_.isEmpty(props.dataSlotTimes)
+      ? props.dataSlotTimes?.data
+      : null;
+    const windowsNew = await axios.get(
+      `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1&api_user=root&api_key=1494ba401c74a879a386b5057d2e9a4f&channel=mobile&id_organization=${organization_id}&id_service=${service_id}&layanan=${layanan_id}&kode=${code}&token=${token}&uuid=${uuid}&slot_date=${slot_date}&unique_identifier=${unique_identifier}&slot_time=${slot_time}`
+    );
+    console.log(
+      `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1&api_user=root&api_key=1494ba401c74a879a386b5057d2e9a4f&channel=mobile&id_organization=${organization_id}&id_service=${service_id}&layanan=${layanan_id}&kode=${code}&token=${token}&uuid=${uuid}&slot_date=${slot_date}&unique_identifier=${unique_identifier}&slot_time=${slot_time}`
+    );
+    // const windowsNew = await axios.get(
+    //   `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
+    // );
+    setToken(windowsNew.data.token);
+  }
 
   useEffect(() => {
     getCookies();
@@ -62,6 +123,7 @@ const ReviewQueue = (props) => {
   function renderDetailAntrian() {
     if (props.dataServiceDetail) {
       const { data } = props.dataServiceDetail;
+      const dataPayment = props.dataPaymentService?.data;
       return (
         <div className="container p-5">
           <h4 className="title-header">Review antrian Anda</h4>
@@ -74,6 +136,7 @@ const ReviewQueue = (props) => {
             <h6 className="title-review">Nama Merchant</h6>
             <h6>{data?.company_name}</h6>
           </div>
+
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-1">
             <div className="mx-2">
@@ -95,6 +158,8 @@ const ReviewQueue = (props) => {
 
   async function handleSubmit() {
     const userSession = sessionStorage.getItem("user");
+    // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
+    // const dataServiceDetail = JSON.parse(dataServiceDetails);
     const user = JSON.parse(userSession);
     if (_.isEmpty(user)) {
       setShowModal(true);
@@ -103,17 +168,17 @@ const ReviewQueue = (props) => {
         api_user: "root",
         api_key: "1494ba401c74a879a386b5057d2e9a4f",
         channel: "mobile",
-        id_organization: props.dataServiceDetail.data.id_organization,
-        id_service: props.dataServiceDetail.data.id,
-        layanan: props.dataServiceDetail.data.id,
-        kode: props.dataServiceDetail.data.code,
+        id_organization: props.dataServiceDetail?.data?.id_organization,
+        id_service: props.dataServiceDetail?.data?.id,
+        layanan: props.dataServiceDetail?.data?.id,
+        kode: props.dataServiceDetail?.data?.code,
         token: _.isEmpty(props.dataSession)
           ? user.token
           : props.dataSession.data.token,
         uuid: _.isEmpty(props.dataSession)
           ? user.uuid
           : props.dataSession.data.uuid,
-        slot_date: props.dataSelectedDate.data,
+        slot_date: props.dataSelectedDate?.data,
         unique_identifier: _.isEmpty(props.dataSession)
           ? user.unique_identifier
           : props.dataSession.data.unique_identifier,
@@ -121,19 +186,75 @@ const ReviewQueue = (props) => {
       if (!_.isEmpty(props.dataSlotTimes)) {
         params.slot_time = props.dataSlotTimes?.data;
       }
+      console.log(params);
       await props
         .getTicket(
-          props.dataServiceDetail.data.id_organization,
+          props.dataServiceDetail?.data?.id_organization,
           params,
           props.dataCustomFieldData.data
         )
         .then(async (response) => {
+          console.log(response);
           if (response.status === 200) {
             await setShowModalSuccess(true);
             await setDataTicket(response.data);
             await props.setDataTicket(response.data);
           }
+        })
+        .catch((err) => {
+          console.log(err);
         });
+    }
+  }
+  async function handleSubmitPayment(data) {
+    const userSession = sessionStorage.getItem("user");
+    // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
+    // const dataServiceDetail = JSON.parse(dataServiceDetails);
+    const user = JSON.parse(userSession);
+    if (_.isEmpty(user)) {
+      setShowModal(true);
+    } else {
+      const params = {
+        api_user: "root",
+        api_key: "1494ba401c74a879a386b5057d2e9a4f",
+        channel: "mobile",
+        id_organization: props.dataServiceDetail?.data?.id_organization,
+        id_service: props.dataServiceDetail?.data?.id,
+        layanan: props.dataServiceDetail?.data?.id,
+        kode: props.dataServiceDetail?.data?.code,
+        token: _.isEmpty(props.dataSession)
+          ? user.token
+          : props.dataSession.data.token,
+        uuid: _.isEmpty(props.dataSession)
+          ? user.uuid
+          : props.dataSession.data.uuid,
+        slot_date: props.dataSelectedDate?.data,
+        unique_identifier: _.isEmpty(props.dataSession)
+          ? user.unique_identifier
+          : props.dataSession.data.unique_identifier,
+      };
+      if (!_.isEmpty(props.dataSlotTimes)) {
+        params.slot_time = props.dataSlotTimes?.data;
+      }
+      console.log(params);
+      await props
+        .getTicket(
+          props.dataServiceDetail?.data?.id_organization,
+          params,
+          props.dataCustomFieldData.data
+        )
+        .then(async (response) => {
+          console.log(response);
+          if (response.status === 200) {
+            await setDataTicket(response.data);
+            await props.setDataTicket(response.data);
+            await history.push(`${location.pathname}/ticket`);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      await props.setPaymentMethod(data);
     }
   }
 
@@ -175,6 +296,34 @@ const ReviewQueue = (props) => {
               </div>
             </div>
             <div className="dropdown-divider"></div>
+            {!_.isEmpty(payment) && (
+              <div>
+                <div className="m-2">
+                  <h5
+                    className="title-review"
+                    style={{ marginTop: 20, marginBottom: 30 }}
+                  >
+                    Status Pembayaran
+                  </h5>
+                  <h6>{`\n`}</h6>
+                </div>
+                <div className="m-2">
+                  <h6 className="title-review">Status Transaksi</h6>
+                  <h6>{payment.transaction_status}</h6>
+                </div>
+                <div className="dropdown-divider"></div>
+                <div className="m-2">
+                  <h6 className="title-review">Tanggal Pembayaran</h6>
+                  <h6>{payment.settlement_time}</h6>
+                </div>
+                <div className="dropdown-divider"></div>
+                <div className="m-2">
+                  <h6 className="title-review">Biaya Transaksi</h6>
+                  <h6>{payment.gross_amount}</h6>
+                </div>
+                <div className="dropdown-divider"></div>
+              </div>
+            )}
           </Container>
         </Modal.Body>
         <Modal.Footer>
@@ -256,7 +405,8 @@ const ReviewQueue = (props) => {
     );
   }
   function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
 
@@ -521,14 +671,25 @@ const ReviewQueue = (props) => {
       <Header back title="Review Antrian" profile={profile} />
       <section>{renderDetailAntrian()}</section>
       <div className="container  my-5 fixed-bottom">
-        <Button
-          variant="primary"
-          type="submit"
-          className="next-button"
-          onClick={handleSubmit}
-        >
-          Ambil Tiket
-        </Button>
+        {props.dataServiceDetail.data?.price_active === "1" ? (
+          <ReactMidtrans
+            clientKey={"SB-Mid-client-7NWm_GuTs-DvTwEt"}
+            token={token}
+          >
+            <Button variant="primary" type="submit" className="next-button">
+              Lanjutkan Pembayaran
+            </Button>
+          </ReactMidtrans>
+        ) : (
+          <Button
+            variant="primary"
+            type="submit"
+            className="next-button"
+            onClick={handleSubmit}
+          >
+            Ambil Tiket
+          </Button>
+        )}
       </div>
       {renderModal()}
       {renderModalReport()}
@@ -560,6 +721,8 @@ const mapStateToProps = (state) => ({
   dataSlotTimes: state.dataSlotTimes,
   dataSession: state.dataSession,
   dataUserProfile: state.dataUserProfile,
+  dataPaymentService: state.dataPaymentService,
+  dataServiceSelected: state.dataServiceSelected,
 });
 
 const mapDispatchToProps = (dispatch) => {

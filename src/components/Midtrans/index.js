@@ -5,12 +5,15 @@
  * @Last modified time: 16-February-2022
  */
 
-import { cloneElement, PureComponent } from "react";
+import { cloneElement, Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { ActionCreators } from "../../redux/actions";
 
 const { oneOfType, arrayOf, node, func, string } = PropTypes;
 
-export default class SnapMidtrans extends PureComponent {
+class SnapMidtrans extends Component {
   state = {
     children: null,
     token: "",
@@ -24,6 +27,7 @@ export default class SnapMidtrans extends PureComponent {
 
   constructor(props) {
     super(props);
+
     const { REACT_APP_ENVIRONMENT: ENV } = process.env;
 
     // bind react-midtrans method
@@ -50,8 +54,8 @@ export default class SnapMidtrans extends PureComponent {
 
   onLoad(e) {
     if ("snap" in window) {
-      const { snap, onSuccess } = window;
-      this.setState({ snap, onSuccess });
+      const { snap } = window;
+      this.setState({ snap });
     }
   }
 
@@ -72,7 +76,26 @@ export default class SnapMidtrans extends PureComponent {
             this.state.snap.pay(
               this.state.token,
               /** @todo options **/
-              this.state.onSuccess && this.state.onSuccess()
+              {
+                onSuccess: function (result) {
+                  sessionStorage.setItem("payment", JSON.stringify(result));
+                  sessionStorage.setItem("order_id", result.order_id);
+                  window.open(result.finish_redirect_url);
+                },
+                onPending: function (result) {
+                  sessionStorage.setItem("payment", JSON.stringify(result));
+                  sessionStorage.setItem("order_id", result.order_id);
+                  window.open(result.finish_redirect_url);
+                },
+                onError: function (result) {
+                  sessionStorage.setItem("payment", JSON.stringify(result));
+                  sessionStorage.setItem("order_id", result.order_id);
+                  window.open(result.finish_redirect_url);
+                },
+                onClose: function (result) {
+                  return result;
+                },
+              }
             );
           }
           this.props.onClick && this.props.onClick();
@@ -114,3 +137,8 @@ SnapMidtrans.propTypes = {
   /* Callback Or Custom onClick */
   onClick: func,
 };
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(ActionCreators, dispatch);
+
+export default connect(null, mapDispatchToProps)(SnapMidtrans);

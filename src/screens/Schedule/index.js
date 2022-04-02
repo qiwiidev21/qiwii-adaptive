@@ -75,6 +75,18 @@ const Schedule = (props) => {
     "November",
     "December",
   ];
+
+  useEffect(() => {
+    getPayment();
+  });
+
+  function getPayment() {
+    const payment = sessionStorage.getItem("payment");
+    if (!_.isEmpty(JSON.parse(payment))) {
+      handleSubmitPayment(JSON.parse(payment));
+    }
+  }
+
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const formatDay = currentDate < 10 ? `0${currentDate}` : `${currentDate}`;
   const formatMonth =
@@ -123,12 +135,13 @@ const Schedule = (props) => {
   }, [organizationID]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (props.dataServiceSelected.data.price_active === "1") {
-      getToken(props.dataServiceSelected.data.id);
+    if (props.dataServiceSelected?.data?.price_active === "1") {
+      getToken(props.dataServiceSelected?.data?.id);
     }
-  }, [props.dataServiceSelected.data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function getToken(id) {
+    // Todo change to post, plus data resgiter
     const windowsNew = await axios.get(
       `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
     );
@@ -614,8 +627,8 @@ const Schedule = (props) => {
       if (dataCustomField.length) {
         return dataCustomField.forEach((item, index) => {
           if (
-            Number(item.required_web) === 1 &&
-            customFieldValue[item.slot_number]
+            Number(item.required_web) === 1
+            // && customFieldValue[item.slot_number]
           ) {
             resolve(true);
           } else {
@@ -853,6 +866,19 @@ const Schedule = (props) => {
       alert(e);
     }
   }
+  async function handleSubmitPayment(payment) {
+    try {
+      const results = await validateCustomField();
+      if (results) {
+        await props.setSelectedDate(selectedDate.format);
+        await props.setCustomField(customFieldValue);
+        await props.setPaymentMethod(payment);
+        await history.push(`${location.pathname}/review`);
+      }
+    } catch (e) {
+      alert(e);
+    }
+  }
 
   function setCustomField(value, index) {
     customFieldValue[index] = value;
@@ -1081,17 +1107,6 @@ const Schedule = (props) => {
           >
             Masuk untuk melanjutkan
           </Button>
-        ) : !_.isEmpty(sessionStored) &&
-          props.dataServiceDetail.data?.price_active === "1" ? (
-          <ReactMidtrans
-            onClick={(result) => console.log(result)}
-            clientKey={"SB-Mid-client-7NWm_GuTs-DvTwEt"}
-            token={token}
-          >
-            <Button variant="primary" type="submit" className="next-button">
-              Lanjutkan Pembayaran
-            </Button>
-          </ReactMidtrans>
         ) : (
           <Button
             variant="primary"

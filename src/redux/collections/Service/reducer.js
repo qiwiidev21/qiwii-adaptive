@@ -7,6 +7,14 @@ const initialState = {
   total: 10,
 };
 
+export const dataPaymentService = createReducer(initialState, {
+  [types.SET_DATA_PAYMENT_SERVICE](state, action) {
+    return {
+      data: action.payload,
+    };
+  },
+});
+
 export const dataService = createReducer(initialState, {
   [types.SET_DATA_SERVICE](state, action) {
     return {

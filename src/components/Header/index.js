@@ -188,6 +188,7 @@ function Header(props) {
                             await sessionStorage.removeItem(
                               "unique_identifier"
                             );
+                            await sessionStorage.removeItem("payment");
                             await history.push("/");
                             await window.location.reload(false);
                           }}

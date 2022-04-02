@@ -23,7 +23,9 @@ function ItemMerchant({ data, index, category, onPress }) {
     if (data) {
       if (
         data.id_icon ===
-        "https://app.qiwii.id/system/cms/themes/ace/img/logo_alt.png"
+          "https://app.qiwii.id/system/cms/themes/ace/img/logo_alt.png" ||
+        data.id_icon ===
+          "https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png"
       ) {
         setIcon(Logo);
       } else {

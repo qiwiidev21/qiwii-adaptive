@@ -3,17 +3,18 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import Header from "../../components/Header";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { Container, Button } from "react-bootstrap";
 import "./styles.css";
 
 function OTPScreen(props) {
-  let history = useHistory();
+  // let history = useHistory();
   const [otp, setOTP] = useState("");
-  const [uniqueIdentifier, setUniqueIdentifier] = useState("");
-  const [showModalLogin, setShowModalLogin] = useState(false);
+  const uniqueIdentifier = "";
+  // const [showModalLogin, setShowModalLogin] = useState(false);
   // const { url } = useRouteMatch();
+
   const handleSubmitOTP = async () => {
     await props
       .verifyCode(otp, uniqueIdentifier)
