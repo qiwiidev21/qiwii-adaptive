@@ -44,7 +44,7 @@ const ReviewQueue = (props) => {
     return () => {
       window.removeEventListener("focus", () => console.log("unfocus"));
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function getPayment() {
     const payment = sessionStorage.getItem("payment");
@@ -63,7 +63,7 @@ const ReviewQueue = (props) => {
         // }
       }
     }
-  }, [props.dataMerchantProfile]);
+  }, [props.dataMerchantProfile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [token, setToken] = useState("");
 
@@ -123,7 +123,7 @@ const ReviewQueue = (props) => {
   function renderDetailAntrian() {
     if (props.dataServiceDetail) {
       const { data } = props.dataServiceDetail;
-      const dataPayment = props.dataPaymentService?.data;
+      // const dataPayment = props.dataPaymentService?.data;
       return (
         <div className="container p-5">
           <h4 className="title-header">Review antrian Anda</h4>

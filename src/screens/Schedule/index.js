@@ -10,7 +10,7 @@ import "./styles.css";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import PropTypes from "prop-types";
-import ReactMidtrans from "../../components/Midtrans";
+// import ReactMidtrans from "../../components/Midtrans";
 import OtpInput from "react-otp-input";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import {
@@ -19,7 +19,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
@@ -46,7 +46,7 @@ const Schedule = (props) => {
   const [password, setPassword] = useState("");
   const currentDate = date.getDate();
   const currentDates = dates.getDate();
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
   const [otp, setOTP] = useState("");
   const [user, setUser] = useState({});
   const [showModalReport, setShowModalReport] = useState(false);
@@ -134,19 +134,19 @@ const Schedule = (props) => {
     }
   }, [organizationID]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (props.dataServiceSelected?.data?.price_active === "1") {
-      getToken(props.dataServiceSelected?.data?.id);
-    }
-  }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   if (props.dataServiceSelected?.data?.price_active === "1") {
+  //     getToken(props.dataServiceSelected?.data?.id);
+  //   }
+  // }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function getToken(id) {
-    // Todo change to post, plus data resgiter
-    const windowsNew = await axios.get(
-      `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
-    );
-    setToken(windowsNew.data.token);
-  }
+  // async function getToken(id) {
+  //   // Todo change to post, plus data resgiter
+  //   const windowsNew = await axios.get(
+  //     `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
+  //   );
+  //   setToken(windowsNew.data.token);
+  // }
 
   useEffect(() => {
     getSession();

@@ -7,7 +7,7 @@ import "./styles.css";
 import PropTypes from "prop-types";
 import Logo from "../../assets/images/header-logo.png";
 import { ArrowLeft, List } from "react-bootstrap-icons";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -52,8 +52,7 @@ const CustomMenu = forwardRef(
 function Header(props) {
   let history = useHistory();
 
-  const { url } = useRouteMatch();
-
+  // const { url } = useRouteMatch();
   // const [bgColor, setBGColor] = useState();
   const [sessionStored, setSessionStored] = useState({});
 
@@ -73,7 +72,7 @@ function Header(props) {
     const user = sessionStorage.getItem("user");
     setSessionStored(JSON.parse(user));
   }
-
+  console.log(history);
   const renderBack = () => {
     return (
       <button
@@ -131,7 +130,7 @@ function Header(props) {
                 </div>
                 <button
                   className="btn btn-primary-outline"
-                  onClick={() => history.push(`${url}login`)}
+                  onClick={() => history.replace(`/login`)}
                 >
                   <h5 className="title">Masuk</h5>
                 </button>

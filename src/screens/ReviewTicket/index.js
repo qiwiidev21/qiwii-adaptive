@@ -76,7 +76,7 @@ const ReviewTicket = (props) => {
               <div className="m-2">
                 <h6 className="title-review">Status Transaksi</h6>
                 <h6>
-                  {payment.transaction_status == "settlement"
+                  {payment.transaction_status === "settlement"
                     ? "Pembayaran Berhasil"
                     : "Belum dibayar"}
                 </h6>
@@ -125,7 +125,7 @@ const ReviewTicket = (props) => {
               className="next-button"
               onClick={() => handleCekStatus()}
             >
-              {payment.transaction_status == "settlement"
+              {payment.transaction_status === "settlement"
                 ? "Pembayaran Berhasil"
                 : "Cek Status Pembayaran"}
             </Button>
