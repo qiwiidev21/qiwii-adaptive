@@ -91,7 +91,7 @@ const Home = (props) => {
                       />
                     )}
 
-                    <h5 className="pt-3 card-title">{item.title}</h5>
+                    <h5 className="text-lg pt-3 card-title">{item.title}</h5>
                   </div>
                 </Link>
               </div>

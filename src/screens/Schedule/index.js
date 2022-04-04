@@ -844,7 +844,7 @@ const Schedule = (props) => {
             onClick={async () => {
               await setShowModal(!showModal);
               await setShowModalLogin(true);
-              await setRegisterForm(!registerForm);
+              await setRegisterForm(false);
             }}
           >
             Masuk

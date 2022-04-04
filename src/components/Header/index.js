@@ -72,7 +72,6 @@ function Header(props) {
     const user = sessionStorage.getItem("user");
     setSessionStored(JSON.parse(user));
   }
-  console.log(history);
   const renderBack = () => {
     return (
       <button
