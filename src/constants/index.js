@@ -14,6 +14,7 @@ export const SLOT_TIME = "/api/v2/slot/time";
 export const BOOKING = "/api/v2/ticket/register/";
 export const CUSTOM_FIELD = "/api/v2/service/get_custom_field";
 export const GET_TICKET = "/api/v2/ticket/register";
+export const GET_TICKET_PAYMENT = "/finance/finance/get_token?display=true";
 export const GET_USER = "/api/v2/users/";
 export const GET_QUEUE = "/api/v2/ticket/";
 export const GET_PROMO = "/api/v2/promo/";

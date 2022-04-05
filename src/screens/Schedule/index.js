@@ -87,6 +87,22 @@ const Schedule = (props) => {
     }
   }
 
+  useEffect(() => {
+    if (props.dataSession) {
+      getCookies();
+    }
+  }, [props.dataSession]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const getCookies = async () => {
+    const userSession = await sessionStorage.getItem("user");
+    const user = await JSON.parse(userSession);
+    if (user) {
+      return props.getDataUser(user.unique_identifier, user.uuid, user.token);
+    } else {
+      return null;
+    }
+  };
+
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const formatDay = currentDate < 10 ? `0${currentDate}` : `${currentDate}`;
   const formatMonth =
@@ -134,23 +150,11 @@ const Schedule = (props) => {
     }
   }, [organizationID]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // useEffect(() => {
-  //   if (props.dataServiceSelected?.data?.price_active === "1") {
-  //     getToken(props.dataServiceSelected?.data?.id);
-  //   }
-  // }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // async function getToken(id) {
-  //   // Todo change to post, plus data resgiter
-  //   const windowsNew = await axios.get(
-  //     `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
-  //   );
-  //   setToken(windowsNew.data.token);
-  // }
-
   useEffect(() => {
-    getSession();
-  }, []);
+    if (props.dataUserProfile.data) {
+      getSession();
+    }
+  }, [props.dataUserProfile.data]);
 
   function getSession() {
     const user = sessionStorage.getItem("user");
@@ -1151,6 +1155,8 @@ const mapStateToProps = (state) => ({
   dataSlotTime: state.dataSlotTime,
   dataService: state.dataService,
   dataServiceSelected: state.dataServiceSelected,
+  dataSession: state.dataSession,
+  dataUserProfile: state.dataUserProfile,
 });
 
 const mapDispatchToProps = (dispatch) => {

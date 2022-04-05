@@ -1,5 +1,11 @@
 import * as types from "../types";
-import { GET_TICKET, MERCHANT, SERVICE, SLOT_TIME } from "../../../constants";
+import {
+  GET_TICKET,
+  GET_TICKET_PAYMENT,
+  MERCHANT,
+  SERVICE,
+  SLOT_TIME,
+} from "../../../constants";
 import { Qiwii } from "../../../utils/Api";
 import qs from "qs";
 import _ from "lodash";
@@ -178,6 +184,34 @@ export function getTicket(id, data, customField) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${GET_TICKET}/${id}`, formBody)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+}
+
+export function getTicketPayment(id, data, customField) {
+  let formBody = [];
+  for (let property in data) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(data[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+
+  formBody = formBody.join("&");
+  if (customField !== undefined) {
+    customField.forEach((item, index) => {
+      formBody = formBody + `&custom_field[${index + 1}]=` + item;
+    });
+  }
+  console.log(formBody);
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      Qiwii.post(`${GET_TICKET_PAYMENT}`, formBody)
         .then((response) => {
           resolve(response);
         })

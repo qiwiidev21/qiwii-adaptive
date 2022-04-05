@@ -56,17 +56,11 @@ function Header(props) {
   // const [bgColor, setBGColor] = useState();
   const [sessionStored, setSessionStored] = useState({});
 
-  // useEffect(() => {
-  //   if (props.profile) {
-  //     if (!_.isEmpty(props.profile)) {
-  //       setBGColor(props.profile.display.config.main_color);
-  //     }
-  //   }
-  // }, [props.profile]);
-
   useEffect(() => {
-    getSession();
-  }, []);
+    if (props.dataUserProfile.data) {
+      getSession();
+    }
+  }, [props.dataUserProfile.data]);
 
   function getSession() {
     const user = sessionStorage.getItem("user");

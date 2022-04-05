@@ -10,7 +10,6 @@ import { Button, Container, Form, Modal } from "react-bootstrap";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 import OtpInput from "react-otp-input";
-import axios from "axios";
 import ReactMidtrans from "../../components/Midtrans";
 
 const ReviewQueue = (props) => {
@@ -93,13 +92,35 @@ const ReviewQueue = (props) => {
     const code = props.dataServiceDetail?.data?.code;
     const slot_time = !_.isEmpty(props.dataSlotTimes)
       ? props.dataSlotTimes?.data
-      : null;
-    const windowsNew = await axios.get(
-      `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1&api_user=root&api_key=1494ba401c74a879a386b5057d2e9a4f&channel=mobile&id_organization=${organization_id}&id_service=${service_id}&layanan=${layanan_id}&kode=${code}&token=${token}&uuid=${uuid}&slot_date=${slot_date}&unique_identifier=${unique_identifier}&slot_time=${slot_time}`
+      : "null";
+    let formBody = [];
+    formBody = formBody.join("&");
+    if (props.dataCustomFieldData.data !== undefined) {
+      props.dataCustomFieldData.data.forEach((item, index) => {
+        formBody = formBody + `&custom_field[${index + 1}]=` + item;
+      });
+    }
+    let payload;
+    payload = {
+      // api_user: "root",
+      // api_key: "1494ba401c74a879a386b5057d2e9a4f",
+      channel: "mobile",
+      id_organization: organization_id,
+      id_service: service_id,
+      layanan: layanan_id,
+      kode: code,
+      token: token,
+      uuid: uuid,
+      slot_date: slot_date,
+      unique_identifier: unique_identifier,
+    };
+    payload.slot_time = slot_time;
+    const windowsNew = await props.getTicketPayment(
+      props.dataServiceDetail?.data?.id_organization,
+      payload,
+      props.dataCustomFieldData.data
     );
-    console.log(
-      `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1&api_user=root&api_key=1494ba401c74a879a386b5057d2e9a4f&channel=mobile&id_organization=${organization_id}&id_service=${service_id}&layanan=${layanan_id}&kode=${code}&token=${token}&uuid=${uuid}&slot_date=${slot_date}&unique_identifier=${unique_identifier}&slot_time=${slot_time}`
-    );
+    console.log(windowsNew);
     // const windowsNew = await axios.get(
     //   `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
     // );
