@@ -45,11 +45,23 @@ const ReviewQueue = (props) => {
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function getPayment() {
-    const payment = sessionStorage.getItem("payment");
+  // useEffect(() => {
+  //   if (payment) {
+  //     await setDataTicket(response.data);
+  //     await props.setDataTicket(response.data);
+  //     await history.push(`${location.pathname}/ticket`);
+  //   }
+  // }, [payment]);
+
+  async function getPayment() {
+    const payment = await sessionStorage.getItem("payment");
     if (!_.isEmpty(JSON.parse(payment))) {
-      setPayment(JSON.parse(payment));
-      handleSubmitPayment(JSON.parse(payment));
+      await setPayment(JSON.parse(payment));
+      await setDataTicket(JSON.parse(payment));
+      await props.setDataTicket(JSON.parse(payment));
+      await props.setPaymentMethod(JSON.parse(payment));
+      await history.push(`${location.pathname}/ticket`);
+      // handleSubmitPayment(JSON.parse(payment));
     }
   }
 
@@ -73,58 +85,66 @@ const ReviewQueue = (props) => {
   }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function getToken(id) {
-    const userSession = sessionStorage.getItem("user");
-    const user = JSON.parse(userSession);
+    try {
+      const userSession = sessionStorage.getItem("user");
+      const user = JSON.parse(userSession);
 
-    const token = _.isEmpty(props.dataSession)
-      ? user.token
-      : props.dataSession.data.token;
-    const uuid = _.isEmpty(props.dataSession)
-      ? user.uuid
-      : props.dataSession.data.uuid;
-    const unique_identifier = _.isEmpty(props.dataSession)
-      ? user.unique_identifier
-      : props.dataSession.data.unique_identifier;
-    const slot_date = props.dataSelectedDate?.data;
-    const layanan_id = props.dataServiceDetail?.data?.id;
-    const service_id = props.dataServiceDetail?.data?.id;
-    const organization_id = props.dataServiceDetail?.data?.id_organization;
-    const code = props.dataServiceDetail?.data?.code;
-    const slot_time = !_.isEmpty(props.dataSlotTimes)
-      ? props.dataSlotTimes?.data
-      : "null";
-    let formBody = [];
-    formBody = formBody.join("&");
-    if (props.dataCustomFieldData.data !== undefined) {
-      props.dataCustomFieldData.data.forEach((item, index) => {
-        formBody = formBody + `&custom_field[${index + 1}]=` + item;
-      });
+      const token = _.isEmpty(props.dataSession)
+        ? user.token
+        : props.dataSession.data.token;
+      const uuid = _.isEmpty(props.dataSession)
+        ? user.uuid
+        : props.dataSession.data.uuid;
+      const unique_identifier = _.isEmpty(props.dataSession)
+        ? user.unique_identifier
+        : props.dataSession.data.unique_identifier;
+      const slot_date = props.dataSelectedDate?.data;
+      const layanan_id = props.dataServiceDetail?.data?.id;
+      const service_id = props.dataServiceDetail?.data?.id;
+      const organization_id = props.dataServiceDetail?.data?.id_organization;
+      const code = props.dataServiceDetail?.data?.code;
+      const slot_time = !_.isEmpty(props.dataSlotTimes)
+        ? props.dataSlotTimes?.data
+        : "null";
+      let formBody = [];
+      formBody = formBody.join("&");
+      if (props.dataCustomFieldData.data !== undefined) {
+        props.dataCustomFieldData.data.forEach((item, index) => {
+          formBody = formBody + `&custom_field[${index + 1}]=` + item;
+        });
+      }
+      let payload;
+      payload = {
+        // api_user: "root",
+        // api_key: "1494ba401c74a879a386b5057d2e9a4f",
+        channel: "mobile",
+        id_organization: organization_id,
+        id_service: service_id,
+        layanan: layanan_id,
+        kode: code,
+        token: token,
+        uuid: uuid,
+        slot_date: slot_date,
+        unique_identifier: unique_identifier,
+      };
+      payload.slot_time = slot_time;
+      const windowsNew = await props.getTicketPayment(
+        props.dataServiceDetail?.data?.id_organization,
+        payload,
+        props.dataCustomFieldData.data
+      );
+      console.log(windowsNew);
+      if (windowsNew?.data.status === "error") {
+        alert(windowsNew?.data.error);
+      } else {
+        setToken(windowsNew.data.token);
+      }
+      // const windowsNew = await axios.get(
+      //   `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
+      // );
+    } catch (e) {
+      console.log(e);
     }
-    let payload;
-    payload = {
-      // api_user: "root",
-      // api_key: "1494ba401c74a879a386b5057d2e9a4f",
-      channel: "mobile",
-      id_organization: organization_id,
-      id_service: service_id,
-      layanan: layanan_id,
-      kode: code,
-      token: token,
-      uuid: uuid,
-      slot_date: slot_date,
-      unique_identifier: unique_identifier,
-    };
-    payload.slot_time = slot_time;
-    const windowsNew = await props.getTicketPayment(
-      props.dataServiceDetail?.data?.id_organization,
-      payload,
-      props.dataCustomFieldData.data
-    );
-    console.log(windowsNew);
-    // const windowsNew = await axios.get(
-    //   `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
-    // );
-    setToken(windowsNew.data.token);
   }
 
   useEffect(() => {
@@ -227,57 +247,57 @@ const ReviewQueue = (props) => {
         });
     }
   }
-  async function handleSubmitPayment(data) {
-    const userSession = sessionStorage.getItem("user");
-    // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
-    // const dataServiceDetail = JSON.parse(dataServiceDetails);
-    const user = JSON.parse(userSession);
-    if (_.isEmpty(user)) {
-      setShowModal(true);
-    } else {
-      const params = {
-        api_user: "root",
-        api_key: "1494ba401c74a879a386b5057d2e9a4f",
-        channel: "mobile",
-        id_organization: props.dataServiceDetail?.data?.id_organization,
-        id_service: props.dataServiceDetail?.data?.id,
-        layanan: props.dataServiceDetail?.data?.id,
-        kode: props.dataServiceDetail?.data?.code,
-        token: _.isEmpty(props.dataSession)
-          ? user.token
-          : props.dataSession.data.token,
-        uuid: _.isEmpty(props.dataSession)
-          ? user.uuid
-          : props.dataSession.data.uuid,
-        slot_date: props.dataSelectedDate?.data,
-        unique_identifier: _.isEmpty(props.dataSession)
-          ? user.unique_identifier
-          : props.dataSession.data.unique_identifier,
-      };
-      if (!_.isEmpty(props.dataSlotTimes)) {
-        params.slot_time = props.dataSlotTimes?.data;
-      }
-      console.log(params);
-      await props
-        .getTicket(
-          props.dataServiceDetail?.data?.id_organization,
-          params,
-          props.dataCustomFieldData.data
-        )
-        .then(async (response) => {
-          console.log(response);
-          if (response.status === 200) {
-            await setDataTicket(response.data);
-            await props.setDataTicket(response.data);
-            await history.push(`${location.pathname}/ticket`);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      await props.setPaymentMethod(data);
-    }
-  }
+  // async function handleSubmitPayment(data) {
+  //   const userSession = sessionStorage.getItem("user");
+  //   // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
+  //   // const dataServiceDetail = JSON.parse(dataServiceDetails);
+  //   const user = JSON.parse(userSession);
+  //   if (_.isEmpty(user)) {
+  //     setShowModal(true);
+  //   } else {
+  //     const params = {
+  //       api_user: "root",
+  //       api_key: "1494ba401c74a879a386b5057d2e9a4f",
+  //       channel: "mobile",
+  //       id_organization: props.dataServiceDetail?.data?.id_organization,
+  //       id_service: props.dataServiceDetail?.data?.id,
+  //       layanan: props.dataServiceDetail?.data?.id,
+  //       kode: props.dataServiceDetail?.data?.code,
+  //       token: _.isEmpty(props.dataSession)
+  //         ? user.token
+  //         : props.dataSession.data.token,
+  //       uuid: _.isEmpty(props.dataSession)
+  //         ? user.uuid
+  //         : props.dataSession.data.uuid,
+  //       slot_date: props.dataSelectedDate?.data,
+  //       unique_identifier: _.isEmpty(props.dataSession)
+  //         ? user.unique_identifier
+  //         : props.dataSession.data.unique_identifier,
+  //     };
+  //     if (!_.isEmpty(props.dataSlotTimes)) {
+  //       params.slot_time = props.dataSlotTimes?.data;
+  //     }
+  //     console.log(params);
+  //     await props
+  //       .getTicket(
+  //         props.dataServiceDetail?.data?.id_organization,
+  //         params,
+  //         props.dataCustomFieldData.data
+  //       )
+  //       .then(async (response) => {
+  //         console.log(response);
+  //         if (response.status === 200) {
+  //           await setDataTicket(response.data);
+  //           await props.setDataTicket(response.data);
+  //           await history.push(`${location.pathname}/ticket`);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //     await props.setPaymentMethod(data);
+  //   }
+  // }
 
   function renderModalSuccess() {
     return (

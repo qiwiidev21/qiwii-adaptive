@@ -188,6 +188,7 @@ export function getTicket(id, data, customField) {
           resolve(response);
         })
         .catch((error) => {
+          console.log(error);
           reject(error);
         });
     });
@@ -213,6 +214,7 @@ export function getTicketPayment(id, data, customField) {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${GET_TICKET_PAYMENT}`, formBody)
         .then((response) => {
+          console.log(response);
           resolve(response);
         })
         .catch((error) => {

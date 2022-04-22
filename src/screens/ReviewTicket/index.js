@@ -39,29 +39,33 @@ const ReviewTicket = (props) => {
       return (
         <div className="container p-5">
           <h4 className="title-header">Terima kasih telah menggunakan Qiwii</h4>
-          <div className="m-2">
-            <h6 className="title-review">Kamu telah mengantri di</h6>
-            <h6>
-              {data?.layanan} - {data?.organization_name}
-            </h6>
-          </div>
-          <div className="dropdown-divider"></div>
+          {data?.layanan && (
+            <div className="m-2">
+              <h6 className="title-review">Kamu telah mengantri di</h6>
+              <h6>
+                {data?.layanan} - {data?.organization_name}
+              </h6>
+            </div>
+          )}
+          {data?.layanan && <div className="dropdown-divider"></div>}
           <div className="mx-2">
             <h6 className="title-review">Informasi antrian telah dikirim ke</h6>
             <h6>{props.dataUserProfile.data?.email}</h6>
           </div>
           <div className="dropdown-divider"></div>
-          <div className="justify-content-between row mx-1">
-            <div className="mx-2">
-              <h6 className="title-review">Tanggal</h6>
-              <h6>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</h6>
+          {data?.antrian && (
+            <div className="justify-content-between row mx-1">
+              <div className="mx-2">
+                <h6 className="title-review">Tanggal</h6>
+                <h6>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</h6>
+              </div>
+              <div className="mx-2">
+                <h6 className="title-review">Estimasi Nomor Antrian</h6>
+                <h6>{data?.antrian || data?.ticket}</h6>
+              </div>
             </div>
-            <div className="mx-2">
-              <h6 className="title-review">Estimasi Nomor Antrian</h6>
-              <h6>{data?.antrian || data?.ticket}</h6>
-            </div>
-          </div>
-          <div className="dropdown-divider"></div>
+          )}
+          {data?.antrian && <div className="dropdown-divider"></div>}
           {!_.isEmpty(payment) && (
             <div>
               <div className="m-2">

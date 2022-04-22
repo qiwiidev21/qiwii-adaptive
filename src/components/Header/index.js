@@ -123,7 +123,7 @@ function Header(props) {
                 </div>
                 <button
                   className="btn btn-primary-outline"
-                  onClick={() => history.replace(`/login`)}
+                  onClick={() => history.push(`/login`)}
                 >
                   <h5 className="title">Masuk</h5>
                 </button>
