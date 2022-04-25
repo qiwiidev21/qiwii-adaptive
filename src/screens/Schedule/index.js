@@ -133,8 +133,8 @@ const Schedule = (props) => {
     time: "05",
   });
 
-  const parseUrl = typeof url === "string" ? url.substr(url.length - 7) : null;
-  const organizationID = parseUrl.substring(0, 3);
+  const parseUrl = typeof url === "string" ? url.split("/") : null;
+  const organizationID = parseUrl[2];
   const [customFieldValue, setValCustomField] = useState([]);
   const [dataCustomField, setDataCustomField] = useState([]);
   const [dataSlotTime, setDataSlotTime] = useState([]);
@@ -222,10 +222,14 @@ const Schedule = (props) => {
 
   function fetchDataCustomField() {
     let params = {
-      organization_id: organizationID,
+      organization_id:
+        organizationID.length <= 3
+          ? organizationID.replace(/\/r/g, "/")
+          : organizationID,
       service_id: routeID,
       "f-show_on_web": 1,
     };
+    console.log(params);
     props
       .fetchDataCustomField(params)
       .then((response) => {
