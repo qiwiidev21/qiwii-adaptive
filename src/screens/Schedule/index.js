@@ -42,6 +42,8 @@ const Schedule = (props) => {
   const [messageReport, setMessageReport] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const currentDate = date.getDate();
@@ -667,7 +669,7 @@ const Schedule = (props) => {
         </Modal.Header>
         <Modal.Body>
           {registerForm ? (
-            <Form>
+            <Form onSubmit={handleLogin}>
               <Form.Group controlId="username">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
@@ -681,8 +683,15 @@ const Schedule = (props) => {
                 <Form.Control
                   type="text"
                   placeholder="Email"
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    setUsernameError("");
+                  }}
+                  isInvalid={emailError}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {emailError}
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="phone">
                 <Form.Label>Nomor Telepon</Form.Label>
@@ -697,27 +706,48 @@ const Schedule = (props) => {
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                    setPasswordError("");
+                  }}
+                  isInvalid={passwordError}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {passwordError}
+                </Form.Control.Feedback>
               </Form.Group>
             </Form>
           ) : (
-            <Form>
+            <Form onSubmit={handleLogin}>
               <Form.Group controlId="username">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Username"
-                  onChange={(event) => setPhoneOrMail(event.target.value)}
+                  onChange={(event) => {
+                    setPhoneOrMail(event.target.value);
+                    setUsernameError("");
+                  }}
+                  isInvalid={emailError}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {emailError}
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                    setPasswordError("");
+                  }}
+                  isInvalid={passwordError}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {passwordError}
+                </Form.Control.Feedback>
               </Form.Group>
             </Form>
           )}
@@ -763,6 +793,7 @@ const Schedule = (props) => {
     props
       .loginQiwii(username, phone, password)
       .then(async (user) => {
+        console.log(user);
         if (user.status === "Success") {
           await setShowModalLogin(!showModalLogin);
           await setShowModalReport(true);
@@ -779,11 +810,26 @@ const Schedule = (props) => {
         }
       })
       .catch((error) => {
-        if (error.status === 400) {
-          setShowModalReport(true);
-          setTitleReport("Error");
-          setMessageReport(error.message);
+        console.log(error);
+        if (error?.status === 400) {
+          if (error.data.message === "User belum terdaftar.") {
+            setUsernameError(error.data.message);
+          } else {
+            setPasswordError(error.data.message);
+          }
+        } else {
+          if (error === "Maaf password yang anda berikan salah.") {
+            console.log(error);
+            setPasswordError(error);
+          } else {
+            setUsernameError(error);
+          }
         }
+        // if (error.status === 400) {
+        //   setShowModalReport(true);
+        //   setTitleReport("Error");
+        //   setMessageReport(error.message);
+        // }
       });
   }
 

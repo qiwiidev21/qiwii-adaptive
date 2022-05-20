@@ -31,13 +31,13 @@ function Login(props) {
         notificationRequest();
       })
       .catch((error) => {
-        if (error.status === 400) {
+        if (error?.status === 400) {
           if (error.data.message === "User belum terdaftar.") {
             setUsernameError(error.data.message);
           } else {
             setPasswordError(error.data.message);
           }
-        } else if (error.status === "Error") {
+        } else {
           if (error === "Maaf password yang anda berikan salah.") {
             setPasswordError(error);
           } else {

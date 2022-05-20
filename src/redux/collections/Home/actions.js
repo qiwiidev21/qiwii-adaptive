@@ -128,7 +128,6 @@ export function loginQiwii(email, phone, password) {
         isMockAllowed("Qiwii", LOGIN) ? payload : qs.stringify(payload)
       )
         .then(({ data }) => {
-          console.log(data);
           if (data.status === "Success") {
             dispatch(setDataSession(data));
             resolve(data);
@@ -137,7 +136,6 @@ export function loginQiwii(email, phone, password) {
           }
         })
         .catch((error) => {
-          console.log(error);
           if (error.response) {
             reject(error.response);
           } else if (error.request) {
