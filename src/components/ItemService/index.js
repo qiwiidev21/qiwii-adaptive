@@ -17,10 +17,7 @@ import Logo from "../../assets/images/logo.png";
 
 function ItemService({ data, index, category, onPress }) {
   const [icon, setIcon] = useState(
-    data.id_icon !==
-      ("https://dev.qiwii.id/system/cms/themes/ace/img/logo_alt.png" || null)
-      ? Logo
-      : data.id_icon
+    `https://app.qiwii.id/files/thumb/${data.id_icon}/100/100/`
   );
 
   // const [setting, setSetting] = useState({});
