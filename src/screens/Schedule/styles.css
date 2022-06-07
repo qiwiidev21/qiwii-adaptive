@@ -78,6 +78,10 @@
   flex: auto;
   width: 100%;
 }
+.btn-flag {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
 .slot-card {
   border-radius: 0.8rem;
   width: auto;

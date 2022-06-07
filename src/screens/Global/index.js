@@ -13,9 +13,11 @@ import "react-tabs/style/react-tabs.css";
 import merchantNull from "../../assets/images/merchant_null.png";
 import serviceNull from "../../assets/images/service_null.png";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 const Salon = (props) => {
   const [keyword, setKeyword] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (keyword.length >= 3) {
@@ -87,7 +89,7 @@ const Salon = (props) => {
         <div className="form-group mx-3 my-2">
           <input
             value={keyword}
-            placeholder="Cari Nama Merchant"
+            placeholder={t("searchMerchantName")}
             className="form-control"
             onChange={handleChange}
           />
@@ -97,8 +99,8 @@ const Salon = (props) => {
         <div>
           <Tabs>
             <TabList>
-              <Tab className="tab-custom">Merchant</Tab>
-              <Tab className="tab-custom">Layanan</Tab>
+              <Tab className="tab-custom">{t("merchant")}</Tab>
+              <Tab className="tab-custom">{t("layanan")}</Tab>
             </TabList>
 
             <TabPanel>

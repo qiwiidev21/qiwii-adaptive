@@ -52,7 +52,7 @@ const CustomMenu = forwardRef(
 
 function Header(props) {
   let history = useHistory();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // const { url } = useRouteMatch();
   // const [bgColor, setBGColor] = useState();
   const [sessionStored, setSessionStored] = useState({});
@@ -123,6 +123,28 @@ function Header(props) {
                   )}
                 </div>
                 <button
+                  className="btn-flag btn-primary-outline"
+                  onClick={() => i18n.changeLanguage("en")}
+                >
+                  <img
+                    src="https://qiwii.id/wp-content/plugins/gtranslate/flags/24/en.png"
+                    height="24"
+                    width="24"
+                    alt="English"
+                  />
+                </button>
+                <button
+                  className="btn-flag btn-primary-outline"
+                  onClick={() => i18n.changeLanguage("id")}
+                >
+                  <img
+                    src="https://qiwii.id/wp-content/plugins/gtranslate/flags/24/id.png"
+                    height="24"
+                    width="24"
+                    alt="Indonesian"
+                  />
+                </button>
+                <button
                   className="btn btn-primary-outline"
                   onClick={() => history.push(`/login`)}
                 >
@@ -171,8 +193,34 @@ function Header(props) {
                           {t("myqueue")}
                         </button>
                       </Dropdown.Item>
-                      <div className="dropdown-divider"></div>
                       <Dropdown.Item eventKey="3">
+                        <button
+                          className="btn-flag btn-primary-outline"
+                          onClick={() => i18n.changeLanguage("en")}
+                        >
+                          <img
+                            src="https://qiwii.id/wp-content/plugins/gtranslate/flags/24/en.png"
+                            height="24"
+                            width="24"
+                            alt="English"
+                          />
+                        </button>
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="4">
+                        <button
+                          className="btn-flag btn-primary-outline"
+                          onClick={() => i18n.changeLanguage("id")}
+                        >
+                          <img
+                            src="https://qiwii.id/wp-content/plugins/gtranslate/flags/24/id.png"
+                            height="24"
+                            width="24"
+                            alt="Indonesian"
+                          />
+                        </button>
+                      </Dropdown.Item>
+                      <div className="dropdown-divider"></div>
+                      <Dropdown.Item eventKey="5">
                         <button
                           className="btn-custom btn-primary-outline"
                           onClick={async () => {
