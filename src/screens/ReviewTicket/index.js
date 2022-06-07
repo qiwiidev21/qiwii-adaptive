@@ -10,11 +10,13 @@ import _ from "lodash";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const ReviewTicket = (props) => {
   const [profile, setProfile] = useState({});
   const [payment, setPayment] = useState({});
   let history = useHistory();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.dataPaymentService) {
@@ -38,10 +40,10 @@ const ReviewTicket = (props) => {
       const { data } = props.dataTicket;
       return (
         <div className="container p-5">
-          <h4 className="title-header">Terima kasih telah menggunakan Qiwii</h4>
+          <h4 className="title-header">{t("thanksUsingQiwii")}</h4>
           {data?.layanan && (
             <div className="m-2">
-              <h6 className="title-review">Kamu telah mengantri di</h6>
+              <h6 className="title-review">{t("youAreAlreadyIn")}</h6>
               <h6>
                 {data?.layanan} - {data?.organization_name}
               </h6>
@@ -49,18 +51,18 @@ const ReviewTicket = (props) => {
           )}
           {data?.layanan && <div className="dropdown-divider"></div>}
           <div className="mx-2">
-            <h6 className="title-review">Informasi antrian telah dikirim ke</h6>
+            <h6 className="title-review">{t("queueInformationHasBeen")}</h6>
             <h6>{props.dataUserProfile.data?.email}</h6>
           </div>
           <div className="dropdown-divider"></div>
           {data?.antrian && (
             <div className="justify-content-between row mx-1">
               <div className="mx-2">
-                <h6 className="title-review">Tanggal</h6>
+                <h6 className="title-review">{t("date")}</h6>
                 <h6>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</h6>
               </div>
               <div className="mx-2">
-                <h6 className="title-review">Estimasi Nomor Antrian</h6>
+                <h6 className="title-review">{t("estimateNumberQueue")}</h6>
                 <h6>{data?.antrian || data?.ticket}</h6>
               </div>
             </div>
@@ -73,12 +75,12 @@ const ReviewTicket = (props) => {
                   className="title-review"
                   style={{ marginTop: 20, marginBottom: 30 }}
                 >
-                  Status Pembayaran
+                  {t("paymentStatus")}
                 </h5>
                 <h6>{`\n`}</h6>
               </div>
               <div className="m-2">
-                <h6 className="title-review">Status Transaksi</h6>
+                <h6 className="title-review">{t("transactionStatus")}</h6>
                 <h6>
                   {payment.transaction_status === "settlement"
                     ? "Pembayaran Berhasil"
@@ -87,12 +89,12 @@ const ReviewTicket = (props) => {
               </div>
               <div className="dropdown-divider"></div>
               <div className="m-2">
-                <h6 className="title-review">Tanggal Pembayaran</h6>
+                <h6 className="title-review">{t("paymentDate")}</h6>
                 <h6>{moment(payment.transaction_time).format("LLL")}</h6>
               </div>
               <div className="dropdown-divider"></div>
               <div className="m-2">
-                <h6 className="title-review">Biaya Transaksi</h6>
+                <h6 className="title-review">{t("transactionFee")}</h6>
                 <h6>{payment.gross_amount}</h6>
               </div>
               <div className="dropdown-divider"></div>
@@ -118,7 +120,7 @@ const ReviewTicket = (props) => {
 
   return (
     <div className="container">
-      <Header back title="Detail Ticket" profile={profile} />
+      <Header back title={t("detailTicket")} profile={profile} />
       <section>{renderDetailAntrian()}</section>
       <div className="container my-5 fixed-bottom">
         {!_.isEmpty(props.dataPaymentService.data) && (
@@ -141,7 +143,7 @@ const ReviewTicket = (props) => {
           className="next-button"
           onClick={handleSubmit}
         >
-          Beranda
+          {t("home")}
         </Button>
       </div>
     </div>

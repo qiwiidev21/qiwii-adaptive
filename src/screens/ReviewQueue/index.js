@@ -11,10 +11,12 @@ import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import ReactMidtrans from "../../components/Midtrans";
+import { useTranslation } from "react-i18next";
 
 const ReviewQueue = (props) => {
   let history = useHistory();
   let location = useLocation();
+  const { t } = useTranslation();
 
   const [user, setUser] = useState({});
   const [dataTicket, setDataTicket] = useState(false);
@@ -167,27 +169,27 @@ const ReviewQueue = (props) => {
       // const dataPayment = props.dataPaymentService?.data;
       return (
         <div className="container p-5">
-          <h4 className="title-header">Review antrian Anda</h4>
+          <h4 className="title-header">{t("reviewYourQueue")}</h4>
           <div className="m-2">
-            <h6 className="title-review">Nama Layanan</h6>
+            <h6 className="title-review">{t("serviceName")}</h6>
             <h6>{data?.name}</h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="mx-2">
-            <h6 className="title-review">Nama Merchant</h6>
+            <h6 className="title-review">{t("merchantName")}</h6>
             <h6>{data?.company_name}</h6>
           </div>
 
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-1">
             <div className="mx-2">
-              <h6 className="title-review">Tanggal</h6>
+              <h6 className="title-review">{t("date")}</h6>
               <h6>
                 {moment(props.dataSelectedDate?.data).format("DD MMM YYYY")}
               </h6>
             </div>
             <div className="mx-2">
-              <h6 className="title-review">Estimasi Nomor Antrian</h6>
+              <h6 className="title-review">{t("estimateNumberQueue")}</h6>
               <h6>{data?.next_ticket}</h6>
             </div>
           </div>
@@ -306,33 +308,31 @@ const ReviewQueue = (props) => {
         onHide={() => setShowModalSuccess(!showModalSuccess)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Terima kasih telah menggunakan Qiwii</Modal.Title>
+          <Modal.Title>{t("thanksUsingQiwii")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container>
             <div className="m-2">
-              <h6 className="title-review">Kamu telah mengantri di</h6>
+              <h6 className="title-review">{t("youAreAlreadyIn")}</h6>
               <h6>
                 {dataTicket?.layanan} - {dataTicket?.organization_name}
               </h6>
             </div>
             <div className="dropdown-divider"></div>
             <div className="mx-2">
-              <h6 className="title-review">
-                Informasi antrian telah dikirim ke
-              </h6>
+              <h6 className="title-review">{t("queueInformationHasBeen")}</h6>
               <h6>{props.dataUserProfile.data?.email}</h6>
             </div>
             <div className="dropdown-divider"></div>
             <div className="justify-content-between row mx-1">
               <div className="mx-2">
-                <h6 className="title-review">Tanggal</h6>
+                <h6 className="title-review">{t("date")}</h6>
                 <h6>
                   {moment(dataTicket?.estimasi_tangal).format("DD MMM YYYY")}
                 </h6>
               </div>
               <div className="mx-2">
-                <h6 className="title-review">Estimasi Nomor Antrian</h6>
+                <h6 className="title-review">{t("estimateNumberQueue")}</h6>
                 <h6>{dataTicket?.antrian}</h6>
               </div>
             </div>
@@ -344,22 +344,22 @@ const ReviewQueue = (props) => {
                     className="title-review"
                     style={{ marginTop: 20, marginBottom: 30 }}
                   >
-                    Status Pembayaran
+                    {t("paymentStatus")}
                   </h5>
                   <h6>{`\n`}</h6>
                 </div>
                 <div className="m-2">
-                  <h6 className="title-review">Status Transaksi</h6>
+                  <h6 className="title-review">{t("paymentStatus")}</h6>
                   <h6>{payment.transaction_status}</h6>
                 </div>
                 <div className="dropdown-divider"></div>
                 <div className="m-2">
-                  <h6 className="title-review">Tanggal Pembayaran</h6>
+                  <h6 className="title-review">{t("paymentDate")}</h6>
                   <h6>{payment.settlement_time}</h6>
                 </div>
                 <div className="dropdown-divider"></div>
                 <div className="m-2">
-                  <h6 className="title-review">Biaya Transaksi</h6>
+                  <h6 className="title-review">{t("transactionFee")}</h6>
                   <h6>{payment.gross_amount}</h6>
                 </div>
                 <div className="dropdown-divider"></div>
@@ -375,7 +375,7 @@ const ReviewQueue = (props) => {
               await history.push(`${location.pathname}/ticket`);
             }}
           >
-            Detail
+            {t("detail")}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -386,9 +386,9 @@ const ReviewQueue = (props) => {
     return (
       <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
         <Modal.Header closeButton>
-          <Modal.Title>Anda belum login.</Modal.Title>
+          <Modal.Title>{t("youAreNotLoggin")}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Silahkan login untuk melanjutkan!</Modal.Body>
+        <Modal.Body>{t("sessionEmpty")}</Modal.Body>
         <Modal.Footer>
           <Button variant="light" onClick={() => setShowModal(!showModal)}>
             Cancel
@@ -400,7 +400,7 @@ const ReviewQueue = (props) => {
               await setShowModalLogin(true);
             }}
           >
-            Login
+            {t("login")}
           </Button>
         </Modal.Footer>
       </Modal>

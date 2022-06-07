@@ -10,10 +10,12 @@ import ItemQueue from "../../components/ItemQueue";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
-const Profile = (props) => {
+const Antrian = (props) => {
   const [profile, setProfile] = useState({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
@@ -44,16 +46,16 @@ const Profile = (props) => {
           name="description"
           content="Qiwii: Sistem antrian online untuk berbagai macam sektor industri dan berbagai macam skala usaha"
         />
-      <title>Qiwii: Sistem antrian online</title>
+        <title>Qiwii: Sistem antrian online</title>
       </Helmet>
       <Header back title="Antrian" profile={profile} />
       <div className="container-custom">
         <div>
           <Tabs>
             <TabList>
-              <Tab className="tab-custom-antrian">Berlangsung</Tab>
-              <Tab className="tab-custom-antrian">Reservasi</Tab>
-              <Tab className="tab-custom-antrian">Selesai</Tab>
+              <Tab className="tab-custom-antrian">{t("ongoing")}</Tab>
+              <Tab className="tab-custom-antrian">{t("reservation")}</Tab>
+              <Tab className="tab-custom-antrian">{t("done")}</Tab>
             </TabList>
 
             <TabPanel>
@@ -147,13 +149,13 @@ const Profile = (props) => {
   );
 };
 
-Profile.defaultProps = {
+Antrian.defaultProps = {
   dataTicket: {},
   dataSelectedDate: {},
   dataSession: {},
 };
 
-Profile.propTypes = {
+Antrian.propTypes = {
   dataUserQueue: PropTypes.object,
   dataUserQueueFinish: PropTypes.object,
   dataUserQueueReservasi: PropTypes.object,
@@ -177,4 +179,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(ActionCreators, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Antrian);

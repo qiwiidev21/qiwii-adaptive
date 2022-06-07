@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { Button, Form } from "react-bootstrap";
 // import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
@@ -15,6 +16,7 @@ const Profile = (props) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   // let history = useHistory();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
@@ -72,30 +74,30 @@ const Profile = (props) => {
       <div className="container my-5">
         <Form>
           <Form.Group className="mb-3" controlId="formBasicUsername">
-            <Form.Label>Username</Form.Label>
+            <Form.Label>{t("username")}</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Masukkan username Anda"
+              placeholder={t("username")}
               value={username}
               onChange={(event) => setUsername(event.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>{t("email")}</Form.Label>
             <Form.Control
               type="email"
-              placeholder="Masukkan email Anda"
+              placeholder={t("inputEmail")}
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPhone">
-            <Form.Label>Phone</Form.Label>
+            <Form.Label>{t("phone")}</Form.Label>
             <Form.Control
               type="number"
-              placeholder="Masukkan nomor handphone Anda"
+              placeholder={t("inputYourPhone")}
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
             />
@@ -110,7 +112,7 @@ const Profile = (props) => {
           className="next-button"
           onClick={handleSubmit}
         >
-          Simpan
+          {t("submit")}
         </Button>
       </div>
     </div>

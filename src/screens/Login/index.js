@@ -6,10 +6,12 @@ import { ActionCreators } from "../../redux/actions";
 import { Button, Form } from "react-bootstrap";
 // import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Login(props) {
   let history = useHistory();
   // const { url } = useRouteMatch();
+  const { t } = useTranslation();
 
   // let location = useLocation();
   const [username, setUsername] = useState("");
@@ -33,13 +35,13 @@ function Login(props) {
       .catch((error) => {
         if (error?.status === 400) {
           if (error.data.message === "User belum terdaftar.") {
-            setUsernameError(error.data.message);
+            setUsernameError(t("userNotRegistered"));
           } else {
             setPasswordError(error.data.message);
           }
         } else {
           if (error === "Maaf password yang anda berikan salah.") {
-            setPasswordError(error);
+            setPasswordError(t("passwordWrong"));
           } else {
             setUsernameError(error);
           }
@@ -80,13 +82,13 @@ function Login(props) {
               <img src={logo} height="100" className="mx-auto d-block" alt="" />
               <div className="card login-page bg-white shadow mt-4 rounded border-0">
                 <div className="card-body">
-                  <h4 className="text-center">Sign In</h4>
+                  <h4 className="text-center">{t("loginForTheNext")}</h4>
                   <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
-                      <Form.Label>Email</Form.Label>
+                      <Form.Label>{t("email")}</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Masukkan email"
+                        placeholder={t("inputEmail")}
                         onChange={(event) => {
                           setPhoneOrMail(event.target.value);
                           setUsernameError("");
@@ -99,10 +101,10 @@ function Login(props) {
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
-                      <Form.Label>Kata Sandi</Form.Label>
+                      <Form.Label>{t("password")}</Form.Label>
                       <Form.Control
                         type="password"
-                        placeholder="Kata Sandi"
+                        placeholder={t("password")}
                         onChange={(event) => {
                           setPassword(event.target.value);
                           setPasswordError("");
@@ -115,13 +117,13 @@ function Login(props) {
                     </Form.Group>
                     <div className="row justify-content-between px-2 pl-2 pr-2">
                       <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Ingatkan saya" />
+                        <Form.Check type="checkbox" label={t("reminderMe")} />
                       </Form.Group>
                       <button
                         className="btn btn-primary-outline"
                         onClick={() => history.push(`/register`)}
                       >
-                        <h6>Daftar</h6>
+                        <h6>{t("register")}</h6>
                       </button>
                     </div>
                     <Button
@@ -130,7 +132,7 @@ function Login(props) {
                       className="col-lg-12 mb-0"
                       onClick={handleSubmit}
                     >
-                      Masuk
+                      {t("login")}
                     </Button>
                   </Form>
                 </div>

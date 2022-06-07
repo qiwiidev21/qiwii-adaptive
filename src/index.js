@@ -1,9 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import "./assets/css/index.css";
 import App from "./main/App";
 import reportWebVitals from "./reportWebVitals";
-import { FirebaseAppProvider } from 'reactfire';
+import { FirebaseAppProvider } from "reactfire";
+import "./utils/i18nextConf";
+
+const Loader = () => <div>loading...</div>;
 
 const firebaseConfig = {
   apiKey: "AIzaSyC22mJMmB9JeiXHeWQKnme12nWAEwxjm6k",
@@ -12,12 +15,14 @@ const firebaseConfig = {
   projectId: "qiwii-bd85e",
   storageBucket: "qiwii-bd85e.appspot.com",
   messagingSenderId: "870706612213",
-  appId: "1:870706612213:web:7b9eb33d5b446fd1a682bc"
+  appId: "1:870706612213:web:7b9eb33d5b446fd1a682bc",
 };
 
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-    <App />
+    <Suspense fallback={<Loader />}>
+      <App />
+    </Suspense>
   </FirebaseAppProvider>,
   document.getElementById("root")
 );

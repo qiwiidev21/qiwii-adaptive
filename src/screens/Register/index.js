@@ -8,9 +8,11 @@ import { Container, Button, Form, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Register(props) {
   let history = useHistory();
+  const { t } = useTranslation();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -128,12 +130,13 @@ function Register(props) {
                       <div className="col-lg-12">
                         <div className="mb-3">
                           <Form.Label className="form-label">
-                            Nama <span className="text-danger">*</span>
+                            {t("username")}{" "}
+                            <span className="text-danger">*</span>
                           </Form.Label>
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Nama"
+                            placeholder={t("username")}
                             name="usename"
                             required=""
                             onChange={(event) =>
@@ -146,12 +149,12 @@ function Register(props) {
                       <div className="col-lg-12">
                         <div className="mb-3">
                           <Form.Label className="form-label">
-                            Email <span className="text-danger">*</span>
+                            {t("email")} <span className="text-danger">*</span>
                           </Form.Label>
                           <input
                             type="email"
                             className="form-control"
-                            placeholder="Email"
+                            placeholder={t("email")}
                             name="email"
                             required=""
                             onChange={(event) => setEmail(event.target.value)}
@@ -162,13 +165,12 @@ function Register(props) {
                       <div className="col-lg-12">
                         <div className="mb-3">
                           <Form.Label className="form-label">
-                            Nomor telepone{" "}
-                            <span className="text-danger">*</span>
+                            {t("phone")} <span className="text-danger">*</span>
                           </Form.Label>
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Nomor telepone"
+                            placeholder={t("phone")}
                             name="phone"
                             required=""
                             onChange={(event) => setPhone(event.target.value)}
@@ -179,7 +181,8 @@ function Register(props) {
                       <div className="col-lg-12">
                         <div className="mb-3">
                           <Form.Label className="form-label">
-                            Kata Sandi <span className="text-danger">*</span>
+                            {t("password")}{" "}
+                            <span className="text-danger">*</span>
                           </Form.Label>
                           <input
                             type="password"
@@ -196,13 +199,13 @@ function Register(props) {
                       <div className="col-lg-12">
                         <div className="mb-3">
                           <Form.Label className="form-label">
-                            Ulangi Kata Sandi{" "}
+                            {t("repassword")}{" "}
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <input
                             type="password"
                             className="form-control"
-                            placeholder="Ulangi Kata Sandi"
+                            placeholder={t("repassword")}
                             required=""
                             onChange={(event) =>
                               setRePassword(event.target.value)
@@ -217,7 +220,7 @@ function Register(props) {
                             className="btn next-button btn-primary"
                             onClick={() => handleSubmit()}
                           >
-                            Daftar
+                            {t("register")}
                           </Button>
                         </div>
                       </div>
@@ -225,10 +228,10 @@ function Register(props) {
                       <div className="col-12 text-center">
                         <h6 className="mb-0 mt-3">
                           <small className="text-dark me-2">
-                            Sudah punya akun ?
+                            {t("haveanaccount")}
                           </small>{" "}
                           <Link to="/login">
-                            <h6 className="text-dark fw-bold">Masuk</h6>
+                            <h6 className="text-dark fw-bold">{t("login")}</h6>
                           </Link>
                         </h6>
                       </div>

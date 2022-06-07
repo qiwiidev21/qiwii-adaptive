@@ -10,12 +10,14 @@ import { Button } from "react-bootstrap";
 import { ChevronRight } from "react-bootstrap-icons";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState({});
   const [data, setDataUser] = useState({});
   let history = useHistory();
   let { url } = useRouteMatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
@@ -64,17 +66,17 @@ const Profile = (props) => {
       <Header back title="Profile" profile={profile} />
       <div className="container my-5">
         <div className="m-2">
-          <h6 className="title-review">Username</h6>
+          <h6 className="title-review">{t("name")}</h6>
           <h6>{data?.name}</h6>
         </div>
         <div className="dropdown-divider"></div>
         <div className="mx-2">
-          <h6 className="title-review">Email</h6>
+          <h6 className="title-review">{t("email")}</h6>
           <h6>{data?.email}</h6>
         </div>
         <div className="dropdown-divider"></div>
         <div className="mx-2">
-          <h6 className="title-review">Phone</h6>
+          <h6 className="title-review">{t("phone")}</h6>
           <h6>{data?.phone}</h6>
         </div>
         <div className="dropdown-divider"></div>
@@ -85,7 +87,7 @@ const Profile = (props) => {
           onClick={() => history.push(`${url}/edit`)}
         >
           <div className="justify-content-between row mx-2">
-            <h6 className="title-review">Pengaturan Profil</h6>
+            <h6 className="title-review">{t("profileSetting")}</h6>
             <ChevronRight />
           </div>
         </button>
@@ -98,7 +100,7 @@ const Profile = (props) => {
                 onClick={() => history.push(`${url}/otp`)}
               >
                 <div className="justify-content-between row mx-2">
-                  <h6 className="title-review">Verifikasi OTP</h6>
+                  <h6 className="title-review">{t("verifyOTP")}</h6>
                   <ChevronRight />
                 </div>
               </button>
@@ -110,7 +112,7 @@ const Profile = (props) => {
           onClick={() => history.push(`${url}/password`)}
         >
           <div className="justify-content-between row mx-2">
-            <h6 className="title-review">Kata Sandi</h6>
+            <h6 className="title-review">{t("password")}</h6>
             <ChevronRight />
           </div>
         </button>
@@ -122,7 +124,7 @@ const Profile = (props) => {
           }
         >
           <div className="justify-content-between row mx-2">
-            <h6 className="title-review">Kebijakan Privasi</h6>
+            <h6 className="title-review">{t("privacyPolice")}</h6>
             <ChevronRight />
           </div>
         </button>
@@ -142,9 +144,7 @@ const Profile = (props) => {
           onClick={() => window.open("http://bit.ly/daftarqiwii", "_blank")}
         >
           <div className="justify-content-between row mx-2">
-            <h6 className="title-review">
-              Saya punya bisnis dan ingin bekerja sama dengan QIWII
-            </h6>
+            <h6 className="title-review">{t("iHaveBussiness")}</h6>
             <ChevronRight />
           </div>
         </button>
@@ -157,7 +157,7 @@ const Profile = (props) => {
           className="next-button"
           onClick={handleSubmit}
         >
-          Keluar
+          {t("logout")}
         </Button>
       </div>
     </div>

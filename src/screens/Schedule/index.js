@@ -32,9 +32,13 @@ import "react-dropdown/style.css";
 import _ from "lodash";
 import { Helmet } from "react-helmet";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
+
 const Schedule = (props) => {
   const { url } = useRouteMatch();
   const { routeID } = useParams();
+  const { t } = useTranslation();
+
   let history = useHistory();
   let location = useLocation();
   const date = new Date();
@@ -485,26 +489,26 @@ const Schedule = (props) => {
       return (
         <div className="slot-card">
           <div className="justify-content-between row mx-2">
-            <h6>Nomor mengantri saat ini</h6>
+            <h6>{t("currentQueue")}</h6>
             <h6>{data.next_ticket}</h6>
           </div>
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-2">
-            <h6>Rata-rata lama per antrian</h6>
+            <h6>{t("averageQueue")}</h6>
             <h6>{data.rata !== null ? data.rata : "0"}</h6>
           </div>
           {data.price_active === "1" && (
             <div>
               <div className="dropdown-divider"></div>
               <div className="justify-content-between row mx-2">
-                <h6>Harga</h6>
+                <h6>{t("price")}</h6>
                 <h6>{data.price !== null ? `Rp.${data.price}` : "Rp.0"}</h6>
               </div>
             </div>
           )}
           <div className="dropdown-divider"></div>
           <div className="justify-content-between row mx-2">
-            <h6>Estimasi waktu dilayani</h6>
+            <h6>{t("estimateServiceTime")}</h6>
             <h6>{data.estimated_next_called_time}</h6>
           </div>
           <div className="dropdown-divider"></div>
@@ -594,7 +598,8 @@ const Schedule = (props) => {
                           : { color: "#333333" }
                       }
                     >
-                      Tersisa {Number(item.quota) - Number(item.queues)} kuota
+                      {t("left")} {Number(item.quota) - Number(item.queues)}{" "}
+                      {t("quota")}
                     </h6>
                   </div>
                 </button>
@@ -642,7 +647,7 @@ const Schedule = (props) => {
           ) {
             resolve(true);
           } else {
-            reject("Harap mengisi form terlebih dahulu!");
+            reject(t("pleaseFillTheForm"));
           }
         });
       }
@@ -671,18 +676,18 @@ const Schedule = (props) => {
           {registerForm ? (
             <Form onSubmit={handleLogin}>
               <Form.Group controlId="username">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>{t("username")}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Username"
+                  placeholder={t("username")}
                   onChange={(event) => setUsername(event.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="email">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>{t("email")}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Email"
+                  placeholder={t("username")}
                   onChange={(event) => {
                     setEmail(event.target.value);
                     setUsernameError("");
@@ -694,18 +699,18 @@ const Schedule = (props) => {
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="phone">
-                <Form.Label>Nomor Telepon</Form.Label>
+                <Form.Label>{t("phone")}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Nomor Telepon"
+                  placeholder={t("phone")}
                   onChange={(event) => setPhone(event.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="password">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>{t("password")}</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder={t("password")}
                   onChange={(event) => {
                     setPassword(event.target.value);
                     setPasswordError("");
@@ -720,10 +725,10 @@ const Schedule = (props) => {
           ) : (
             <Form onSubmit={handleLogin}>
               <Form.Group controlId="username">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>{t("username")}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Username"
+                  placeholder={t("username")}
                   onChange={(event) => {
                     setPhoneOrMail(event.target.value);
                     setUsernameError("");
@@ -735,10 +740,10 @@ const Schedule = (props) => {
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="password">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>{t("password")}</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder={t("password")}
                   onChange={(event) => {
                     setPassword(event.target.value);
                     setPasswordError("");
@@ -766,7 +771,7 @@ const Schedule = (props) => {
                 }
               }}
             >
-              Submit
+              {t("submit")}
             </Button>
             <div>
               <h6 className="register-text">
@@ -793,7 +798,6 @@ const Schedule = (props) => {
     props
       .loginQiwii(username, phone, password)
       .then(async (user) => {
-        console.log(user);
         if (user.status === "Success") {
           await setShowModalLogin(!showModalLogin);
           await setShowModalReport(true);
@@ -810,17 +814,15 @@ const Schedule = (props) => {
         }
       })
       .catch((error) => {
-        console.log(error);
         if (error?.status === 400) {
           if (error.data.message === "User belum terdaftar.") {
-            setUsernameError(error.data.message);
+            setUsernameError(t("userNotRegistered"));
           } else {
             setPasswordError(error.data.message);
           }
         } else {
           if (error === "Maaf password yang anda berikan salah.") {
-            console.log(error);
-            setPasswordError(error);
+            setPasswordError(t("passwordWrong"));
           } else {
             setUsernameError(error);
           }
@@ -1159,7 +1161,7 @@ const Schedule = (props) => {
             className="next-button"
             onClick={() => setShowModal(true)}
           >
-            Masuk untuk melanjutkan
+            {t("loginForTheNext")}
           </Button>
         ) : (
           <Button
@@ -1168,7 +1170,7 @@ const Schedule = (props) => {
             className="next-button"
             onClick={handleSubmit}
           >
-            Lanjutkan
+            {t("next")}
           </Button>
         )}
       </div>

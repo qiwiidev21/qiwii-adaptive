@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../redux/actions";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useTranslation } from "react-i18next";
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
   <button
@@ -51,7 +52,7 @@ const CustomMenu = forwardRef(
 
 function Header(props) {
   let history = useHistory();
-
+  const { t } = useTranslation();
   // const { url } = useRouteMatch();
   // const [bgColor, setBGColor] = useState();
   const [sessionStored, setSessionStored] = useState({});
@@ -125,7 +126,7 @@ function Header(props) {
                   className="btn btn-primary-outline"
                   onClick={() => history.push(`/login`)}
                 >
-                  <h5 className="title">Masuk</h5>
+                  <h5 className="title">{t("login")}</h5>
                 </button>
               </div>
             ) : (
@@ -159,7 +160,7 @@ function Header(props) {
                           className="btn-custom btn-primary-outline"
                           onClick={async () => await history.push("/profile")}
                         >
-                          Profil
+                          {t("profile")}
                         </button>
                       </Dropdown.Item>
                       <Dropdown.Item eventKey="2">
@@ -167,7 +168,7 @@ function Header(props) {
                           className="btn-custom btn-primary-outline"
                           onClick={async () => await history.push("/antrian")}
                         >
-                          Antrian Saya
+                          {t("myqueue")}
                         </button>
                       </Dropdown.Item>
                       <div className="dropdown-divider"></div>
@@ -185,7 +186,7 @@ function Header(props) {
                             await window.location.reload(false);
                           }}
                         >
-                          Keluar
+                          {t("logout")}
                         </button>
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -198,15 +199,13 @@ function Header(props) {
       </header>
       {_.isEmpty(sessionStored) && (
         <div className="tooltips">
-          <h5 className="info-login">
-            Silahkan masuk untuk melanjutkan pengambilan antrian Anda
-          </h5>
+          <h5 className="info-login">{t("sessionEmpty")}</h5>
         </div>
       )}
       {props.dataUserProfile.data &&
         props.dataUserProfile.data.verification_status !== "1" && (
           <div className="tooltips">
-            <h5 className="info-login">Segera lakukan verifikasi user Anda</h5>
+            <h5 className="info-login">{t("pleaseVerify")}</h5>
           </div>
         )}
     </>
