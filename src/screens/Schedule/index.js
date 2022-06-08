@@ -169,7 +169,7 @@ const Schedule = (props) => {
 
   useEffect(() => {
     if (routeID) {
-      if (props.dataServiceSelected.data?.slot_aktif === "1") {
+      if (props.dataServiceSelected.data.slot_aktif === "1") {
         props
           .fetchSlotTime(routeID, selectedDate.format)
           .then((response) => {
@@ -190,9 +190,11 @@ const Schedule = (props) => {
         props
           .fetchSlotTime(routeID, selectedDate.format)
           .then((response) => {
+            console.log(response, "SLOT TIME");
             setDataSlotTime(response);
           })
           .catch((error) => {
+            console.log(error, "ERROR SLOT TIME");
             if (error) {
               setDataSlotTime([]);
             }
@@ -1165,6 +1167,10 @@ const Schedule = (props) => {
           </Button>
         ) : (
           <Button
+            disabled={
+              props.dataServiceSelected.data.slot_aktif === "1" &&
+              dataSlotTime.length < 1
+            }
             variant="primary"
             type="submit"
             className="next-button"

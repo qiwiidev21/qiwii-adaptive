@@ -328,7 +328,8 @@ const ReviewQueue = (props) => {
               <div className="mx-2">
                 <h6 className="title-review">{t("date")}</h6>
                 <h6>
-                  {moment(dataTicket?.estimasi_tangal).format("DD MMM YYYY")}
+                  {/*moment(dataTicket?.estimasi_tangal).format("DD MMM YYYY")*/}
+                  {moment(props.dataSelectedDate?.data).format("DD MMM YYYY")}
                 </h6>
               </div>
               <div className="mx-2">

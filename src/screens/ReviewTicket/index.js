@@ -38,6 +38,7 @@ const ReviewTicket = (props) => {
   function renderDetailAntrian() {
     if (props.dataTicket) {
       const { data } = props.dataTicket;
+      console.log(data, "DATA TICKET");
       return (
         <div className="container p-5">
           <h4 className="title-header">{t("thanksUsingQiwii")}</h4>
@@ -59,7 +60,7 @@ const ReviewTicket = (props) => {
             <div className="justify-content-between row mx-1">
               <div className="mx-2">
                 <h6 className="title-review">{t("date")}</h6>
-                <h6>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</h6>
+                <h6>{moment(data?.estimasi).format("DD MMM YYYY")}</h6>
               </div>
               <div className="mx-2">
                 <h6 className="title-review">{t("estimateNumberQueue")}</h6>

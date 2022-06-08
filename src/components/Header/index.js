@@ -58,6 +58,10 @@ function Header(props) {
   const [sessionStored, setSessionStored] = useState({});
 
   useEffect(() => {
+    getSession();
+  }, []);
+
+  useEffect(() => {
     if (props.dataUserProfile.data) {
       getSession();
     }
