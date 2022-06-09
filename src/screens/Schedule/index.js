@@ -671,7 +671,7 @@ const Schedule = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
-            {registerForm ? "Daftar" : "Masuk"}
+            {registerForm ? t("register") : t("login")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -689,7 +689,7 @@ const Schedule = (props) => {
                 <Form.Label>{t("email")}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder={t("username")}
+                  placeholder={t("inputEmail")}
                   onChange={(event) => {
                     setEmail(event.target.value);
                     setUsernameError("");
@@ -883,9 +883,9 @@ const Schedule = (props) => {
     return (
       <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
         <Modal.Header closeButton>
-          <Modal.Title>Anda belum login.</Modal.Title>
+          <Modal.Title>{t("youAreNotLoggin")}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Silahkan login untuk melanjutkan!</Modal.Body>
+        <Modal.Body>{t("sessionEmpty")}</Modal.Body>
         <Modal.Footer>
           <Button
             variant="light"
@@ -895,7 +895,7 @@ const Schedule = (props) => {
               await setRegisterForm(true);
             }}
           >
-            Daftar
+            {t("register")}
           </Button>
           <Button
             variant="primary"
@@ -905,7 +905,7 @@ const Schedule = (props) => {
               await setRegisterForm(false);
             }}
           >
-            Masuk
+            {t("login")}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -1062,9 +1062,7 @@ const Schedule = (props) => {
     return (
       <Modal show={modalOTP} onHide={() => {}}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            Masukkan kode verifikasi yang telah dikirim via Email Anda.
-          </Modal.Title>
+          <Modal.Title>{t("inputCodeOTP")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container>
@@ -1091,7 +1089,7 @@ const Schedule = (props) => {
               await handleSubmitOTP();
             }}
           >
-            Submit
+            {t("submit")}
           </Button>
         </Modal.Footer>
       </Modal>

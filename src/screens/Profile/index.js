@@ -66,7 +66,7 @@ const Profile = (props) => {
       <Header back title="Profile" profile={profile} />
       <div className="container my-5">
         <div className="m-2">
-          <h6 className="title-review">{t("name")}</h6>
+          <h6 className="title-review">{t("username")}</h6>
           <h6>{data?.name}</h6>
         </div>
         <div className="dropdown-divider"></div>
