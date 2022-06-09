@@ -1145,7 +1145,7 @@ const Schedule = (props) => {
         />
         <title>Qiwii: {companyName}</title>
       </Helmet>
-      <Header back title="Pilih Jadwal" profile={profile} />
+      <Header back title={t("schedule")} profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
       <div className="menu"></div>
       <section>{renderMerchant()}</section>

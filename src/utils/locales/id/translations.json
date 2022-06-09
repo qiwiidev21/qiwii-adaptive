@@ -22,7 +22,8 @@
   "inputYourPhone": "Masukkan nomor handphone Anda",
   "price": "Harga",
   "merchant": "Merchant",
-  "layanan": "Service",
+  "layanan": "Layanan",
+  "schedule": "Pilih Jadwal",
   "merchantName": "Nama Merchant",
   "searchMerchantName": "Cari Nama Merchant",
   "reviewYourQueue": "Review antrian Anda",
@@ -53,5 +54,6 @@
   "queueInformationHasBeen": "Informasi antrian telah dikirim ke",
   "inputCodeOTP": "Masukkan kode verifikasi yang telah dikirim via Email Anda",
   "reminderMe": "Ingatkan saya",
+  "serviceNotAvailable": "Layanan sedang tidak tersedia",
   "myqueue": "Antrian Saya"
 }

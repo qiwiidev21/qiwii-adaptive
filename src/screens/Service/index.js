@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./styles.css";
 import _ from "lodash";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 const Service = (props) => {
   const { url } = useRouteMatch();
@@ -18,6 +19,7 @@ const Service = (props) => {
   // const [banner, setBanner] = useState(
   //   "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit"
   // );
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchServiceMerchant(serviceId);
@@ -74,7 +76,7 @@ const Service = (props) => {
         />
         <title>Qiwii: {serviceName}</title>
       </Helmet>
-      <Header back title="Layanan" profile={profile} />
+      <Header back title={t("layanan")} profile={profile} />
       <Hero url={props.dataPromo.data} alt="Qiwii" />
       <div className="container-custom menu pl-2 px-2">
         <section className="d-flex">{renderMerchant()}</section>
@@ -99,7 +101,7 @@ const Service = (props) => {
 
         {props.dataService.data?.length < 1 && (
           <div className="d-flex self-center">
-            <h2>Layanan sedang tidak tersedia</h2>
+            <h2>{t("serviceNotAvailable")}</h2>
           </div>
         )}
       </div>

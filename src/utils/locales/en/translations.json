@@ -21,6 +21,7 @@
   "price": "Price",
   "merchant": "Merchant",
   "layanan": "Services",
+  "schedule": "Schedule",
   "merchantName": "Merchant Name",
   "searchMerchantName": "Search Merchant Name",
   "reviewYourQueue": "Review your Queue",
@@ -53,5 +54,6 @@
   "inputCodeOTP": "Enter the verification code that has been sent via your email",
   "reminderMe": "reminder me",
   "profile": "Profile",
+  "serviceNotAvailable": "Service is currently unavailable",
   "myqueue": "My Queue"
 }
