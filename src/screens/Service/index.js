@@ -15,11 +15,29 @@ import { useTranslation } from "react-i18next";
 
 const Service = (props) => {
   const { url } = useRouteMatch();
-  const serviceId = typeof url == "string" ? url.substr(url.length - 3) : null;
+
+  const serviceId =
+    typeof url == "string"
+      ? url === "/kbri-bangkok"
+        ? 698
+        : url.substr(url.length - 3)
+      : null;
   // const [banner, setBanner] = useState(
   //   "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit"
   // );
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (url === "/kbri-bangkok") {
+      fetchDataPromo();
+    }
+  }, [url]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function fetchDataPromo() {
+    props.getPromo(5).then(async (data) => {
+      await props.setDataPromo(data);
+    });
+  }
 
   useEffect(() => {
     fetchServiceMerchant(serviceId);

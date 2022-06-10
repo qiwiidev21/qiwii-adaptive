@@ -54,6 +54,7 @@ function Routes() {
         <Route path={"/photoStudio"} component={RoutePhotoStudio} />
         <Route path={"/events"} component={RouteEvents} />
         <Route path={"/pemerintahan"} component={RouteGovernment} />
+        <Route path={"/kbri-bangkok"} component={RouteKbri} />
         <Route path={"/keuangan"} component={RouteFinance} />
         <Route path={"/kecantikan"} component={RouteSalon} />
         <Route path={"/services"} component={RouteServices} />
@@ -70,6 +71,16 @@ function Routes() {
 }
 
 function RouteScedule() {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path} component={Service} />
+      <Route path={`${path}/:routeID`} component={RouteReview} />
+    </Switch>
+  );
+}
+
+function RouteKbri() {
   const { path } = useRouteMatch();
   return (
     <Switch>
