@@ -55,5 +55,6 @@
   "reminderMe": "reminder me",
   "profile": "Profile",
   "serviceNotAvailable": "Service is currently unavailable",
-  "myqueue": "My Queue"
+  "myqueue": "My Queue",
+  "verifyEmail": "Immediately do the verification that has been sent via your email."
 }

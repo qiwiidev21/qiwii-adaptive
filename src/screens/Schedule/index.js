@@ -56,6 +56,7 @@ const Schedule = (props) => {
   const [otp, setOTP] = useState("");
   const [user, setUser] = useState({});
   const [showModalReport, setShowModalReport] = useState(false);
+  const [modalVerify, setModalVerify] = useState(false);
 
   const lastDay = new Date(
     date.getFullYear(),
@@ -859,7 +860,7 @@ const Schedule = (props) => {
           // setShowModalLogin(!showModalLogin);
           await setShowModalLogin(!showModalLogin);
           // await setRegisterForm(!registerForm);
-          await showModalOTP(!modalOTP);
+          await setModalVerify(!modalVerify);
           await setUniqueIdentifier(user.unique_identifier);
           await sessionStorage.setItem(
             "unique_identifier",
@@ -1085,9 +1086,26 @@ const Schedule = (props) => {
           <Button
             variant="primary"
             className="next-button"
-            onClick={async () => {
-              await handleSubmitOTP();
-            }}
+            onClick={() => handleSubmitOTP()}
+          >
+            {t("submit")}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+  function renderModalVerify() {
+    return (
+      <Modal show={modalVerify} onHide={() => {}}>
+        <Modal.Header closeButton>
+          <Modal.Title>{t("verifyEmail")}</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            className="next-button"
+            onClick={async () => setModalVerify(false)}
           >
             {t("submit")}
           </Button>
@@ -1179,6 +1197,7 @@ const Schedule = (props) => {
         )}
       </div>
       {renderModal()}
+      {renderModalVerify()}
       {renderModalOTP()}
       {renderModalLogin()}
       {renderModalReport()}

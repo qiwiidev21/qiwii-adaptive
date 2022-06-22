@@ -21,6 +21,7 @@ function Register(props) {
   // eslint-disable-next-line no-unused-vars
   const [rePassword, setRePassword] = useState("");
   const [modalOTP, showModalOTP] = useState(false);
+  const [modalVerify, setModalVerify] = useState(false);
   const [uniqueIdentifier, setUniqueIdentifier] = useState("");
   const [otp, setOTP] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -36,7 +37,7 @@ function Register(props) {
             user.unique_identifier
           );
           await setUniqueIdentifier(user.unique_identifier);
-          await showModalOTP(!modalOTP);
+          await setModalVerify(!modalVerify);
         }
       })
       .catch((error) => {
@@ -74,6 +75,29 @@ function Register(props) {
         console.log(error);
       });
   };
+  function renderModalVerify() {
+    return (
+      <Modal show={modalVerify} onHide={() => setModalVerify(!modalVerify)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{t("verifyEmail")}</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            className="next-button"
+            onClick={() => {
+              setModalVerify(false);
+              history.push("/login");
+              // await handleSubmitOTP();
+            }}
+          >
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
   function renderModalOTP() {
     return (
@@ -243,6 +267,7 @@ function Register(props) {
           </div>
         </div>
       </section>
+      {renderModalVerify()}
       {renderModalOTP()}
     </div>
   );

@@ -25,7 +25,7 @@ function Login(props) {
     props
       .loginQiwii(username, phone, password)
       .then((user) => {
-        history.goBack();
+        history.push("/");
         sessionStorage.setItem("token", user.token);
         sessionStorage.setItem("unique_identifier", user.unique_identifier);
         sessionStorage.setItem("user", JSON.stringify(user));

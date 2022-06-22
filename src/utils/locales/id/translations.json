@@ -55,5 +55,6 @@
   "inputCodeOTP": "Masukkan kode verifikasi yang telah dikirim via Email Anda",
   "reminderMe": "Ingatkan saya",
   "serviceNotAvailable": "Layanan sedang tidak tersedia",
-  "myqueue": "Antrian Saya"
+  "myqueue": "Antrian Saya",
+  "verifyEmail": "Segera lakukan verifikasi yang telah dikirim via Email Anda."
 }
