@@ -9,23 +9,25 @@
  * ItemService Component
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 
 function ItemService({ data, index, category, onPress }) {
-  const [icon, setIcon] = useState(
-    `https://app.qiwii.id/files/thumb/${data.id_icon}/100/100/`
-  );
+  const [icon, setIcon] = useState(null);
 
   // const [setting, setSetting] = useState({});
-  // useEffect(() => {
-  //   if (data) {
-  //     handleJson(data);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      if (data.id_icon) {
+        setIcon(`https://app.qiwii.id/files/thumb/${data.id_icon}/100/100/`);
+      } else {
+        setIcon(Logo);
+      }
+    }
+  }, [data]);
 
   // const handleJson = (data) => setSetting(JSON.parse(data.setting));
   let history = useHistory();
