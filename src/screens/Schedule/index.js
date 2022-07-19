@@ -940,7 +940,7 @@ const Schedule = (props) => {
   }
 
   function setCustomField(value, index) {
-    customFieldValue[index] = value;
+    customFieldValue[index - 1] = value;
     setValCustomField(customFieldValue);
   }
 
@@ -1006,7 +1006,7 @@ const Schedule = (props) => {
       <div className="mb-3">
         <Dropdown
           options={data.configuration.text_options}
-          onChange={() => {}}
+          onChange={(event) => setCustomField(event.value, data.slot_number)}
           placeholder={data.field_name}
         />
       </div>

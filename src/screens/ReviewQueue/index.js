@@ -87,6 +87,7 @@ const ReviewQueue = (props) => {
   }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function getToken(id) {
+    console.log(props.dataCustomFieldData.data);
     try {
       const userSession = sessionStorage.getItem("user");
       const user = JSON.parse(userSession);
@@ -115,6 +116,7 @@ const ReviewQueue = (props) => {
           formBody = formBody + `&custom_field[${index + 1}]=` + item;
         });
       }
+      console.log(formBody, "formBody");
       let payload;
       payload = {
         // api_user: "root",
@@ -229,7 +231,7 @@ const ReviewQueue = (props) => {
       if (!_.isEmpty(props.dataSlotTimes)) {
         params.slot_time = props.dataSlotTimes?.data;
       }
-      console.log(params);
+      console.log({ ...params, ...props.dataCustomFieldData.data });
       await props
         .getTicket(
           props.dataServiceDetail?.data?.id_organization,
@@ -710,7 +712,7 @@ const ReviewQueue = (props) => {
 
   return (
     <div className="container">
-      <Header back title="Review Antrian" profile={profile} />
+      <Header back={false} title="Review Antrian" profile={profile} />
       <section>{renderDetailAntrian()}</section>
       <div className="container  my-5 fixed-bottom">
         {props.dataServiceDetail.data?.price_active === "1" ? (
