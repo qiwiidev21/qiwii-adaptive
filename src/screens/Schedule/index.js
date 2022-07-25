@@ -622,15 +622,20 @@ const Schedule = (props) => {
           {dataCustomField.map((item, index) => {
             return (
               <Form key={index} onSubmit={handleSubmit}>
-                {item.configuration?.input_type === "text_input" &&
+                {item.web_is_active === 1 &&
+                  item.configuration?.input_type === "text_input" &&
                   renderInputText(item, index)}
-                {item.configuration?.input_type === "radio_button" &&
+                {item.web_is_active === 1 &&
+                  item.configuration?.input_type === "radio_button" &&
                   renderRadio(item, index)}
-                {item.configuration?.input_type === "checkbox" &&
+                {item.web_is_active === 1 &&
+                  item.configuration?.input_type === "checkbox" &&
                   renderCheckBox(item, index)}
-                {item.configuration?.input_type === "dropdown" &&
+                {item.web_is_active === 1 &&
+                  item.configuration?.input_type === "dropdown" &&
                   renderDropDown(item, index)}
-                {item.configuration?.input_type === "date" &&
+                {item.web_is_active === 1 &&
+                  item.configuration?.input_type === "date" &&
                   renderDatePicker(item, index)}
               </Form>
             );
@@ -960,6 +965,9 @@ const Schedule = (props) => {
             setCustomField(event.target.value, data.slot_number)
           }
         />
+        <Form.Control.Feedback type="invalid">
+          Data tidak boleh kosong
+        </Form.Control.Feedback>
       </Form.Group>
     );
   }
@@ -979,6 +987,9 @@ const Schedule = (props) => {
               ></Form.Check>
             </div>
           ))}
+        <Form.Control.Feedback type="invalid">
+          Data tidak boleh kosong
+        </Form.Control.Feedback>
       </Form.Group>
     );
   }
@@ -998,6 +1009,9 @@ const Schedule = (props) => {
               ></Form.Check>
             </div>
           ))}
+        <Form.Control.Feedback type="invalid">
+          Data tidak boleh kosong
+        </Form.Control.Feedback>
       </Form.Group>
     );
   }
