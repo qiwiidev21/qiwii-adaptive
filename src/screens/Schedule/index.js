@@ -251,33 +251,38 @@ const Schedule = (props) => {
   }
 
   function renderMerchant() {
-    if (props.dataServiceSelected.data) {
-      const { data } = props.dataServiceSelected;
+    if (props.dataServiceDetail.data) {
+      const { data } = props.dataServiceDetail;
+      const { rentang, setting } = data;
+      const today = date.getDay();
+      const isOpen =
+        setting?.pengaturan_jam == "hari" && setting?.hari[today] === today
+          ? "OPEN"
+          : setting?.pengaturan_jam == "jam"
+          ? "OPEN"
+          : "CLOSE";
       return (
         <div className="schedule-item my-5 p-3 shadow-sm">
           <h6 className="m-1">{data.name}</h6>
           <h5 className="unit-name m-1">{data.company_name}</h5>
           <div className="row m-1">
             <div className="d-flex status-open">
-              <h6 className="status-text">
-                {data.buka === "00:00:00" && data.tutup === "00:00:00"
-                  ? "OPEN"
-                  : data.tutup <= data.buka
-                  ? "CLOSE"
-                  : "OPEN"}
-              </h6>
+              <h6 className="status-text">{isOpen}</h6>
             </div>
-            <h6 className="time-text">
-              Jam Buka:{" "}
-              {data.buka === "00:00:00" && data.tutup === "00:00:00"
-                ? "24 Jam"
-                : data.buka + " - " + data.tutup}
-            </h6>
+            {isOpen === "OPEN" && (
+              <h6 className="time-text">
+                Jam Buka:{" "}
+                {data.buka === "00:00:00" && data.tutup === "00:00:00"
+                  ? "24 Jam"
+                  : data.buka + " - " + data.tutup}
+              </h6>
+            )}
           </div>
         </div>
       );
     }
   }
+
   function validateEmail(email) {
     let re =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
@@ -650,7 +655,7 @@ const Schedule = (props) => {
       if (dataCustomField.length) {
         return dataCustomField.forEach((item, index) => {
           if (
-            Number(item.required_web) === 1
+            Number(item.web_is_required) === 1
             // && customFieldValue[item.slot_number]
           ) {
             resolve(true);
