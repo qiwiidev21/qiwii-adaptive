@@ -2,7 +2,7 @@
  * @Author: Raka Mahardika <rakamahardika>
  * @Date:   02-October-2021
  * @Last modified by:   rakamahardika
- * @Last modified time: 11-March-2022
+ * @Last modified time: 01-August-2022
  */
 
 import React, { useEffect, useState } from "react";
@@ -284,8 +284,7 @@ const Schedule = (props) => {
   }
 
   function validateEmail(email) {
-    let re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
   function setPhoneOrMail(value) {
