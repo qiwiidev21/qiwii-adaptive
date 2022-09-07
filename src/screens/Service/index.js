@@ -15,13 +15,14 @@ import { useTranslation } from "react-i18next";
 
 const Service = (props) => {
   const { url } = useRouteMatch();
-
+  const idX = url.split("/");
   const serviceId =
     typeof url == "string"
       ? url === "/kbri-bangkok"
         ? 698
-        : url.substr(url.length - 3)
+        : idX[idX.length - 1]
       : null;
+
   // const [banner, setBanner] = useState(
   //   "https://dev.qiwii.id/files/thumb/179d7a995690b4c/720/360/fit"
   // );
@@ -83,7 +84,7 @@ const Service = (props) => {
       );
     }
   }
-
+  console.log(`serviceName`.toUpperCase(), props.dataService.data);
   return (
     <div className="container">
       <Helmet>

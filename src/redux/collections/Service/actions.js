@@ -24,6 +24,7 @@ export function fetchMerchantServices(id, payload) {
     return new Promise((resolve, reject) => {
       Qiwii.get(`${MERCHANT}/${id}?` + qs.stringify(payload))
         .then((response) => {
+          console.log("response", response);
           if (response.data?.length) {
             dispatch(setDataService(response.data));
             resolve(response.data);
@@ -33,6 +34,7 @@ export function fetchMerchantServices(id, payload) {
           }
         })
         .catch((error) => {
+          console.log("error", error);
           reject(error);
         });
     });

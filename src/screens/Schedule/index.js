@@ -253,12 +253,12 @@ const Schedule = (props) => {
   function renderMerchant() {
     if (props.dataServiceDetail.data) {
       const { data } = props.dataServiceDetail;
-      const { rentang, setting } = data;
+      const { setting } = data;
       const today = date.getDay();
       const isOpen =
-        setting?.pengaturan_jam == "hari" && setting?.hari[today] === today
+        setting?.pengaturan_jam === "hari" && setting?.hari[today] === today
           ? "OPEN"
-          : setting?.pengaturan_jam == "jam"
+          : setting?.pengaturan_jam === "jam"
           ? "OPEN"
           : "CLOSE";
       return (
