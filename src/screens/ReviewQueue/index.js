@@ -717,7 +717,7 @@ const ReviewQueue = (props) => {
       <div className="container  my-5 fixed-bottom">
         {props.dataServiceDetail.data?.price_active === "1" ? (
           <ReactMidtrans
-            clientKey={"SB-Mid-client-7NWm_GuTs-DvTwEt"}
+            clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
             token={token}
           >
             <Button variant="primary" type="submit" className="next-button">
