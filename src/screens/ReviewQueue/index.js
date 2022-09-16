@@ -190,10 +190,12 @@ const ReviewQueue = (props) => {
                 {moment(props.dataSelectedDate?.data).format("DD MMM YYYY")}
               </h6>
             </div>
-            <div className="mx-2">
-              <h6 className="title-review">{t("estimateNumberQueue")}</h6>
-              <h6>{data?.next_ticket}</h6>
-            </div>
+            {/*
+              <div className="mx-2">
+                <h6 className="title-review">{t("estimateNumberQueue")}</h6>
+                <h6>{data?.next_ticket}</h6>
+              </div>
+              */}
           </div>
           <div className="dropdown-divider"></div>
         </div>
@@ -334,10 +336,12 @@ const ReviewQueue = (props) => {
                   {moment(props.dataSelectedDate?.data).format("DD MMM YYYY")}
                 </h6>
               </div>
-              <div className="mx-2">
-                <h6 className="title-review">{t("estimateNumberQueue")}</h6>
-                <h6>{dataTicket?.antrian}</h6>
-              </div>
+              {/*
+                <div className="mx-2">
+                  <h6 className="title-review">{t("estimateNumberQueue")}</h6>
+                  <h6>{dataTicket?.antrian}</h6>
+                </div>
+                */}
             </div>
             <div className="dropdown-divider"></div>
             {!_.isEmpty(payment) && (
