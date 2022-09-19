@@ -38,7 +38,6 @@ const ReviewTicket = (props) => {
   function renderDetailAntrian() {
     if (props.dataTicket) {
       const { data } = props.dataTicket;
-      console.log(data, "DATA TICKET");
       return (
         <div className="container p-5">
           <h4 className="title-header">{t("thanksUsingQiwii")}</h4>
@@ -110,15 +109,22 @@ const ReviewTicket = (props) => {
     history.push(`/`);
   }
 
-  async function handleCekStatus() {
-    const order_id = sessionStorage.getItem("order_id");
-    const windowsNew = await axios.get(
-      `https://dev.qiwii.id/finance/finance/finish?order_id=${order_id}`
-    );
-    console.log(windowsNew.data);
-    await props.setPaymentMethod(windowsNew.data);
+  async function handleCekStatus() {}
+  async function handlePayment() {
+    try {
+      const order_id = sessionStorage.getItem("order_id");
+      const windowsNew = await axios.get(
+        `https://dev.qiwii.id/finance/finance/finish?order_id=${order_id}`
+      );
+      if (windowsNew.data.transaction_status === "pending") {
+        return null;
+      } else {
+        await props.setPaymentMethod(windowsNew.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
-
   return (
     <div className="container">
       <Header back title={t("detailTicket")} profile={profile} />
@@ -130,10 +136,18 @@ const ReviewTicket = (props) => {
               variant="primary"
               type="submit"
               className="next-button"
-              onClick={() => handleCekStatus()}
+              onClick={() => {
+                if (payment.transaction_status === "pending") {
+                  handlePayment();
+                } else {
+                  handleCekStatus();
+                }
+              }}
             >
               {payment.transaction_status === "settlement"
                 ? "Pembayaran Berhasil"
+                : payment.transaction_status === "pending"
+                ? "Belum dibayar"
                 : "Cek Status Pembayaran"}
             </Button>
           </div>

@@ -45,7 +45,7 @@ class SnapMidtrans extends Component {
     this.snapScript.src =
       ENV === "production"
         ? "https://app.midtrans.com/snap/snap.js"
-        : "https://app.sandbox.midtrans.com/snap/snap.js";
+        : "https://app.midtrans.com/snap/snap.js";
 
     this.snapScript.type = "text/javascript";
     this.snapScript.onload = this.onLoad.bind(this);
@@ -83,13 +83,13 @@ class SnapMidtrans extends Component {
                   // window.open(result.finish_redirect_url);
                 },
                 onPending: function (result) {
-                  sessionStorage.setItem("payment", JSON.stringify(result));
-                  sessionStorage.setItem("order_id", result.order_id);
+                  return result;
+                  // sessionStorage.setItem("payment", JSON.stringify(result));
+                  // sessionStorage.setItem("order_id", result.order_id);
                   // window.open(result.finish_redirect_url);
                 },
                 onError: function (result) {
-                  sessionStorage.setItem("payment", JSON.stringify(result));
-                  sessionStorage.setItem("order_id", result.order_id);
+                  return result;
                   // window.open(result.finish_redirect_url);
                 },
                 onClose: function (result) {
