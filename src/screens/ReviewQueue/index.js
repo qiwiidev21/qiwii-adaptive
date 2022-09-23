@@ -87,7 +87,6 @@ const ReviewQueue = (props) => {
   }, [props.dataServiceSelected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function getToken(id) {
-    console.log(props.dataCustomFieldData.data);
     try {
       const userSession = sessionStorage.getItem("user");
       const user = JSON.parse(userSession);
@@ -720,14 +719,25 @@ const ReviewQueue = (props) => {
       <section>{renderDetailAntrian()}</section>
       <div className="container  my-5 fixed-bottom">
         {props.dataServiceDetail.data?.price_active === "1" ? (
-          <ReactMidtrans
-            clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
-            token={token}
-          >
-            <Button variant="primary" type="submit" className="next-button">
-              Lanjutkan Pembayaran
+          <div>
+            <Button
+              variant="primary"
+              type="submit"
+              className="next-button"
+              style={{ marginBottom: 20 }}
+              onClick={() => getToken(props.dataServiceSelected?.data?.id)}
+            >
+              Refresh Token
             </Button>
-          </ReactMidtrans>
+            <ReactMidtrans
+              clientKey={"Mid-client-7nI9_hHTqtz0PAbj"}
+              token={token}
+            >
+              <Button variant="primary" type="submit" className="next-button">
+                Lanjutkan Pembayaran
+              </Button>
+            </ReactMidtrans>
+          </div>
         ) : (
           <Button
             variant="primary"
