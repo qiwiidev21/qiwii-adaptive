@@ -207,7 +207,10 @@ const ReviewQueue = (props) => {
     // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
     // const dataServiceDetail = JSON.parse(dataServiceDetails);
     const user = JSON.parse(userSession);
-    if (_.isEmpty(user)) {
+    if (
+      _.isEmpty(user) &&
+      props.dataServiceDetail.data.access_type !== "opened"
+    ) {
       setShowModal(true);
     } else {
       const params = {
@@ -218,21 +221,30 @@ const ReviewQueue = (props) => {
         id_service: props.dataServiceDetail?.data?.id,
         layanan: props.dataServiceDetail?.data?.id,
         kode: props.dataServiceDetail?.data?.code,
-        token: _.isEmpty(props.dataSession)
-          ? user.token
-          : props.dataSession.data.token,
-        uuid: _.isEmpty(props.dataSession)
-          ? user.uuid
-          : props.dataSession.data.uuid,
         slot_date: props.dataSelectedDate?.data,
-        unique_identifier: _.isEmpty(props.dataSession)
-          ? user.unique_identifier
-          : props.dataSession.data.unique_identifier,
       };
+
+      if (props.dataServiceDetail.data.access_type === "opened") {
+        params.email = props.dataFieldData?.data?.email;
+        params.noponsel = props.dataFieldData?.data?.phone;
+      }
+
       if (!_.isEmpty(props.dataSlotTimes)) {
         params.slot_time = props.dataSlotTimes?.data;
       }
-      console.log({ ...params, ...props.dataCustomFieldData.data });
+      if (
+        _.isEmpty(props.dataSession) &&
+        props.dataServiceDetail.data.access_type !== "opened"
+      ) {
+        params.token = user.token ?? props.dataSession.data.token;
+        params.uuid = user.uuid ?? props.dataSession.data.uuid;
+        params.unique_identifier =
+          user.unique_identifier ?? props.dataSession.data.unique_identifier;
+      }
+
+      console.log(
+        JSON.stringify({ ...params, ...props.dataCustomFieldData.data })
+      );
       await props
         .getTicket(
           props.dataServiceDetail?.data?.id_organization,
@@ -242,8 +254,8 @@ const ReviewQueue = (props) => {
         .then(async (response) => {
           console.log(response);
           if (response.status === 200) {
-            await setShowModalSuccess(true);
-            await setDataTicket(response.data);
+            setShowModalSuccess(true);
+            setDataTicket(response.data);
             await props.setDataTicket(response.data);
           }
         })
@@ -769,6 +781,7 @@ ReviewQueue.propTypes = {
   dataSelectedDate: PropTypes.object,
   dataSession: PropTypes.object,
   dataCustomFieldData: PropTypes.object,
+  dataFieldData: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
@@ -776,6 +789,7 @@ const mapStateToProps = (state) => ({
   dataMerchantProfile: state.dataMerchantProfile,
   dataSelectedDate: state.dataSelectedDate,
   dataCustomFieldData: state.dataCustomFieldData,
+  dataFieldData: state.dataFieldData,
   dataSlotTimes: state.dataSlotTimes,
   dataSession: state.dataSession,
   dataUserProfile: state.dataUserProfile,

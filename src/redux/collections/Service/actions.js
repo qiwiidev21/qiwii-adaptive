@@ -149,6 +149,20 @@ export function setCustomField(customField) {
   };
 }
 
+const setFieldData = (email, phone) => ({
+  type: types.SET_DATA_FIELD_DATA,
+  payload: {
+    email,
+    phone,
+  },
+});
+
+export function setField(email, phone) {
+  return (dispatch) => {
+    dispatch(setFieldData(email, phone));
+  };
+}
+
 const setSlotTimeData = (data) => ({
   type: types.SET_DATA_SLOT_TIME_DATA,
   payload: data,

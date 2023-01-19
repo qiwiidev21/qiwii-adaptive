@@ -83,6 +83,16 @@ export const dataCustomFieldData = createReducer(
     },
   }
 );
+export const dataFieldData = createReducer(
+  {},
+  {
+    [types.SET_DATA_FIELD_DATA](state, action) {
+      return {
+        data: action.payload,
+      };
+    },
+  }
+);
 export const dataSlotTimes = createReducer(
   {},
   {

@@ -45,6 +45,9 @@ const Schedule = (props) => {
   const dates = new Date(date.getFullYear(), date.getMonth() + 1, 1);
   const [messageReport, setMessageReport] = useState("");
   const [username, setUsername] = useState("");
+  const [emailField, setEmailField] = useState("");
+  const [phoneField, setPhoneField] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [email, setEmail] = useState("");
   const [emailError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -284,7 +287,8 @@ const Schedule = (props) => {
   }
 
   function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
     return re.test(email);
   }
   function setPhoneOrMail(value) {
@@ -649,6 +653,48 @@ const Schedule = (props) => {
     }
   }
 
+  function renderField() {
+    if (props.dataServiceDetail?.data?.access_type === "opened") {
+      const { input_email, input_phone } = props.dataServiceDetail?.data;
+      return (
+        <div className="container slot-card my-3">
+          <Form onSubmit={handleSubmit}>
+            {input_email === "1" && (
+              <Form.Group controlId={input_email}>
+                <Form.Label>{"Email"}</Form.Label>
+                <Form.Control
+                  type={"text"}
+                  maxLength={50}
+                  placeholder={"Silakan masukkan email Anda"}
+                  onChange={(event) => setEmailField(event.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Email tidak boleh kosong
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+            {input_phone === "1" && (
+              <Form.Group controlId={input_phone}>
+                <Form.Label>{"Email"}</Form.Label>
+                <Form.Control
+                  type={"number"}
+                  maxLength={15}
+                  placeholder={"Silakan masukkan telepon Anda"}
+                  onChange={(event) => setPhoneField(event.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Nomor telepon tidak boleh kosong
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+          </Form>
+        </div>
+      );
+    } else {
+      return <div />;
+    }
+  }
+
   function validateCustomField() {
     return new Promise((resolve, reject) => {
       if (dataCustomField.length) {
@@ -687,29 +733,33 @@ const Schedule = (props) => {
         <Modal.Body>
           {registerForm ? (
             <Form onSubmit={handleLogin}>
-              <Form.Group controlId="username">
-                <Form.Label>{t("username")}</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={t("username")}
-                  onChange={(event) => setUsername(event.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="email">
-                <Form.Label>{t("email")}</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={t("inputEmail")}
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                    setUsernameError("");
-                  }}
-                  isInvalid={emailError}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {emailError}
-                </Form.Control.Feedback>
-              </Form.Group>
+              {/*
+                <Form.Group controlId="username">
+                  <Form.Label>{t("username")}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder={t("username")}
+                    onChange={(event) => setUsername(event.target.value)}
+                  />
+                </Form.Group>
+                */}
+              {/*
+                <Form.Group controlId="email">
+                  <Form.Label>{t("email")}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder={t("inputEmail")}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                      setUsernameError("");
+                    }}
+                    isInvalid={emailError}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {emailError}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                */}
               <Form.Group controlId="phone">
                 <Form.Label>{t("phone")}</Form.Label>
                 <Form.Control
@@ -928,7 +978,8 @@ const Schedule = (props) => {
       if (results) {
         await props.setSelectedDate(selectedDate.format);
         await props.setCustomField(customFieldValue);
-        await history.push(`${location.pathname}/review`);
+        await props.setField(emailField, phoneField);
+        history.push(`${location.pathname}/review`);
       }
     } catch (e) {
       alert(e);
@@ -1188,9 +1239,11 @@ const Schedule = (props) => {
       <section>{renderCalendar()}</section>
       <section>{renderAntrian()}</section>
       <section>{renderSlotTime()}</section>
+      <section>{renderField()}</section>
       <section>{renderCustomField()}</section>
       <div className="container-item my-5">
-        {_.isEmpty(sessionStored) ? (
+        {_.isEmpty(sessionStored) &&
+        props.dataServiceDetail?.data?.access_type !== "opened" ? (
           <Button
             variant="primary"
             type="submit"

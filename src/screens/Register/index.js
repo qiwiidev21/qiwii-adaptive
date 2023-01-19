@@ -14,12 +14,10 @@ function Register(props) {
   let history = useHistory();
   const { t } = useTranslation();
 
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line no-unused-vars
-  const [rePassword, setRePassword] = useState("");
   const [modalOTP, showModalOTP] = useState(false);
   const [modalVerify, setModalVerify] = useState(false);
   const [uniqueIdentifier, setUniqueIdentifier] = useState("");
@@ -29,8 +27,9 @@ function Register(props) {
 
   const handleSubmit = async () => {
     await props
-      .registerQiwii(username, email, phone, password)
+      .registerQiwii(email, phone, password)
       .then(async (user) => {
+        console.log("user :", user);
         if (user.status === "Success") {
           await sessionStorage.setItem(
             "unique_identifier",
@@ -41,6 +40,7 @@ function Register(props) {
         }
       })
       .catch((error) => {
+        console.log("error :", error);
         if (error.status === 409) {
           alert(error.data.message);
         }
@@ -154,50 +154,22 @@ function Register(props) {
                       <div className="col-lg-12">
                         <div className="mb-3">
                           <Form.Label className="form-label">
-                            {t("username")}{" "}
+                            {t("email")} {`atau`} {t("phone")}{" "}
                             <span className="text-danger">*</span>
-                          </Form.Label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder={t("username")}
-                            name="usename"
-                            required=""
-                            onChange={(event) =>
-                              setUsername(event.target.value)
-                            }
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-lg-12">
-                        <div className="mb-3">
-                          <Form.Label className="form-label">
-                            {t("email")} <span className="text-danger">*</span>
-                          </Form.Label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            placeholder={t("email")}
-                            name="email"
-                            required=""
-                            onChange={(event) => setEmail(event.target.value)}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-lg-12">
-                        <div className="mb-3">
-                          <Form.Label className="form-label">
-                            {t("phone")} <span className="text-danger">*</span>
                           </Form.Label>
                           <input
                             type="number"
                             className="form-control"
-                            placeholder={t("phone")}
+                            placeholder={`${t("email")} atau ${t("phone")}`}
                             name="phone"
                             required=""
-                            onChange={(event) => setPhone(event.target.value)}
+                            onChange={(event) => {
+                              if (event.target.value.includes("0")) {
+                                setPhone(event.target.value);
+                              } else {
+                                setEmail(event.target.value);
+                              }
+                            }}
                           />
                         </div>
                       </div>
@@ -215,24 +187,6 @@ function Register(props) {
                             required=""
                             onChange={(event) =>
                               setPassword(event.target.value)
-                            }
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-lg-12">
-                        <div className="mb-3">
-                          <Form.Label className="form-label">
-                            {t("repassword")}{" "}
-                            <span className="text-danger">*</span>
-                          </Form.Label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            placeholder={t("repassword")}
-                            required=""
-                            onChange={(event) =>
-                              setRePassword(event.target.value)
                             }
                           />
                         </div>
