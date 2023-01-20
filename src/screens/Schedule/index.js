@@ -675,9 +675,8 @@ const Schedule = (props) => {
             )}
             {input_phone === "1" && (
               <Form.Group controlId={input_phone}>
-                <Form.Label>{"Email"}</Form.Label>
+                <Form.Label>{"Phone Number"}</Form.Label>
                 <Form.Control
-                  type={"number"}
                   maxLength={15}
                   placeholder={"Silakan masukkan telepon Anda"}
                   onChange={(event) => setPhoneField(event.target.value)}
