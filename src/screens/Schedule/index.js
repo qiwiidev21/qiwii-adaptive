@@ -269,9 +269,11 @@ const Schedule = (props) => {
           <h6 className="m-1">{data.name}</h6>
           <h5 className="unit-name m-1">{data.company_name}</h5>
           <div className="row m-1">
-            <div className="d-flex status-open">
+            {/*
+              <div className="d-flex status-open">
               <h6 className="status-text">{isOpen}</h6>
             </div>
+            */}
             {isOpen === "OPEN" && (
               <h6 className="time-text">
                 Jam Buka:{" "}
