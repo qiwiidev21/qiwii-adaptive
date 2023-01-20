@@ -949,20 +949,20 @@ const Schedule = (props) => {
         <Modal.Footer>
           <Button
             variant="light"
-            onClick={async () => {
-              await setShowModal(!showModal);
-              await setShowModalLogin(true);
-              await setRegisterForm(true);
+            onClick={() => {
+              setShowModal(!showModal);
+              setShowModalLogin(true);
+              setRegisterForm(true);
             }}
           >
             {t("register")}
           </Button>
           <Button
             variant="primary"
-            onClick={async () => {
-              await setShowModal(!showModal);
-              await setShowModalLogin(true);
-              await setRegisterForm(false);
+            onClick={() => {
+              setShowModal(!showModal);
+              setShowModalLogin(true);
+              setRegisterForm(false);
             }}
           >
             {t("login")}

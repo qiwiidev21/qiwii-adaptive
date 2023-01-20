@@ -233,7 +233,7 @@ const ReviewQueue = (props) => {
         params.slot_time = props.dataSlotTimes?.data;
       }
       if (
-        _.isEmpty(props.dataSession) &&
+        !_.isEmpty(props.dataSession) &&
         props.dataServiceDetail.data.access_type !== "opened"
       ) {
         params.token = user.token ?? props.dataSession.data.token;
