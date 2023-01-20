@@ -194,11 +194,9 @@ const Schedule = (props) => {
         props
           .fetchSlotTime(routeID, selectedDate.format)
           .then((response) => {
-            console.log(response, "SLOT TIME");
             setDataSlotTime(response);
           })
           .catch((error) => {
-            console.log(error, "ERROR SLOT TIME");
             if (error) {
               setDataSlotTime([]);
             }
@@ -241,11 +239,9 @@ const Schedule = (props) => {
       service_id: routeID,
       "f-show_on_web": 1,
     };
-    console.log(params);
     props
       .fetchDataCustomField(params)
       .then((response) => {
-        console.log("CUSTOM_FIELD", response);
         setDataCustomField(response);
       })
       .catch((error) => {
@@ -907,7 +903,7 @@ const Schedule = (props) => {
         sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
   const [titleReport, setTitleReport] = useState("");

@@ -58,7 +58,7 @@ const Profile = (props) => {
         user.unique_identifier,
         user.uuid
       );
-      console.log(result);
+      return result;
       // await sessionStorage.removeItem("user");
       // await sessionStorage.removeItem("token");
       // await sessionStorage.removeItem("unique_identifier");

@@ -29,7 +29,6 @@ function Register(props) {
     await props
       .registerQiwii(email, phone, password)
       .then(async (user) => {
-        console.log("user :", user);
         if (user.status === "Success") {
           await sessionStorage.setItem(
             "unique_identifier",
@@ -40,7 +39,6 @@ function Register(props) {
         }
       })
       .catch((error) => {
-        console.log("error :", error);
         if (error.status === 409) {
           alert(error.data.message);
         }
@@ -72,7 +70,7 @@ function Register(props) {
         }
       })
       .catch((error) => {
-        console.log(error);
+        throw new Error(error);
       });
   };
   function renderModalVerify() {

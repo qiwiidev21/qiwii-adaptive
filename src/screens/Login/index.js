@@ -19,7 +19,6 @@ function Login(props) {
   const [emailError, setUsernameError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  // console.log(userSession);
   const handleSubmit = (event) => {
     event.preventDefault();
     props
@@ -58,7 +57,7 @@ function Login(props) {
         sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
 

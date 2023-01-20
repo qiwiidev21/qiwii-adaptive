@@ -24,7 +24,6 @@ export function fetchMerchantServices(id, payload) {
     return new Promise((resolve, reject) => {
       Qiwii.get(`${MERCHANT}/${id}?` + qs.stringify(payload))
         .then((response) => {
-          console.log("response", response);
           if (response.data?.length) {
             dispatch(setDataService(response.data));
             resolve(response.data);
@@ -34,7 +33,6 @@ export function fetchMerchantServices(id, payload) {
           }
         })
         .catch((error) => {
-          console.log("error", error);
           reject(error);
         });
     });
@@ -105,7 +103,6 @@ export function fetchSlotTime(id, format) {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${SLOT_TIME}/${id}/${format}/mobile/`, qs.stringify(params))
         .then((response) => {
-          console.log(response, "SLOE");
           if (response.status === 200) {
             if (!_.isEmpty(response.data)) {
               let data = [];
@@ -207,7 +204,6 @@ export function getTicket(id, data, customField) {
           resolve(response);
         })
         .catch((error) => {
-          console.log(error);
           reject(error);
         });
     });
@@ -228,12 +224,10 @@ export function getTicketPayment(id, data, customField) {
       formBody = formBody + `&custom_field[${index + 1}]=` + item;
     });
   }
-  console.log(formBody);
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       Qiwii.post(`${GET_TICKET_PAYMENT}`, formBody)
         .then((response) => {
-          console.log(response);
           resolve(response);
         })
         .catch((error) => {

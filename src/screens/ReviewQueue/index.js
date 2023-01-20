@@ -43,7 +43,7 @@ const ReviewQueue = (props) => {
     });
 
     return () => {
-      window.removeEventListener("focus", () => console.log("unfocus"));
+      window.removeEventListener("focus", () => {});
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -115,7 +115,6 @@ const ReviewQueue = (props) => {
           formBody = formBody + `&custom_field[${index + 1}]=` + item;
         });
       }
-      console.log(formBody, "formBody");
       let payload;
       payload = {
         // api_user: "root",
@@ -136,7 +135,6 @@ const ReviewQueue = (props) => {
         payload,
         props.dataCustomFieldData.data
       );
-      console.log(windowsNew);
       if (windowsNew?.data.status === "error") {
         alert(windowsNew?.data.error);
       } else {
@@ -146,7 +144,7 @@ const ReviewQueue = (props) => {
       //   `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
       // );
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
 
@@ -242,9 +240,6 @@ const ReviewQueue = (props) => {
           user.unique_identifier ?? props.dataSession.data.unique_identifier;
       }
 
-      console.log(
-        JSON.stringify({ ...params, ...props.dataCustomFieldData.data })
-      );
       await props
         .getTicket(
           props.dataServiceDetail?.data?.id_organization,
@@ -252,7 +247,6 @@ const ReviewQueue = (props) => {
           props.dataCustomFieldData.data
         )
         .then(async (response) => {
-          console.log(response);
           if (response.status === 200) {
             setShowModalSuccess(true);
             setDataTicket(response.data);
@@ -260,7 +254,7 @@ const ReviewQueue = (props) => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          throw new Error(err);
         });
     }
   }
@@ -294,7 +288,6 @@ const ReviewQueue = (props) => {
   //     if (!_.isEmpty(props.dataSlotTimes)) {
   //       params.slot_time = props.dataSlotTimes?.data;
   //     }
-  //     console.log(params);
   //     await props
   //       .getTicket(
   //         props.dataServiceDetail?.data?.id_organization,
@@ -302,7 +295,6 @@ const ReviewQueue = (props) => {
   //         props.dataCustomFieldData.data
   //       )
   //       .then(async (response) => {
-  //         console.log(response);
   //         if (response.status === 200) {
   //           await setDataTicket(response.data);
   //           await props.setDataTicket(response.data);
@@ -310,7 +302,6 @@ const ReviewQueue = (props) => {
   //         }
   //       })
   //       .catch((err) => {
-  //         console.log(err);
   //       });
   //     await props.setPaymentMethod(data);
   //   }
@@ -617,7 +608,7 @@ const ReviewQueue = (props) => {
         sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
 

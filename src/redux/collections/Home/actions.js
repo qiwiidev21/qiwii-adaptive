@@ -239,7 +239,6 @@ export function updateUser(
     return new Promise((resolve, reject) => {
       Qiwii.put(REGISTER, qs.stringify(params))
         .then((response) => {
-          console.log(response);
           // if (data.status === "Success") {
           //   // dispatch(setDataSession(data));
           //   resolve(data);
@@ -274,7 +273,9 @@ export function fetchMenuCategory() {
             dispatch(setDataMenu(data.data));
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          throw new Error(error);
+        });
     });
   };
 }
@@ -293,7 +294,9 @@ export function fetchEntertainmentCategory() {
             dispatch(setDataEntertainment(data.data));
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          throw new Error(error);
+        });
     });
   };
 }

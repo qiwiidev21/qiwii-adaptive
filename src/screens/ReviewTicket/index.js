@@ -122,7 +122,7 @@ const ReviewTicket = (props) => {
         await props.setPaymentMethod(windowsNew.data);
       }
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   }
   return (
