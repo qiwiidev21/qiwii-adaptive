@@ -30,7 +30,7 @@ function Register(props) {
       .registerQiwii(email, phone, password)
       .then(async (user) => {
         if (user.status === "Success") {
-          await sessionStorage.setItem(
+          await localStorage.setItem(
             "unique_identifier",
             user.unique_identifier
           );
@@ -58,8 +58,8 @@ function Register(props) {
           };
           await showModalOTP(false);
           await setOTP("");
-          await sessionStorage.setItem("token", user.token);
-          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
+          await localStorage.setItem("token", user.token);
+          await localStorage.setItem("user", JSON.stringify(sessionUser));
           await props
             .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
             .then(async (response) => {
@@ -156,7 +156,7 @@ function Register(props) {
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             className="form-control"
                             placeholder={`${t("email")} atau ${t("phone")}`}
                             name="phone"

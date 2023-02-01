@@ -68,7 +68,7 @@ function Header(props) {
   }, [props.dataUserProfile.data]);
 
   function getSession() {
-    const user = sessionStorage.getItem("user");
+    const user = localStorage.getItem("user");
     setSessionStored(JSON.parse(user));
   }
   const renderBack = () => {
@@ -228,12 +228,10 @@ function Header(props) {
                         <button
                           className="btn-custom btn-primary-outline"
                           onClick={async () => {
-                            await sessionStorage.removeItem("user");
-                            await sessionStorage.removeItem("token");
-                            await sessionStorage.removeItem(
-                              "unique_identifier"
-                            );
-                            await sessionStorage.removeItem("payment");
+                            await localStorage.removeItem("user");
+                            await localStorage.removeItem("token");
+                            await localStorage.removeItem("unique_identifier");
+                            await localStorage.removeItem("payment");
                             await history.push("/");
                             await window.location.reload(false);
                           }}

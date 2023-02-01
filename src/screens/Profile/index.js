@@ -35,7 +35,7 @@ const Profile = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function getDataUser() {
-    const userSession = await sessionStorage.getItem("user");
+    const userSession = await localStorage.getItem("user");
     const user = await JSON.parse(userSession);
     await props.getDataUser(user.unique_identifier, user.uuid, user.token);
   }
@@ -47,9 +47,9 @@ const Profile = (props) => {
   }, [props.dataUserProfile]);
 
   async function handleSubmit() {
-    await sessionStorage.removeItem("user");
-    await sessionStorage.removeItem("token");
-    await sessionStorage.removeItem("unique_identifier");
+    await localStorage.removeItem("user");
+    await localStorage.removeItem("token");
+    await localStorage.removeItem("unique_identifier");
     await history.goBack();
   }
 

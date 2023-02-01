@@ -25,9 +25,9 @@ function Login(props) {
       .loginQiwii(username, phone, password)
       .then((user) => {
         history.push("/");
-        sessionStorage.setItem("token", user.token);
-        sessionStorage.setItem("unique_identifier", user.unique_identifier);
-        sessionStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", user.token);
+        localStorage.setItem("unique_identifier", user.unique_identifier);
+        localStorage.setItem("user", JSON.stringify(user));
         props.getDataUser(user.unique_identifier, user.uuid, user.token);
         notificationRequest();
       })
@@ -52,9 +52,9 @@ function Login(props) {
     try {
       let permission = await Notification.requestPermission();
       if (permission === "granted") {
-        sessionStorage.setItem("permission", permission);
+        localStorage.setItem("permission", permission);
       } else if (permission === "denied") {
-        sessionStorage.setItem("permission", permission);
+        localStorage.setItem("permission", permission);
       }
     } catch (e) {
       throw new Error(e);

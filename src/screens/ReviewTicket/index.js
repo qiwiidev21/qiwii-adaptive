@@ -112,7 +112,7 @@ const ReviewTicket = (props) => {
   async function handleCekStatus() {}
   async function handlePayment() {
     try {
-      const order_id = sessionStorage.getItem("order_id");
+      const order_id = localStorage.getItem("order_id");
       const windowsNew = await axios.get(
         `https://dev.qiwii.id/finance/finance/finish?order_id=${order_id}`
       );

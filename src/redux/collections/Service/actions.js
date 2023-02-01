@@ -73,7 +73,7 @@ export function fetchServiceDetail(id) {
         .then((response) => {
           if (response.status === 200) {
             dispatch(setDetailService(response.data));
-            sessionStorage.setItem(
+            localStorage.setItem(
               "dataServiceDetail",
               JSON.stringify(response.data)
             );

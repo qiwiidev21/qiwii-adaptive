@@ -78,14 +78,14 @@ class SnapMidtrans extends Component {
               /** @todo options **/
               {
                 onSuccess: function (result) {
-                  sessionStorage.setItem("payment", JSON.stringify(result));
-                  sessionStorage.setItem("order_id", result.order_id);
+                  localStorage.setItem("payment", JSON.stringify(result));
+                  localStorage.setItem("order_id", result.order_id);
                   // window.open(result.finish_redirect_url);
                 },
                 onPending: function (result) {
                   return result;
-                  // sessionStorage.setItem("payment", JSON.stringify(result));
-                  // sessionStorage.setItem("order_id", result.order_id);
+                  // localStorage.setItem("payment", JSON.stringify(result));
+                  // localStorage.setItem("order_id", result.order_id);
                   // window.open(result.finish_redirect_url);
                 },
                 onError: function (result) {

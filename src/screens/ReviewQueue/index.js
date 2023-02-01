@@ -56,7 +56,7 @@ const ReviewQueue = (props) => {
   // }, [payment]);
 
   async function getPayment() {
-    const payment = await sessionStorage.getItem("payment");
+    const payment = await localStorage.getItem("payment");
     if (!_.isEmpty(JSON.parse(payment))) {
       await setPayment(JSON.parse(payment));
       await setDataTicket(JSON.parse(payment));
@@ -88,7 +88,7 @@ const ReviewQueue = (props) => {
 
   async function getToken(id) {
     try {
-      const userSession = sessionStorage.getItem("user");
+      const userSession = localStorage.getItem("user");
       const user = JSON.parse(userSession);
 
       const token = _.isEmpty(props.dataSession)
@@ -153,7 +153,7 @@ const ReviewQueue = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getCookies = async () => {
-    const userSession = await sessionStorage.getItem("user");
+    const userSession = await localStorage.getItem("user");
     const user = await JSON.parse(userSession);
     if (user) {
       return props.getDataUser(user.unique_identifier, user.uuid, user.token);
@@ -201,8 +201,8 @@ const ReviewQueue = (props) => {
   }
 
   async function handleSubmit() {
-    const userSession = sessionStorage.getItem("user");
-    // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
+    const userSession = localStorage.getItem("user");
+    // const dataServiceDetails = localStorage.getItem("dataServiceDetail");
     // const dataServiceDetail = JSON.parse(dataServiceDetails);
     const user = JSON.parse(userSession);
     if (
@@ -259,8 +259,8 @@ const ReviewQueue = (props) => {
     }
   }
   // async function handleSubmitPayment(data) {
-  //   const userSession = sessionStorage.getItem("user");
-  //   // const dataServiceDetails = sessionStorage.getItem("dataServiceDetail");
+  //   const userSession = localStorage.getItem("user");
+  //   // const dataServiceDetails = localStorage.getItem("dataServiceDetail");
   //   // const dataServiceDetail = JSON.parse(dataServiceDetails);
   //   const user = JSON.parse(userSession);
   //   if (_.isEmpty(user)) {
@@ -432,12 +432,12 @@ const ReviewQueue = (props) => {
             onClick={async () => {
               if (!_.isEmpty(user)) {
                 await setShowModalReport(false);
-                await sessionStorage.setItem("token", user.token);
-                await sessionStorage.setItem(
+                await localStorage.setItem("token", user.token);
+                await localStorage.setItem(
                   "unique_identifier",
                   user.unique_identifier
                 );
-                await sessionStorage.setItem("user", JSON.stringify(user));
+                await localStorage.setItem("user", JSON.stringify(user));
                 await props.getDataUser(
                   user.unique_identifier,
                   user.uuid,
@@ -603,9 +603,9 @@ const ReviewQueue = (props) => {
     try {
       let permission = await Notification.requestPermission();
       if (permission === "granted") {
-        sessionStorage.setItem("permission", permission);
+        localStorage.setItem("permission", permission);
       } else if (permission === "denied") {
-        sessionStorage.setItem("permission", permission);
+        localStorage.setItem("permission", permission);
       }
     } catch (e) {
       throw new Error(e);
@@ -622,7 +622,7 @@ const ReviewQueue = (props) => {
           // setShowModalReport(true);
           await showModalOTP(!modalOTP);
           await setUniqueIdentifier(user.unique_identifier);
-          await sessionStorage.setItem(
+          await localStorage.setItem(
             "unique_identifier",
             user.unique_identifier
           );
@@ -657,8 +657,8 @@ const ReviewQueue = (props) => {
           };
           await showModalOTP(false);
           await setOTP("");
-          await sessionStorage.setItem("token", user.token);
-          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
+          await localStorage.setItem("token", user.token);
+          await localStorage.setItem("user", JSON.stringify(sessionUser));
           await props
             .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
             .then(async (response) => {
