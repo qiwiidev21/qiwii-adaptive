@@ -38,15 +38,21 @@ const ReviewTicket = (props) => {
   function renderDetailAntrian() {
     if (props.dataTicket) {
       const { data } = props.dataTicket;
+      console.log(data);
       return (
         <div className="container p-5">
           <h4 className="title-header">{t("thanksUsingQiwii")}</h4>
           {data?.layanan && (
             <div className="m-2">
               <h6 className="title-review">{t("youAreAlreadyIn")}</h6>
-              <h6>
-                {data?.layanan} - {data?.organization_name}
-              </h6>
+              <h6>{data?.layanan}</h6>
+            </div>
+          )}
+          <div className="dropdown-divider"></div>
+          {data?.layanan && (
+            <div className="m-2">
+              <h6 className="title-review">{t("merchantName")}</h6>
+              <h6>{data?.organization_name}</h6>
             </div>
           )}
           {data?.layanan && <div className="dropdown-divider"></div>}
@@ -55,17 +61,40 @@ const ReviewTicket = (props) => {
             <h6>{props.dataUserProfile.data?.email}</h6>
           </div>
           <div className="dropdown-divider"></div>
+
           {data?.antrian && (
             <div className="justify-content-between row mx-1">
               <div className="mx-2">
-                <h6 className="title-review">{t("date")}</h6>
-                <h6>{moment(data?.estimasi).format("DD MMM YYYY")}</h6>
+                <h6 className="title-review">{"Tanggal Daftar"}</h6>
+                <h6>{moment(data?.tanggal_daftar).format("DD MMM YYYY")}</h6>
               </div>
               <div className="mx-2">
                 <h6 className="title-review">{t("estimateNumberQueue")}</h6>
                 <h6>{data?.antrian || data?.ticket}</h6>
               </div>
             </div>
+          )}
+          {data?.antrian && (
+            <>
+              <div className="dropdown-divider"></div>
+              <div className="justify-content-between row mx-1">
+                <div className="mx-2">
+                  <h6 className="title-review">{"Tanggal dilayani"}</h6>
+                  <h6>
+                    {moment(data?.estimasi_tanggal).format("DD MMM YYYY")}
+                  </h6>
+                </div>
+              </div>
+            </>
+          )}
+          {data?.antrian && (
+            <>
+              <div className="dropdown-divider"></div>
+              <div className="mx-2">
+                <h6 className="title-review">{t("estimateServiceTime")}</h6>
+                <h6>{data?.estimasi_waktu}</h6>
+              </div>
+            </>
           )}
           {data?.antrian && <div className="dropdown-divider"></div>}
           {!_.isEmpty(payment) && (
@@ -112,7 +141,7 @@ const ReviewTicket = (props) => {
   async function handleCekStatus() {}
   async function handlePayment() {
     try {
-      const order_id = localStorage.getItem("order_id");
+      const order_id = sessionStorage.getItem("order_id");
       const windowsNew = await axios.get(
         `https://dev.qiwii.id/finance/finance/finish?order_id=${order_id}`
       );

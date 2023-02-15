@@ -33,7 +33,7 @@
   "transactionStatus": "Status Transaksi",
   "serviceName": "Nama Layanan",
   "estimateServiceTime": "Estimasi waktu dilayani",
-  "estimateNumberQueue": "Estimasi Nomor Antrian",
+  "estimateNumberQueue": "Nomor Antrian",
   "currentQueue": "Nomor mengantri saat ini",
   "averageQueue": "Rata-rata lama per antrian",
   "loginForTheNext": "Masuk untuk melanjutkan",

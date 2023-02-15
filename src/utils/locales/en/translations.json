@@ -31,7 +31,7 @@
   "transactionStatus": "Transaction Status",
   "serviceName": "Service Name",
   "estimateServiceTime": "Estimate Service Time",
-  "estimateNumberQueue": "Estimated Queue Number",
+  "estimateNumberQueue": "Queue Number",
   "currentQueue": "Current queue number",
   "averageQueue": "Average length per queue",
   "loginForTheNext": "Login to continue",

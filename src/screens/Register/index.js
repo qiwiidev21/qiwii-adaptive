@@ -27,13 +27,10 @@ function Register(props) {
 
   const handleSubmit = async () => {
     await props
-      .registerQiwii(email, phone, password)
+      .registerQiwii(phone || email, email, phone, password)
       .then(async (user) => {
         if (user.status === "Success") {
-          await localStorage.setItem(
-            "unique_identifier",
-            user.unique_identifier
-          );
+          sessionStorage.setItem("unique_identifier", user.unique_identifier);
           await setUniqueIdentifier(user.unique_identifier);
           await setModalVerify(!modalVerify);
         }
@@ -58,8 +55,8 @@ function Register(props) {
           };
           await showModalOTP(false);
           await setOTP("");
-          await localStorage.setItem("token", user.token);
-          await localStorage.setItem("user", JSON.stringify(sessionUser));
+          await sessionStorage.setItem("token", user.token);
+          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
           await props
             .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
             .then(async (response) => {
@@ -87,7 +84,7 @@ function Register(props) {
             onClick={() => {
               setModalVerify(false);
               history.push("/login");
-              // await handleSubmitOTP();
+              handleSubmitOTP();
             }}
           >
             Submit
@@ -162,10 +159,10 @@ function Register(props) {
                             name="phone"
                             required=""
                             onChange={(event) => {
-                              if (event.target.value.includes("0")) {
-                                setPhone(event.target.value);
-                              } else {
+                              if (event.target.value.includes("@")) {
                                 setEmail(event.target.value);
+                              } else {
+                                setPhone(event.target.value);
                               }
                             }}
                           />

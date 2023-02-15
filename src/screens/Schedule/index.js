@@ -91,7 +91,7 @@ const Schedule = (props) => {
   });
 
   function getPayment() {
-    const payment = localStorage.getItem("payment");
+    const payment = sessionStorage.getItem("payment");
     if (!_.isEmpty(JSON.parse(payment))) {
       handleSubmitPayment(JSON.parse(payment));
     }
@@ -104,7 +104,7 @@ const Schedule = (props) => {
   }, [props.dataSession]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getCookies = async () => {
-    const userSession = await localStorage.getItem("user");
+    const userSession = await sessionStorage.getItem("user");
     const user = await JSON.parse(userSession);
     if (user) {
       return props.getDataUser(user.unique_identifier, user.uuid, user.token);
@@ -167,7 +167,7 @@ const Schedule = (props) => {
   }, [props.dataUserProfile.data]);
 
   function getSession() {
-    const user = localStorage.getItem("user");
+    const user = sessionStorage.getItem("user");
     setSessionStored(JSON.parse(user));
   }
 
@@ -898,9 +898,9 @@ const Schedule = (props) => {
     try {
       let permission = await Notification.requestPermission();
       if (permission === "granted") {
-        localStorage.setItem("permission", permission);
+        sessionStorage.setItem("permission", permission);
       } else if (permission === "denied") {
-        localStorage.setItem("permission", permission);
+        sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
       throw new Error(e);
@@ -918,7 +918,7 @@ const Schedule = (props) => {
           // await setRegisterForm(!registerForm);
           await setModalVerify(!modalVerify);
           await setUniqueIdentifier(user.unique_identifier);
-          await localStorage.setItem(
+          await sessionStorage.setItem(
             "unique_identifier",
             user.unique_identifier
           );
@@ -1106,8 +1106,8 @@ const Schedule = (props) => {
           };
           await showModalOTP(false);
           await setOTP("");
-          await localStorage.setItem("token", user.token);
-          await localStorage.setItem("user", JSON.stringify(sessionUser));
+          await sessionStorage.setItem("token", user.token);
+          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
           await props
             .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
             .then(async (response) => {
@@ -1196,12 +1196,12 @@ const Schedule = (props) => {
             onClick={async () => {
               if (!_.isEmpty(user)) {
                 await setShowModalReport(false);
-                await localStorage.setItem("token", user.token);
-                await localStorage.setItem(
+                await sessionStorage.setItem("token", user.token);
+                await sessionStorage.setItem(
                   "unique_identifier",
                   user.unique_identifier
                 );
-                await localStorage.setItem("user", JSON.stringify(user));
+                await sessionStorage.setItem("user", JSON.stringify(user));
                 await props.getDataUser(
                   user.unique_identifier,
                   user.uuid,

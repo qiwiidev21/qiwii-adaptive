@@ -180,8 +180,10 @@ export function verifyCode(verification_code, unique_identifier) {
 export function registerQiwii(name, email, phone, password) {
   let payload = {
     name,
-    email,
-    phone,
+    email: email.includes("@") ? email : `${phone}@yopmail.com`,
+    phone: phone.includes("0")
+      ? phone
+      : `0812${Math.floor(Math.random() * 1000000000)}`,
     password,
     uuid: "ABCD1234",
   };

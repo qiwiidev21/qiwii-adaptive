@@ -33,7 +33,7 @@ const Antrian = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function getAntrian() {
-    const userSession = await localStorage.getItem("user");
+    const userSession = await sessionStorage.getItem("user");
     const user = await JSON.parse(userSession);
     await props.getDataQueue(user.unique_identifier, user.uuid, user.token);
     await props.getDataUser(user.unique_identifier, user.uuid, user.token);

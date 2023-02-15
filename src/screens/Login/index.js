@@ -25,9 +25,9 @@ function Login(props) {
       .loginQiwii(username, phone, password)
       .then((user) => {
         history.push("/");
-        localStorage.setItem("token", user.token);
-        localStorage.setItem("unique_identifier", user.unique_identifier);
-        localStorage.setItem("user", JSON.stringify(user));
+        sessionStorage.setItem("token", user.token);
+        sessionStorage.setItem("unique_identifier", user.unique_identifier);
+        sessionStorage.setItem("user", JSON.stringify(user));
         props.getDataUser(user.unique_identifier, user.uuid, user.token);
         notificationRequest();
       })
@@ -52,9 +52,9 @@ function Login(props) {
     try {
       let permission = await Notification.requestPermission();
       if (permission === "granted") {
-        localStorage.setItem("permission", permission);
+        sessionStorage.setItem("permission", permission);
       } else if (permission === "denied") {
-        localStorage.setItem("permission", permission);
+        sessionStorage.setItem("permission", permission);
       }
     } catch (e) {
       throw new Error(e);
@@ -84,10 +84,12 @@ function Login(props) {
                   <h4 className="text-center">{t("loginForTheNext")}</h4>
                   <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
-                      <Form.Label>{t("email")}</Form.Label>
+                      <Form.Label>{`${t("email")} atau ${t(
+                        "phone"
+                      )}`}</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder={t("inputEmail")}
+                        placeholder={`${t("email")} atau ${t("phone")}`}
                         onChange={(event) => {
                           setPhoneOrMail(event.target.value);
                           setUsernameError("");

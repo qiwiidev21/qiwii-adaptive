@@ -28,8 +28,8 @@ function OTPScreen(props) {
             uuid: "ABCD1234",
           };
           await setOTP("");
-          await localStorage.setItem("token", user.token);
-          await localStorage.setItem("user", JSON.stringify(sessionUser));
+          await sessionStorage.setItem("token", user.token);
+          await sessionStorage.setItem("user", JSON.stringify(sessionUser));
           await props
             .getDataUser(uniqueIdentifier, "ABCD1234", user.token)
             .then(async (response) => {
