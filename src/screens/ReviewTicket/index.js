@@ -58,7 +58,11 @@ const ReviewTicket = (props) => {
           {data?.layanan && <div className="dropdown-divider"></div>}
           <div className="mx-2">
             <h6 className="title-review">{t("queueInformationHasBeen")}</h6>
-            <h6>{props.dataUserProfile.data?.email}</h6>
+            <h6>
+              {props.dataUserProfile.data?.email ||
+                props.dataFieldData?.data?.email ||
+                props.dataFieldData?.data?.phone}
+            </h6>
           </div>
           <div className="dropdown-divider"></div>
 
@@ -217,6 +221,7 @@ const mapStateToProps = (state) => ({
   dataSession: state.dataSession,
   dataUserProfile: state.dataUserProfile,
   dataPaymentService: state.dataPaymentService,
+  dataFieldData: state.dataFieldData,
 });
 
 const mapDispatchToProps = (dispatch) => {
