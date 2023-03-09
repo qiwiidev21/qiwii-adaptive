@@ -322,6 +322,7 @@ const Schedule = (props) => {
         `${date.getFullYear()}-${formatMonth}-${formatDay}`
       );
       const rentang_maksimal = moment(rentant).format("YYYY-MM-DD");
+      console.log(rentang_maksimal, "rentang_maksimal");
       const setting =
         typeof props.dataServiceSelected.data?.setting === "string"
           ? JSON.parse(props.dataServiceSelected.data?.setting)
@@ -362,9 +363,12 @@ const Schedule = (props) => {
       const objDate = {
         day: days[formatDate.getDay()],
         date: i,
-        isOpen: isOpen,
+        isOpen: moment(
+          `${date.getFullYear()}-${formatMonth}-${formatDay}`
+        ).isSameOrBefore(rentang_maksimal),
         format: `${date.getFullYear()}-${formatMonth}-${formatDay}`,
       };
+      console.log(objDate.format);
       week.push(objDate);
       setWeek(week);
     }
@@ -433,7 +437,10 @@ const Schedule = (props) => {
 
   function renderCalendar() {
     const isDisabled =
-      props.dataServiceSelected.data?.slot_aktif === "0" ? true : false;
+      props.dataServiceSelected.data?.slot_aktif === "1" ||
+      props.dataServiceSelected.data?.rentang === "rentang"
+        ? false
+        : true;
     return (
       <div
         className="slot-card my-5 p-3 align-items-center justify-content-center"

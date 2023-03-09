@@ -88,62 +88,80 @@ const ReviewQueue = (props) => {
 
   async function getToken(id) {
     try {
-      const userSession = sessionStorage.getItem("user");
-      const user = JSON.parse(userSession);
-
-      const token = _.isEmpty(props.dataSession)
-        ? user.token
-        : props.dataSession.data.token;
-      const uuid = _.isEmpty(props.dataSession)
-        ? user.uuid
-        : props.dataSession.data.uuid;
-      const unique_identifier = _.isEmpty(props.dataSession)
-        ? user.unique_identifier
-        : props.dataSession.data.unique_identifier;
-      const slot_date = props.dataSelectedDate?.data;
-      const layanan_id = props.dataServiceDetail?.data?.id;
-      const service_id = props.dataServiceDetail?.data?.id;
-      const organization_id = props.dataServiceDetail?.data?.id_organization;
-      const code = props.dataServiceDetail?.data?.code;
-      const slot_time = !_.isEmpty(props.dataSlotTimes)
-        ? props.dataSlotTimes?.data
-        : "null";
-      let formBody = [];
-      formBody = formBody.join("&");
-      if (props.dataCustomFieldData.data !== undefined) {
-        props.dataCustomFieldData.data.forEach((item, index) => {
-          formBody = formBody + `&custom_field[${index + 1}]=` + item;
-        });
-      }
-      let payload;
-      payload = {
-        // api_user: "root",
-        // api_key: "1494ba401c74a879a386b5057d2e9a4f",
-        channel: "mobile",
-        id_organization: organization_id,
-        id_service: service_id,
-        layanan: layanan_id,
-        kode: code,
-        token: token,
-        uuid: uuid,
-        slot_date: slot_date,
-        unique_identifier: unique_identifier,
-      };
-      payload.slot_time = slot_time;
-      const windowsNew = await props.getTicketPayment(
-        props.dataServiceDetail?.data?.id_organization,
-        payload,
-        props.dataCustomFieldData.data
-      );
-      if (windowsNew?.data.status === "error") {
-        alert(windowsNew?.data.error);
+      let userSession = sessionStorage.getItem("user");
+      let user = JSON.parse(userSession);
+      if (
+        _.isEmpty(user) ||
+        props.dataServiceDetail.data.access_type !== "opened"
+      ) {
+        setShowModal(true);
       } else {
-        setToken(windowsNew.data.token);
+        const token = _.isEmpty(props.dataSession)
+          ? user.token
+          : props.dataSession.data.token;
+        const uuid = _.isEmpty(props.dataSession)
+          ? user.uuid
+          : props.dataSession.data.uuid;
+        const unique_identifier = _.isEmpty(props.dataSession)
+          ? user.unique_identifier
+          : props.dataSession.data.unique_identifier;
+        const slot_date = props.dataSelectedDate?.data;
+        const layanan_id = props.dataServiceDetail?.data?.id;
+        const service_id = props.dataServiceDetail?.data?.id;
+        const organization_id = props.dataServiceDetail?.data?.id_organization;
+        const code = props.dataServiceDetail?.data?.code;
+        const slot_time = !_.isEmpty(props.dataSlotTimes)
+          ? props.dataSlotTimes?.data
+          : "null";
+        let formBody = [];
+        formBody = formBody.join("&");
+        if (props.dataCustomFieldData.data !== undefined) {
+          props.dataCustomFieldData.data.forEach((item, index) => {
+            formBody = formBody + `&custom_field[${index + 1}]=` + item;
+          });
+        }
+        const payload = {
+          // api_user: "root",
+          // api_key: "1494ba401c74a879a386b5057d2e9a4f",
+          channel: "mobile",
+          id_organization: organization_id,
+          id_service: service_id,
+          layanan: layanan_id,
+          kode: code,
+          slot_date: slot_date,
+        };
+        payload.slot_time = slot_time;
+        if (props.dataServiceDetail.data.access_type === "opened") {
+          payload.email = props.dataFieldData?.data?.email;
+          payload.noponsel = props.dataFieldData?.data?.phone;
+        }
+        if (
+          !_.isEmpty(props.dataSession) &&
+          props.dataServiceDetail.data.access_type !== "opened"
+        ) {
+          payload.token = token ?? props.dataSession.data.token;
+          payload.uuid = uuid ?? props.dataSession.data.uuid;
+          payload.unique_identifier =
+            unique_identifier ?? props.dataSession.data.unique_identifier;
+        }
+        const windowsNew = await props.getTicketPayment(
+          props.dataServiceDetail?.data?.id_organization,
+          payload,
+          props.dataCustomFieldData.data
+        );
+        console.log(payload);
+        console.log(windowsNew);
+        if (windowsNew?.data.status === "error") {
+          alert(windowsNew?.data.error);
+        } else {
+          setToken(windowsNew.data.token);
+        }
       }
       // const windowsNew = await axios.get(
       //   `https://dev.qiwii.id/finance/finance/get_token?id_service=${id}&display=1`
       // );
     } catch (e) {
+      console.log(e);
       throw new Error(e);
     }
   }
