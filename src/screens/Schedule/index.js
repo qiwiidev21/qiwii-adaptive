@@ -328,6 +328,7 @@ const Schedule = (props) => {
           ? JSON.parse(props.dataServiceSelected.data?.setting)
           : props.dataServiceSelected.data?.setting;
       const isOpen = moment(
+        // eslint-disable-line no-unused-vars
         `${date.getFullYear()}-${formatMonth}-${formatDay}`
       ).isSameOrAfter(rentang_maksimal)
         ? false
