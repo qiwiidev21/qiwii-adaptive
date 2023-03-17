@@ -38,7 +38,6 @@ const ReviewTicket = (props) => {
   function renderDetailAntrian() {
     if (props.dataTicket) {
       const { data } = props.dataTicket;
-      console.log(data);
       return (
         <div className="container p-5">
           <h4 className="title-header">{t("thanksUsingQiwii")}</h4>

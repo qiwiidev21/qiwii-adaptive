@@ -96,15 +96,6 @@ const ReviewQueue = (props) => {
       // ) {
       //   setShowModal(true);
       // } else {
-      const token = _.isEmpty(props.dataSession)
-        ? user.token
-        : props.dataSession.data.token;
-      const uuid = _.isEmpty(props.dataSession)
-        ? user.uuid
-        : props.dataSession.data.uuid;
-      const unique_identifier = _.isEmpty(props.dataSession)
-        ? user.unique_identifier
-        : props.dataSession.data.unique_identifier;
       const slot_date = props.dataSelectedDate?.data;
       const layanan_id = props.dataServiceDetail?.data?.id;
       const service_id = props.dataServiceDetail?.data?.id;
@@ -139,10 +130,10 @@ const ReviewQueue = (props) => {
         !_.isEmpty(props.dataSession) &&
         props.dataServiceDetail.data.access_type !== "opened"
       ) {
-        payload.token = token ?? props.dataSession.data.token;
-        payload.uuid = uuid ?? props.dataSession.data.uuid;
+        payload.token = user.token ?? props.dataSession.data.token;
+        payload.uuid = user.uuid ?? props.dataSession.data.uuid;
         payload.unique_identifier =
-          unique_identifier ?? props.dataSession.data.unique_identifier;
+          user.unique_identifier ?? props.dataSession.data.unique_identifier;
       }
       const windowsNew = await props.getTicketPayment(
         props.dataServiceDetail?.data?.id_organization,
