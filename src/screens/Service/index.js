@@ -53,18 +53,23 @@ const Service = (props) => {
   }
 
   const [profile, setProfile] = useState({});
+  console.log(profile);
   const [serviceName, setServiceName] = useState("Merchant");
 
   useEffect(() => {
     if (props.dataMerchantProfile) {
       if (!_.isEmpty(props.dataMerchantProfile)) {
-        setProfile(props.dataMerchantProfile.data[0]);
+        const lastId = idX[idX.length - 1];
+        const merchantData = props.dataMerchantProfile.data.find(
+          (item) => item.id === lastId
+        );
+        setProfile(merchantData);
         // if (props.dataMerchantProfile.data[0]?.banner) {
         //   setBanner(props.dataMerchantProfile.data[0].banner);
         // }
       }
     }
-  }, [props.dataMerchantProfile]);
+  }, [props.dataMerchantProfile, idX]);
 
   useEffect(() => {
     if (!_.isEmpty(profile)) {
@@ -73,18 +78,16 @@ const Service = (props) => {
   }, [profile]);
 
   function renderMerchant() {
-    if (props.dataMerchantProfile.data) {
-      const data = props.dataMerchantProfile.data[0];
+    if (profile) {
       return (
         <div className="my-5 merchant-item p-3 shadow-sm">
-          <h6 className="m-1">{data.category_name}</h6>
-          <h5 className="unit-name m-1">{data.unit_name}</h5>
-          <h6 className="address-text">{data.unit_address}</h6>
+          <h6 className="m-1">{profile.category_name}</h6>
+          <h5 className="unit-name m-1">{profile.unit_name}</h5>
+          <h6 className="address-text">{profile.unit_address}</h6>
         </div>
       );
     }
   }
-  console.log(`serviceName`.toUpperCase(), props.dataService.data);
   return (
     <div className="container">
       <Helmet>

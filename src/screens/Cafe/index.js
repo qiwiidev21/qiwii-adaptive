@@ -64,7 +64,7 @@ const Movies = (props) => {
 
   function fetchDataPromo() {
     props.getPromo(12).then(async (data) => {
-      await setPromo(data);
+      setPromo(data);
       await props.setDataPromo(data);
     });
   }
@@ -116,7 +116,7 @@ const Movies = (props) => {
                   key={index}
                   data={item}
                   index={index}
-                  category="bioskop"
+                  category="cafe"
                   onPress={(id) => props.fetchMerchantProfile(id)}
                 />
               ))}

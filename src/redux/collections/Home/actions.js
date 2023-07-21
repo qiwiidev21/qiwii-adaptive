@@ -179,11 +179,13 @@ export function verifyCode(verification_code, unique_identifier) {
 
 export function registerQiwii(name, email, phone, password) {
   let payload = {
-    name,
+    name: email.includes("@")
+      ? email.replace(/@|gmail|yopmail|.com/gi, "")
+      : name,
     email: email.includes("@") ? email : `${phone}@yopmail.com`,
-    phone: phone.includes("0")
+    phone: phone.includes("08")
       ? phone
-      : `0812${Math.floor(Math.random() * 1000000000)}`,
+      : `0812${Math.floor(Math.random() * 100000000)}`,
     password,
     uuid: "ABCD1234",
   };
@@ -222,13 +224,6 @@ export function updateUser(
 ) {
   let params;
 
-  if (oldPassword) {
-    params.old_password = oldPassword;
-  }
-  if (password) {
-    params.password = password;
-  }
-
   params = {
     unique_identifier: unique_identifier,
     uuid: uuid,
@@ -237,10 +232,19 @@ export function updateUser(
     email: email,
     phone: phone,
   };
+
+  if (oldPassword) {
+    params.old_password = oldPassword;
+  }
+  if (password) {
+    params.password = password;
+  }
+  console.log(params);
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       Qiwii.put(REGISTER, qs.stringify(params))
         .then((response) => {
+          console.log(response);
           // if (data.status === "Success") {
           //   // dispatch(setDataSession(data));
           //   resolve(data);
@@ -249,6 +253,7 @@ export function updateUser(
           // }
         })
         .catch((error) => {
+          console.log(error);
           if (error.response) {
             reject(error.response);
           } else if (error.request) {

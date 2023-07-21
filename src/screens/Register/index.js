@@ -87,7 +87,7 @@ function Register(props) {
               handleSubmitOTP();
             }}
           >
-            Submit
+            {t("next")}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -127,7 +127,7 @@ function Register(props) {
               await handleSubmitOTP();
             }}
           >
-            Submit
+            {t("next")}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -153,13 +153,13 @@ function Register(props) {
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <input
-                            type="text"
+                            type="email"
                             className="form-control"
                             placeholder={`${t("email")} atau ${t("phone")}`}
                             name="phone"
                             required=""
                             onChange={(event) => {
-                              if (event.target.value.includes("@")) {
+                              if (!event.target.value.includes("08")) {
                                 setEmail(event.target.value);
                               } else {
                                 setPhone(event.target.value);

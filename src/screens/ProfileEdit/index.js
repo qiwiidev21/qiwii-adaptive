@@ -47,15 +47,23 @@ const Profile = (props) => {
     }
   }, [props.dataUserProfile]);
 
+  const userSession = sessionStorage.getItem("user");
+  console.log(JSON.parse(userSession));
+  // const user = await JSON.parse(userSession);
+
   async function handleSubmit() {
     try {
-      const userSession = await sessionStorage.getItem("user");
+      const userSession = sessionStorage.getItem("user");
       const user = await JSON.parse(userSession);
+      console.log(user);
       const result = await props.updateUser(
         username,
         email,
         phone,
         user.unique_identifier,
+        "123456",
+        "123456",
+        user.token,
         user.uuid
       );
       return result;
@@ -64,7 +72,7 @@ const Profile = (props) => {
       // await sessionStorage.removeItem("unique_identifier");
       // await history.goBack();
     } catch (e) {
-    } finally {
+      console.log(e);
     }
   }
 
@@ -112,7 +120,7 @@ const Profile = (props) => {
           className="next-button"
           onClick={handleSubmit}
         >
-          {t("submit")}
+          {t("save")}
         </Button>
       </div>
     </div>

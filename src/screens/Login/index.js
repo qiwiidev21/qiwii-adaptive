@@ -73,7 +73,7 @@ function Login(props) {
     setPhone(phone);
   }
   return (
-    <div className="container">
+    <div className="md:container md:mx-auto">
       <section className="bg-home d-flex bg-light align-items-center">
         <div className="container">
           <div className="row justify-content-center">
